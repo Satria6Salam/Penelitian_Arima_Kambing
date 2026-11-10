@@ -5,8 +5,8 @@ ARIMA: ARIMA(0, 0, 0)
 ==============================================================================
 Dep. Variable:     Total_Kuantitas_Kg   No. Observations:                   27
 Model:                        SARIMAX   Log Likelihood                  -6.981
-Date:                Mon, 09 Nov 2026   AIC                             17.963
-Time:                        23:15:47   BIC                             20.555
+Date:                Tue, 10 Nov 2026   AIC                             17.963
+Time:                        16:10:01   BIC                             20.555
 Sample:                    01-01-2023   HQIC                            18.734
                          - 03-01-2025                                         
 Covariance Type:                  opg                                         
@@ -32,8 +32,8 @@ SARIMA D=0: SARIMA(1, 0, 0)x(1, 0, 0, 12)
 ==========================================================================================
 Dep. Variable:                 Total_Kuantitas_Kg   No. Observations:                   27
 Model:             SARIMAX(1, 0, 0)x(1, 0, 0, 12)   Log Likelihood                   1.737
-Date:                            Mon, 09 Nov 2026   AIC                              4.526
-Time:                                    23:15:47   BIC                              9.709
+Date:                            Tue, 10 Nov 2026   AIC                              4.526
+Time:                                    16:10:01   BIC                              9.709
 Sample:                                01-01-2023   HQIC                             6.067
                                      - 03-01-2025                                         
 Covariance Type:                              opg                                         
@@ -61,8 +61,8 @@ SARIMA D=1: SARIMA(1, 0, 0)x(1, 1, 0, 12)
 ==========================================================================================
 Dep. Variable:                 Total_Kuantitas_Kg   No. Observations:                   27
 Model:             SARIMAX(1, 0, 0)x(1, 1, 0, 12)   Log Likelihood                   9.274
-Date:                            Mon, 09 Nov 2026   AIC                            -12.548
-Time:                                    23:15:47   BIC                            -10.423
+Date:                            Tue, 10 Nov 2026   AIC                            -12.548
+Time:                                    16:10:01   BIC                            -10.423
 Sample:                                01-01-2023   HQIC                           -12.570
                                      - 03-01-2025                                         
 Covariance Type:                              opg                                         
@@ -89,8 +89,8 @@ ARIMAX Harga: ARIMAX(2, 0, 0) + Harga
 ==============================================================================
 Dep. Variable:     Total_Kuantitas_Kg   No. Observations:                   27
 Model:               SARIMAX(2, 0, 0)   Log Likelihood                  26.808
-Date:                Mon, 09 Nov 2026   AIC                            -43.616
-Time:                        23:15:48   BIC                            -37.137
+Date:                Tue, 10 Nov 2026   AIC                            -43.616
+Time:                        16:10:01   BIC                            -37.137
 Sample:                    01-01-2023   HQIC                           -41.689
                          - 03-01-2025                                         
 Covariance Type:                  opg                                         
@@ -119,8 +119,8 @@ ARIMAX Harga+Iduladha: ARIMAX(2, 0, 0) + Harga + Iduladha
 ==============================================================================
 Dep. Variable:     Total_Kuantitas_Kg   No. Observations:                   27
 Model:               SARIMAX(2, 0, 0)   Log Likelihood                  28.354
-Date:                Mon, 09 Nov 2026   AIC                            -44.708
-Time:                        23:15:48   BIC                            -36.933
+Date:                Tue, 10 Nov 2026   AIC                            -44.708
+Time:                        16:10:01   BIC                            -36.933
 Sample:                    01-01-2023   HQIC                           -42.396
                          - 03-01-2025                                         
 Covariance Type:                  opg                                         
