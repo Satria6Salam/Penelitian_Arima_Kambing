@@ -1,0 +1,105 @@
+{
+    "derajat_pembedaan_non_musiman_d": 0,
+    "derajat_pembedaan_musiman_D": 0,
+    "parameter_ar_musiman_P": 0,
+    "parameter_ma_musiman_Q": 0,
+    "periode_musiman_m": 12,
+    "indikasi_pola_musiman": true,
+    "daftar_kandidat_p_d_q": [
+        [
+            0,
+            0,
+            0
+        ],
+        [
+            1,
+            0,
+            0
+        ],
+        [
+            2,
+            0,
+            0
+        ],
+        [
+            0,
+            0,
+            1
+        ],
+        [
+            0,
+            0,
+            2
+        ],
+        [
+            1,
+            0,
+            1
+        ],
+        [
+            2,
+            0,
+            1
+        ],
+        [
+            1,
+            0,
+            2
+        ]
+    ],
+    "daftar_kandidat_sarima": [
+        {
+            "order": [
+                0,
+                0,
+                1
+            ],
+            "seasonal_order": [
+                0,
+                0,
+                1,
+                12
+            ]
+        },
+        {
+            "order": [
+                1,
+                0,
+                0
+            ],
+            "seasonal_order": [
+                1,
+                0,
+                0,
+                12
+            ]
+        },
+        {
+            "order": [
+                0,
+                0,
+                1
+            ],
+            "seasonal_order": [
+                0,
+                1,
+                1,
+                12
+            ]
+        },
+        {
+            "order": [
+                1,
+                0,
+                0
+            ],
+            "seasonal_order": [
+                1,
+                1,
+                0,
+                12
+            ]
+        }
+    ],
+    "catatan_metodologi": "Lag signifikan tidak otomatis menjadi orde p atau q. Keputusan differencing musiman D harus dievaluasi terpisah."
+}

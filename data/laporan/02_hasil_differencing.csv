@@ -1,0 +1,5 @@
+Seri,Jumlah_Observasi,ADF_Statistic,P_value,Used_Lag,Kritis_1%,Kritis_5%,Kritis_10%,Keputusan,Dipakai
+"Asli (d=0, D=0)",35,-5.745197895881798,6.144416032843899e-07,0,-3.6327426647230316,-2.9485102040816327,-2.6130173469387756,Stasioner (tolak H0),Ya – ARIMA/SARIMA D=0/ARIMAX (keputusan script 05: d=0)
+Differencing 1 (d=1),24,-4.250185934550941,0.0005412196088030774,10,-3.7377092158564813,-2.9922162731481485,-2.635746736111111,Stasioner (tolak H0),Tidak – seri asli sudah stasioner
+"Differencing musiman (D=1, m=12)",23,-2.717669524263513,0.07103026018164443,0,-3.7529275211638033,-2.998499866852963,-2.6389669754253307,Tidak stasioner (gagal tolak H0),Pembanding
+"Differencing musiman log (D=1, m=12)",14,-2.3144958383209895,0.16733538795637998,9,-4.01203360058309,-3.1041838775510207,-2.6909873469387753,Tidak stasioner (gagal tolak H0),"Ya – model final SARIMA(1,0,0)x(1,1,0,12) log"

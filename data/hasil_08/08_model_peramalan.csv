@@ -1,0 +1,4 @@
+Label,Nama_Model,Kelompok,Order,Seasonal_Order,Eksogen,AIC_06,BIC_06,Ljung_Box,Shapiro_Wilk,MAPE_rolling_07_%
+SARIMA D=1,"SARIMA(1, 0, 0)x(1, 1, 0, 12)","d=0, D=1","(1, 0, 0)","(1, 1, 0, 12)",-,-12.547538386056239,-10.423387782749609,Lulus,Lulus,6.586261795396102
+ARIMAX Harga,"ARIMAX(2, 0, 0) + Harga","d=0, D=0","(2, 0, 0)","(0, 0, 0, 0)",Harga_Rata2_Per_Kg,-43.61569716576019,-37.13651283573854,Lulus,Lulus,4.003017831878643
+ARIMAX Harga+Iduladha,"ARIMAX(2, 0, 0) + Harga + Iduladha","d=0, D=0","(2, 0, 0)","(0, 0, 0, 0)","Harga_Rata2_Per_Kg, Koefisien_Musim",-44.70839440058765,-36.933373204561676,Lulus,Lulus,4.586235408001363

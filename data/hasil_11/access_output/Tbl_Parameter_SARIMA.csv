@@ -1,0 +1,6 @@
+Nama_Parameter,Nilai,Keterangan,Nama_Model,Tanggal_Training,Periode_Data
+ar.L1,0.9459083069003812,phi: koefisien AR non-musiman pada w_t = ln y_t - ln y_(t-12),"SARIMA(1,0,0)x(1,1,0,12) log",2026-11-03 17:40:25,Jan 2023 - Dec 2025 (36 bulan)
+ar.S.L12,-0.7953053963057501,Phi: koefisien AR musiman lag 12 pada w_t,"SARIMA(1,0,0)x(1,1,0,12) log",2026-11-03 17:40:25,Jan 2023 - Dec 2025 (36 bulan)
+sigma2,0.006840438545348,Varians residual (skala log); SE 1 langkah = Sqr(sigma2),"SARIMA(1,0,0)x(1,1,0,12) log",2026-11-03 17:40:25,Jan 2023 - Dec 2025 (36 bulan)
+m,12.0,Periode musiman (bulan),"SARIMA(1,0,0)x(1,1,0,12) log",2026-11-03 17:40:25,Jan 2023 - Dec 2025 (36 bulan)
+Z_95,1.959963984540054,Nilai Z untuk interval kepercayaan 95%,"SARIMA(1,0,0)x(1,1,0,12) log",2026-11-03 17:40:25,Jan 2023 - Dec 2025 (36 bulan)

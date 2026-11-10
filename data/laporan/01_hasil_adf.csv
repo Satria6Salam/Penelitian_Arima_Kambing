@@ -1,0 +1,2 @@
+Seri,Jumlah_Observasi,ADF_Statistic,P_value,Used_Lag,Kritis_1%,Kritis_5%,Kritis_10%,Keputusan
+Asli (d=0),35,-5.745197895881798,6.144416032843899e-07,0,-3.6327426647230316,-2.9485102040816327,-2.6130173469387756,Stasioner (tolak H0)

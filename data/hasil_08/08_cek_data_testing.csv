@@ -1,0 +1,11 @@
+Pemeriksaan,Hasil,Lulus
+Jumlah baris testing,9,Ya
+Jumlah baris training,27,Ya
+Proporsi testing,25.0% dari 36 bulan,Ya
+Periode testing,2025-04 s.d. 2025-12,Ya
+Tidak tumpang tindih dengan training,training berakhir 2025-03,Ya
+Testing berurutan bulanan tanpa celah,MS,Ya
+Testing tepat setelah training,2025-03 -> 2025-04,Ya
+Kolom tersedia,"Total_Kuantitas_Kg, Harga_Rata2_Per_Kg, Koefisien_Musim",Ya
+Tidak ada nilai kosong,-,Ya
+Bulan Iduladha di testing,2025-06,Ya

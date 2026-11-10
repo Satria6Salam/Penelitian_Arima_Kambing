@@ -1,0 +1,6 @@
+Skenario_Detail,Kelompok_Differencing,Jumlah_Kandidat,Eksogen,Berhasil
+ARIMA,"d=0, D=0",8,-,8
+SARIMA,"d=0, D=0",2,-,2
+SARIMA,"d=0, D=1",2,-,2
+ARIMAX Harga,"d=0, D=0",8,Harga_Rata2_Per_Kg,8
+ARIMAX Harga+Iduladha,"d=0, D=0",8,"Harga_Rata2_Per_Kg, Koefisien_Musim",8

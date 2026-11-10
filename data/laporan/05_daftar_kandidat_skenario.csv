@@ -1,0 +1,29 @@
+Skenario,Skenario_Detail,Nama_Model,Order,Seasonal_Order,Eksogen,Kelompok_Differencing,Status
+ARIMA,ARIMA,"ARIMA(0, 0, 0)","(0, 0, 0)","(0, 0, 0, 0)",-,"d=0, D=0",Berhasil
+ARIMA,ARIMA,"ARIMA(1, 0, 0)","(1, 0, 0)","(0, 0, 0, 0)",-,"d=0, D=0",Berhasil
+ARIMA,ARIMA,"ARIMA(2, 0, 0)","(2, 0, 0)","(0, 0, 0, 0)",-,"d=0, D=0",Berhasil
+ARIMA,ARIMA,"ARIMA(0, 0, 1)","(0, 0, 1)","(0, 0, 0, 0)",-,"d=0, D=0",Berhasil
+ARIMA,ARIMA,"ARIMA(0, 0, 2)","(0, 0, 2)","(0, 0, 0, 0)",-,"d=0, D=0",Berhasil
+ARIMA,ARIMA,"ARIMA(1, 0, 1)","(1, 0, 1)","(0, 0, 0, 0)",-,"d=0, D=0",Berhasil
+ARIMA,ARIMA,"ARIMA(2, 0, 1)","(2, 0, 1)","(0, 0, 0, 0)",-,"d=0, D=0",Berhasil
+ARIMA,ARIMA,"ARIMA(1, 0, 2)","(1, 0, 2)","(0, 0, 0, 0)",-,"d=0, D=0",Berhasil
+SARIMA,SARIMA,"SARIMA(0, 0, 1)x(0, 0, 1, 12)","(0, 0, 1)","(0, 0, 1, 12)",-,"d=0, D=0",Berhasil
+SARIMA,SARIMA,"SARIMA(1, 0, 0)x(1, 0, 0, 12)","(1, 0, 0)","(1, 0, 0, 12)",-,"d=0, D=0",Berhasil
+SARIMA,SARIMA,"SARIMA(0, 0, 1)x(0, 1, 1, 12)","(0, 0, 1)","(0, 1, 1, 12)",-,"d=0, D=1",Berhasil
+SARIMA,SARIMA,"SARIMA(1, 0, 0)x(1, 1, 0, 12)","(1, 0, 0)","(1, 1, 0, 12)",-,"d=0, D=1",Berhasil
+ARIMAX,ARIMAX Harga,"ARIMAX(0, 0, 0) + Harga","(0, 0, 0)","(0, 0, 0, 0)",Harga_Rata2_Per_Kg,"d=0, D=0",Berhasil
+ARIMAX,ARIMAX Harga,"ARIMAX(1, 0, 0) + Harga","(1, 0, 0)","(0, 0, 0, 0)",Harga_Rata2_Per_Kg,"d=0, D=0",Berhasil
+ARIMAX,ARIMAX Harga,"ARIMAX(2, 0, 0) + Harga","(2, 0, 0)","(0, 0, 0, 0)",Harga_Rata2_Per_Kg,"d=0, D=0",Berhasil
+ARIMAX,ARIMAX Harga,"ARIMAX(0, 0, 1) + Harga","(0, 0, 1)","(0, 0, 0, 0)",Harga_Rata2_Per_Kg,"d=0, D=0",Berhasil
+ARIMAX,ARIMAX Harga,"ARIMAX(0, 0, 2) + Harga","(0, 0, 2)","(0, 0, 0, 0)",Harga_Rata2_Per_Kg,"d=0, D=0",Berhasil
+ARIMAX,ARIMAX Harga,"ARIMAX(1, 0, 1) + Harga","(1, 0, 1)","(0, 0, 0, 0)",Harga_Rata2_Per_Kg,"d=0, D=0",Berhasil
+ARIMAX,ARIMAX Harga,"ARIMAX(2, 0, 1) + Harga","(2, 0, 1)","(0, 0, 0, 0)",Harga_Rata2_Per_Kg,"d=0, D=0",Berhasil
+ARIMAX,ARIMAX Harga,"ARIMAX(1, 0, 2) + Harga","(1, 0, 2)","(0, 0, 0, 0)",Harga_Rata2_Per_Kg,"d=0, D=0",Berhasil
+ARIMAX,ARIMAX Harga+Iduladha,"ARIMAX(0, 0, 0) + Harga + Iduladha","(0, 0, 0)","(0, 0, 0, 0)","Harga_Rata2_Per_Kg, Koefisien_Musim","d=0, D=0",Berhasil
+ARIMAX,ARIMAX Harga+Iduladha,"ARIMAX(1, 0, 0) + Harga + Iduladha","(1, 0, 0)","(0, 0, 0, 0)","Harga_Rata2_Per_Kg, Koefisien_Musim","d=0, D=0",Berhasil
+ARIMAX,ARIMAX Harga+Iduladha,"ARIMAX(2, 0, 0) + Harga + Iduladha","(2, 0, 0)","(0, 0, 0, 0)","Harga_Rata2_Per_Kg, Koefisien_Musim","d=0, D=0",Berhasil
+ARIMAX,ARIMAX Harga+Iduladha,"ARIMAX(0, 0, 1) + Harga + Iduladha","(0, 0, 1)","(0, 0, 0, 0)","Harga_Rata2_Per_Kg, Koefisien_Musim","d=0, D=0",Berhasil
+ARIMAX,ARIMAX Harga+Iduladha,"ARIMAX(0, 0, 2) + Harga + Iduladha","(0, 0, 2)","(0, 0, 0, 0)","Harga_Rata2_Per_Kg, Koefisien_Musim","d=0, D=0",Berhasil
+ARIMAX,ARIMAX Harga+Iduladha,"ARIMAX(1, 0, 1) + Harga + Iduladha","(1, 0, 1)","(0, 0, 0, 0)","Harga_Rata2_Per_Kg, Koefisien_Musim","d=0, D=0",Berhasil
+ARIMAX,ARIMAX Harga+Iduladha,"ARIMAX(2, 0, 1) + Harga + Iduladha","(2, 0, 1)","(0, 0, 0, 0)","Harga_Rata2_Per_Kg, Koefisien_Musim","d=0, D=0",Berhasil
+ARIMAX,ARIMAX Harga+Iduladha,"ARIMAX(1, 0, 2) + Harga + Iduladha","(1, 0, 2)","(0, 0, 0, 0)","Harga_Rata2_Per_Kg, Koefisien_Musim","d=0, D=0",Berhasil

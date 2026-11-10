@@ -1,0 +1,7 @@
+Nama_Model,Bulan,Horizon,Ramalan_Kg,Batas_Bawah_95,Batas_Atas_95,Sumber,Tanggal_Dibuat
+"SARIMA(1,0,0)x(1,1,0,12) log",January 2026,1,71327.0,60653.0,83880.0,Python (rumus rekursif = modul VBA),2026-11-03 17:40:27
+"SARIMA(1,0,0)x(1,1,0,12) log",February 2026,2,71335.0,57069.0,89168.0,Python (rumus rekursif = modul VBA),2026-11-03 17:40:27
+"SARIMA(1,0,0)x(1,1,0,12) log",March 2026,3,69364.0,53157.0,90514.0,Python (rumus rekursif = modul VBA),2026-11-03 17:40:27
+"SARIMA(1,0,0)x(1,1,0,12) log",April 2026,4,67206.0,49817.0,90665.0,Python (rumus rekursif = modul VBA),2026-11-03 17:40:27
+"SARIMA(1,0,0)x(1,1,0,12) log",May 2026,5,65768.0,47456.0,91146.0,Python (rumus rekursif = modul VBA),2026-11-03 17:40:27
+"SARIMA(1,0,0)x(1,1,0,12) log",June 2026,6,177280.0,125095.0,251233.0,Python (rumus rekursif = modul VBA),2026-11-03 17:40:27

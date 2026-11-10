@@ -1,0 +1,12 @@
+Jenis,Nama
+Tabel,Tbl_Volume_Bulanan
+Tabel,Tbl_Parameter_SARIMA
+Tabel,Tbl_Faktor_Musiman
+Tabel,Tbl_Peramalan
+Query,qry_11_Volume_Bulanan
+Query,qry_11_Ramalan_1_Bulan_Historis
+Query,qry_11_Ramalan_Bulan_Depan
+Query,qry_11_Peramalan_6_Bulan
+Query,qry_11_Faktor_Musiman
+Modul VBA (impor manual),sql/11_modul_peramalan.bas
+Backup database,data/db_penjualan_kambing_backup_20261104_210331.accdb

@@ -1,0 +1,5 @@
+Jumlah_Residual,Uji,Statistik,df,P_value,Keputusan
+24,Ljung-Box lag 6,9.058898841904787,4.0,0.05964403278416402,Lulus (white noise)
+24,Ljung-Box lag 9,10.846421436746041,7.0,0.14545975241759967,Lulus (white noise)
+24,Ljung-Box lag 12,11.55331565966916,10.0,0.3160626346304714,Lulus (white noise)
+24,Shapiro-Wilk,0.9711679995053369,,0.6958763685867948,Lulus (normal)

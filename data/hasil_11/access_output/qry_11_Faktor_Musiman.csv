@@ -1,0 +1,13 @@
+Bulan,Nama_Bulan,Rata2_Kg,Faktor,Keterangan
+1,Januari,98299.0,0.886,"Rata-rata bulan ini / rata-rata seluruh bulan (2023-2025). Informasi pendukung, bukan inti model SARIMA."
+2,Februari,93295.0,0.841,"Rata-rata bulan ini / rata-rata seluruh bulan (2023-2025). Informasi pendukung, bukan inti model SARIMA."
+3,Maret,96846.0,0.873,"Rata-rata bulan ini / rata-rata seluruh bulan (2023-2025). Informasi pendukung, bukan inti model SARIMA."
+4,April,95807.0,0.863,"Rata-rata bulan ini / rata-rata seluruh bulan (2023-2025). Informasi pendukung, bukan inti model SARIMA."
+5,Mei,91167.0,0.822,"Rata-rata bulan ini / rata-rata seluruh bulan (2023-2025). Informasi pendukung, bukan inti model SARIMA."
+6,Juni,272065.0,2.452,"Rata-rata bulan ini / rata-rata seluruh bulan (2023-2025). Informasi pendukung, bukan inti model SARIMA."
+7,Juli,98533.0,0.888,"Rata-rata bulan ini / rata-rata seluruh bulan (2023-2025). Informasi pendukung, bukan inti model SARIMA."
+8,Agustus,100481.0,0.906,"Rata-rata bulan ini / rata-rata seluruh bulan (2023-2025). Informasi pendukung, bukan inti model SARIMA."
+9,September,94511.0,0.852,"Rata-rata bulan ini / rata-rata seluruh bulan (2023-2025). Informasi pendukung, bukan inti model SARIMA."
+10,Oktober,95946.0,0.865,"Rata-rata bulan ini / rata-rata seluruh bulan (2023-2025). Informasi pendukung, bukan inti model SARIMA."
+11,November,95492.0,0.861,"Rata-rata bulan ini / rata-rata seluruh bulan (2023-2025). Informasi pendukung, bukan inti model SARIMA."
+12,Desember,99096.0,0.893,"Rata-rata bulan ini / rata-rata seluruh bulan (2023-2025). Informasi pendukung, bukan inti model SARIMA."

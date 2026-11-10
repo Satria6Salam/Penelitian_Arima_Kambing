@@ -1,0 +1,16 @@
+# Environment Penelitian Judul 11 - Prediksi Permintaan Daging Kambing (ARIMA)
+# Install:  pip install -r requirements.txt
+
+# --- Analisis (sesuai metodologi) ---
+pandas>=2.2          # agregasi bulanan, cleaning IQR, interpolasi linier
+numpy>=1.26
+statsmodels>=0.15    # ADF, ACF/PACF, dekomposisi, ARIMA/SARIMA/ARIMAX (SARIMAX), Ljung-Box
+matplotlib>=3.8      # time series plot, forecast + CI 95%, residual plot, seasonal plot
+scipy>=1.11          # Shapiro-Wilk test, Q-Q plot
+
+# --- Koneksi ke MS Access ---
+pyodbc>=5.1          # baca tabel Transaksi_Penjualan & tulis tabel Hasil_Prediksi
+msaccessdb>=1.0      # membuat file .accdb kosong dari Python
+
+# --- Kerja di VS Code (Jupyter notebook) ---
+ipykernel>=6.29

@@ -1,0 +1,39 @@
+# =============================================================================
+# .gitignore - Penelitian ARIMA Kambing
+# File/folder di bawah ini TIDAK diunggah ke GitHub.
+# =============================================================================
+
+# --- Lingkungan Python (dibuat ulang dengan: pip install -r requirements.txt) ---
+.venv/
+venv/
+env/
+__pycache__/
+*.pyc
+.ipynb_checkpoints/
+
+# --- MS Access: file kunci, cadangan, dan salinan demo ---
+*.laccdb
+data/db_penjualan_kambing_backup_*.accdb
+data/db_penjualan_kambing_DEMO.accdb
+
+# --- Cadangan dan file sementara ---
+backup_script_sebelum_penjelasan/
+output/
+*.tmp
+~$*
+
+# --- Data besar yang bisa dibuat ulang dengan: python 03_generate_data.py ---
+data/hasil_generate/transaksi_penjualan.csv
+
+# --- Log terminal (dibuat ulang setiap script dijalankan) ---
+log_terminal/
+
+# --- Dokumen pribadi/tugas kuliah (hapus baris ini bila ingin diunggah) ---
+*.docx
+
+# --- Sistem operasi / editor ---
+Thumbs.db
+desktop.ini
+.DS_Store
+.vscode/
+.idea/
