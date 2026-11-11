@@ -1,3 +1,16 @@
+"# ===================================================================================================="
+"# KETERANGAN TABEL : 09_parameter_model_validasi.csv (dibuat oleh 09_peramalan_visualisasi.py)"
+"# Isi tabel        : Parameter model final SARIMA(1,0,0)x(1,1,0,12) log bila dilatih dengan 27 bulan data latih saja (dipakai untuk validasi April - September 2025)."
+"# Satu baris data  : satu parameter model."
+"# Keterangan kolom : nomor. NAMA KOLOM = arti | Diperoleh dari: cara menghitung/sumbernya"
+"#   1. Parameter = Nama parameter model final. ar.L1 = pengaruh bulan sebelumnya; ar.S.L12 = pengaruh bulan yang sama tahun lalu; sigma2 = ragam galat model. | Diperoleh dari: Nama baku dari statsmodels."
+"#   2. Koefisien = Besar pengaruh parameter tersebut di dalam model (pada skala logaritma). Tanda negatif berarti arah pengaruh berlawanan. | Diperoleh dari: Hasil estimasi kemungkinan maksimum (MLE) statsmodels."
+"#   3. Std_Error = Galat baku koefisien: seberapa tidak pasti nilai koefisien. Makin kecil dibanding koefisiennya makin meyakinkan. | Diperoleh dari: Dihitung statsmodels dari kelengkungan fungsi likelihood."
+"#   4. P_value = Peluang koefisien sebesar itu muncul hanya karena kebetulan. Di bawah 0,05 = pengaruhnya nyata (signifikan). | Diperoleh dari: Dari uji z = Koefisien / Std_Error."
+"#   5. CI95_Bawah = Batas bawah rentang 95% untuk nilai koefisien yang sebenarnya. | Diperoleh dari: Koefisien - 1,96 x Std_Error."
+"#   6. CI95_Atas = Batas atas rentang 95% untuk nilai koefisien yang sebenarnya. | Diperoleh dari: Koefisien + 1,96 x Std_Error."
+"# Catatan          : baris berawalan tanda # adalah keterangan, bukan data. Tabel data dimulai tepat di bawah garis ini."
+"# ===================================================================================================="
 Parameter,Koefisien,Std_Error,P_value,CI95_Bawah,CI95_Atas
 ar.L1,0.9839987471324974,0.028801298110026293,7.98430119490226e-256,0.9275492401288443,1.0404482541361504
 ar.S.L12,-0.9463257695320315,0.08666766372230772,9.350137255749256e-28,-1.1161912690519833,-0.7764602700120797

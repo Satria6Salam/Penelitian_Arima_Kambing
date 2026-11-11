@@ -1,3 +1,14 @@
+"# ===================================================================================================="
+"# KETERANGAN TABEL : 12_hasil_qry_12_Ramalan_6_Bulan_access.csv (dibuat oleh 12_ramalan_6_bulan_access.py)"
+"# Isi tabel        : Hasil query MS Access qry_12_Ramalan_6_Bulan: ramalan 6 bulan ke depan yang dihitung sepenuhnya di dalam MS Access (tanpa Python)."
+"# Satu baris data  : satu bulan yang diramal."
+"# Keterangan kolom : nomor. NAMA KOLOM = arti | Diperoleh dari: cara menghitung/sumbernya"
+"#   1. Periode = Bulan yang diramal. | Diperoleh dari: Enam bulan setelah data terakhir di Tbl_Volume_Bulanan."
+"#   2. Ramalan_Kg = Ramalan permintaan (kg) hasil query MS Access. | Diperoleh dari: Query qry_12_Ramalan_6_Bulan: rumus SARIMA(1,0,0)x(1,1,0,12) log ditulis dalam SQL."
+"#   3. Batas_Bawah_95_Kg = Batas bawah interval 95% (kg). | Diperoleh dari: exp(ramalan log - 1,96 x galat baku ramalan) dalam SQL."
+"#   4. Batas_Atas_95_Kg = Batas atas interval 95% (kg). | Diperoleh dari: exp(ramalan log + 1,96 x galat baku ramalan) dalam SQL."
+"# Catatan          : baris berawalan tanda # adalah keterangan, bukan data. Tabel data dimulai tepat di bawah garis ini."
+"# ===================================================================================================="
 Periode,Ramalan_Kg,Batas_Bawah_95_Kg,Batas_Atas_95_Kg
 2026-01,71327.29209355311,60653.442959752814,83879.53509539367
 2026-02,71335.11192707371,57068.651797797946,89168.01139228046

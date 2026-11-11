@@ -1,3 +1,16 @@
+"# ===================================================================================================="
+"# KETERANGAN TABEL : qry_11_Volume_Bulanan.csv (dibuat oleh ekspor query MS Access qry_11_Volume_Bulanan)"
+"# Isi tabel        : Hasil query qry_11_Volume_Bulanan: data permintaan bulanan di MS Access beserta logaritmanya (bahan hitung query peramalan)."
+"# Satu baris data  : satu bulan data."
+"# Keterangan kolom : nomor. NAMA KOLOM = arti | Diperoleh dari: cara menghitung/sumbernya"
+"#   1. Periode = Bulan yang dicatat atau diramal (tahun-bulan). | Diperoleh dari: Kalender; satu baris mewakili satu bulan."
+"#   2. Tahun = Tahun kalender. | Diperoleh dari: Diambil dari Periode."
+"#   3. Bulan = Nomor bulan dalam setahun (1 = Januari ... 12 = Desember). | Diperoleh dari: Diambil dari Periode."
+"#   4. Permintaan_Kg = Permintaan daging kambing seluruh Kabupaten Malang pada bulan itu (kg). | Diperoleh dari: Diambil dari data permintaan bulanan."
+"#   5. Harga_Rata2_Per_Kg = Harga jual rata-rata per kg bulan itu (rupiah). | Diperoleh dari: Dari Tbl_Volume_Bulanan."
+"#   6. Ln_Permintaan = Logaritma natural permintaan. | Diperoleh dari: Log(Permintaan_Kg) di MS Access."
+"# Catatan          : baris berawalan tanda # adalah keterangan, bukan data. Tabel data dimulai tepat di bawah garis ini."
+"# ===================================================================================================="
 Periode,Tahun,Bulan,Permintaan_Kg,Harga_Rata2_Per_Kg,Ln_Permintaan
 2023-01-01,2023,1,117654.63,120939.0,11.67550874739731
 2023-02-01,2023,2,106155.92,121180.0,11.572664235712905

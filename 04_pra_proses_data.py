@@ -12,6 +12,7 @@ import pandas as pd
 import numpy as np
 from pathlib import Path
 
+import keterangan_csv as kk  # keterangan kolom pada setiap CSV hasil
 import penjelasan  # contoh perhitungan rumus di terminal + log_terminal/
 
 # =============================================================================
@@ -30,7 +31,7 @@ OUTPUT_DIR.mkdir(parents=True, exist_ok=True)
 # =============================================================================
 def muat_data_transaksi(filepath):
     print(f"-> Memuat data transaksi dari: {filepath.name}")
-    df = pd.read_csv(filepath)
+    df = kk.baca_csv(filepath)
     df['Tanggal_Transaksi'] = pd.to_datetime(df['Tanggal_Transaksi'])
     return df
 
@@ -146,7 +147,7 @@ def bersihkan_outlier_iqr(df, kolom='Total_Kuantitas_Kg'):
 # =============================================================================
 def simpan_hasil_pra_proses(df, filepath):
     print(f"\n-> Menyimpan hasil akhir pra-pemrosesan ke: {filepath.name}")
-    df.to_csv(filepath, index=False)
+    kk.simpan_csv(df, filepath, index=False)
     print("-> SELURUH SIKLUS PRA-PEMROSESAN (TAHAP 1-3) SELESAI.\n")
 
 

@@ -38,6 +38,7 @@ from pathlib import Path
 import numpy as np
 import pandas as pd
 
+import keterangan_csv as kk  # keterangan kolom pada setiap CSV hasil
 import estimasi_model as em
 from koneksi import get_conn, DB_PATH
 
@@ -184,8 +185,8 @@ def objek_ada(cur, nama):
 
 
 def muat_data():
-    df = pd.read_csv(DATASET_CSV, parse_dates=["Periode"]).set_index("Periode").asfreq("MS")
-    par = pd.read_csv(PARAM_CSV).set_index("Parameter")["Koefisien"]
+    df = kk.baca_csv(DATASET_CSV, parse_dates=["Periode"]).set_index("Periode").asfreq("MS")
+    par = kk.baca_csv(PARAM_CSV).set_index("Parameter")["Koefisien"]
     return df, par
 
 
@@ -458,7 +459,7 @@ def verifikasi(df, par, hasil):
     baris = []
 
     # (a) Query bulan depan (Access) vs statsmodels Jan 2026
-    ref = pd.read_csv(PERAMALAN_09_CSV)
+    ref = kk.baca_csv(PERAMALAN_09_CSV)
     with get_conn() as conn:
         with warnings.catch_warnings():
             warnings.simplefilter("ignore", UserWarning)
@@ -500,7 +501,7 @@ def verifikasi(df, par, hasil):
     ver = pd.DataFrame(baris)
     ver["Selisih"] = ver["Access"] - ver["Python"]
     ver["Selisih_Relatif_%"] = ver["Selisih"] / ver["Python"] * 100
-    ver.to_csv(VERIFIKASI_CSV, index=False)
+    kk.simpan_csv(ver, VERIFIKASI_CSV, index=False)
 
     for uji, isi in ver.groupby("Uji", sort=False):
         print(f"- {uji}: {len(isi)} nilai, selisih relatif maks "
@@ -530,7 +531,7 @@ def main():
         + [{"Jenis": "Query", "Nama": q} for q in QUERIES]
         + [{"Jenis": "Modul VBA (impor manual)", "Nama": "sql/11_modul_peramalan.bas"},
            {"Jenis": "Backup database", "Nama": f"data/{backup.name}"}])
-    objek.to_csv(OBJEK_CSV, index=False)
+    kk.simpan_csv(objek, OBJEK_CSV, index=False)
 
     print("\n" + "=" * 75)
     print("TAHAP 11 SELESAI. Tabel, query, dan peramalan sudah tersedia di MS Access.")

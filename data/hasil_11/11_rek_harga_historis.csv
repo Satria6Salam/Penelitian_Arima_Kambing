@@ -1,3 +1,17 @@
+"# ===================================================================================================="
+"# KETERANGAN TABEL : 11_rek_harga_historis.csv (dibuat oleh 11_rekomendasi_manajerial.py)"
+"# Isi tabel        : Perbandingan harga dan volume antara bulan Iduladha dan bulan biasa pada data 2023-2025, sebagai dasar saran harga/margin."
+"# Satu baris data  : satu kategori bulan (Bulan Iduladha atau Bulan biasa)."
+"# Keterangan kolom : nomor. NAMA KOLOM = arti | Diperoleh dari: cara menghitung/sumbernya"
+"#   1. Kategori = Kelompok bulan. | Diperoleh dari: Bulan Iduladha bila Koefisien_Musim lebih dari 1; selain itu Bulan biasa."
+"#   2. Jumlah_Bulan = Banyaknya bulan pada kategori itu. | Diperoleh dari: Menghitung bulan."
+"#   3. Harga_Rata2_Per_Kg = Rata-rata harga per kg pada kategori itu (rupiah). | Diperoleh dari: Rata-rata Harga_Rata2_Per_Kg bulanan."
+"#   4. Harga_Min = Harga rata-rata bulanan terendah (rupiah). | Diperoleh dari: Nilai terkecil Harga_Rata2_Per_Kg bulanan."
+"#   5. Harga_Maks = Harga rata-rata bulanan tertinggi (rupiah). | Diperoleh dari: Nilai terbesar Harga_Rata2_Per_Kg bulanan."
+"#   6. Volume_Rata2_Kg = Rata-rata permintaan bulanan pada kategori itu (kg). | Diperoleh dari: Rata-rata Total_Kuantitas_Kg."
+"#   7. Selisih_vs_Bulan_Biasa_% = Seberapa lebih mahal dibanding bulan biasa (persen). | Diperoleh dari: (Harga kategori / harga Bulan biasa - 1) x 100."
+"# Catatan          : baris berawalan tanda # adalah keterangan, bukan data. Tabel data dimulai tepat di bawah garis ini."
+"# ===================================================================================================="
 Kategori,Jumlah_Bulan,Harga_Rata2_Per_Kg,Harga_Min,Harga_Maks,Volume_Rata2_Kg,Selisih_vs_Bulan_Biasa_%
 Bulan Iduladha,3,133196.66666666666,132865.0,133371.0,272065.12,10.394318704388938
 Bulan biasa,33,120655.36363636363,119448.0,121667.0,96315.5693939394,0.0

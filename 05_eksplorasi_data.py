@@ -34,6 +34,7 @@ from statsmodels.tsa.seasonal import seasonal_decompose
 from statsmodels.tsa.stattools import adfuller, acf, pacf
 from statsmodels.graphics.tsaplots import plot_acf, plot_pacf
 
+import keterangan_csv as kk  # keterangan kolom pada setiap CSV hasil
 import penjelasan  # contoh perhitungan rumus di terminal + log_terminal/
 
 
@@ -75,7 +76,7 @@ def muat_data(filepath):
             f"Dataset tidak ditemukan: {filepath}"
         )
 
-    df = pd.read_csv(filepath)
+    df = kk.baca_csv(filepath)
 
     kolom_wajib = [
         "Periode",
@@ -178,7 +179,8 @@ def hitung_dan_ekspor_tabel(filepath, output_csv):
 
     df_hasil = df_hasil.round(2)
 
-    df_hasil.to_csv(
+    kk.simpan_csv(
+        df_hasil,
         output_csv,
         index_label="Periode"
     )
@@ -202,7 +204,7 @@ def visualisasi_time_series_dari_tabel(
 
     print("\n-> Membuat visualisasi time series...")
 
-    df = pd.read_csv(file_csv)
+    df = kk.baca_csv(file_csv)
 
     df["Periode"] = pd.to_datetime(df["Periode"])
     df = df.set_index("Periode")
@@ -272,7 +274,7 @@ def visualisasi_dekomposisi_dari_tabel(
 
     print("\n-> Membuat visualisasi dekomposisi...")
 
-    df = pd.read_csv(file_csv)
+    df = kk.baca_csv(file_csv)
 
     df["Periode"] = pd.to_datetime(df["Periode"])
     df = df.set_index("Periode")
@@ -460,7 +462,7 @@ def uji_stasioneritas_dan_iterasi_differencing(
     print("UJI STASIONERITAS AUGMENTED DICKEY-FULLER")
     print("================================================")
 
-    df = pd.read_csv(file_csv)
+    df = kk.baca_csv(file_csv)
 
     y_original = df[TARGET_COLUMN].astype(float).values
 
@@ -1159,7 +1161,7 @@ def main():
         )
 
         # Contoh perhitungan rumus [4] ADF/differencing dan [5] ACF/PACF.
-        df_asli = pd.read_csv(INPUT_FILE, parse_dates=["Periode"])
+        df_asli = kk.baca_csv(INPUT_FILE, parse_dates=["Periode"])
         penjelasan.jelaskan_05(df_asli[TARGET_COLUMN].values, list(df_asli["Periode"]))
 
         # 6. Ekspor konfigurasi.

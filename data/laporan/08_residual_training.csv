@@ -1,3 +1,16 @@
+"# ===================================================================================================="
+"# KETERANGAN TABEL : 08_residual_training.csv (dibuat oleh 10_ekspor_output_laporan.py)"
+"# Isi tabel        : Sisa (residual) tiap model shortlist pada data latih, dalam skala logaritma. Dipakai untuk uji Ljung-Box, Shapiro-Wilk, dan Q-Q plot."
+"# Satu baris data  : satu bulan data latih (Januari 2023 - Maret 2025)."
+"# Keterangan kolom : nomor. NAMA KOLOM = arti | Diperoleh dari: cara menghitung/sumbernya"
+"#   1. Periode = Bulan yang dicatat atau diramal (tahun-bulan). | Diperoleh dari: Kalender; satu baris mewakili satu bulan."
+"#   2. Residual_ARIMA = Sisa (galat) model ARIMA pada skala logaritma: bagian data yang tidak terjelaskan model. Kosong pada bulan awal yang belum bisa dihitung. | Diperoleh dari: ln(aktual) - ln(nilai fitted) dari model ARIMA."
+"#   3. Residual_SARIMA D=0 = Sisa (galat) model SARIMA D=0 pada skala logaritma: bagian data yang tidak terjelaskan model. Kosong pada bulan awal yang belum bisa dihitung. | Diperoleh dari: ln(aktual) - ln(nilai fitted) dari model SARIMA D=0."
+"#   4. Residual_SARIMA D=1 = Sisa (galat) model SARIMA D=1 pada skala logaritma: bagian data yang tidak terjelaskan model. Kosong pada bulan awal yang belum bisa dihitung. | Diperoleh dari: ln(aktual) - ln(nilai fitted) dari model SARIMA D=1."
+"#   5. Residual_ARIMAX Harga = Sisa (galat) model ARIMAX Harga pada skala logaritma: bagian data yang tidak terjelaskan model. Kosong pada bulan awal yang belum bisa dihitung. | Diperoleh dari: ln(aktual) - ln(nilai fitted) dari model ARIMAX Harga."
+"#   6. Residual_ARIMAX Harga+Iduladha = Sisa (galat) model ARIMAX Harga+Iduladha pada skala logaritma: bagian data yang tidak terjelaskan model. Kosong pada bulan awal yang belum bisa dihitung. | Diperoleh dari: ln(aktual) - ln(nilai fitted) dari model ARIMAX Harga+Iduladha."
+"# Catatan          : baris berawalan tanda # adalah keterangan, bukan data. Tabel data dimulai tepat di bawah garis ini."
+"# ===================================================================================================="
 Periode,Residual_ARIMA,Residual_SARIMA D=0,Residual_SARIMA D=1,Residual_ARIMAX Harga,Residual_ARIMAX Harga+Iduladha
 2023-01,0.13014657991381995,0.07346911119200783,,0.17299470423804308,0.17625597117352498
 2023-02,0.02730206822941561,-0.08772240889181049,,-0.06157562356016122,-0.08000001214508679

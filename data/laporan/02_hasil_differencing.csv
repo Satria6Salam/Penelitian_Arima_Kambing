@@ -1,3 +1,20 @@
+"# ===================================================================================================="
+"# KETERANGAN TABEL : 02_hasil_differencing.csv (dibuat oleh 10_ekspor_output_laporan.py)"
+"# Isi tabel        : Hasil uji stasioneritas ADF pada data asli dan beberapa bentuk pembedaan (differencing), beserta keterangan bentuk mana yang dipakai model."
+"# Satu baris data  : satu bentuk data yang diuji."
+"# Keterangan kolom : nomor. NAMA KOLOM = arti | Diperoleh dari: cara menghitung/sumbernya"
+"#   1. Seri = Bentuk data yang diuji (asli, atau sudah dibedakan). | Diperoleh dari: Ditetapkan di script 10."
+"#   2. Jumlah_Observasi = Banyaknya titik data yang dipakai uji. | Diperoleh dari: Dilaporkan uji ADF (jumlah data dikurangi lag yang dipakai)."
+"#   3. ADF_Statistic = Statistik uji ADF. Makin negatif makin kuat bukti data stasioner (rata-rata dan ragamnya stabil). | Diperoleh dari: Uji Augmented Dickey-Fuller (statsmodels) dengan konstanta."
+"#   4. P_value = P-value uji ADF. Di bawah 0,05 = data stasioner. | Diperoleh dari: Dari ADF_Statistic."
+"#   5. Used_Lag = Banyaknya lag yang dipakai uji. | Diperoleh dari: Dipilih otomatis berdasarkan AIC."
+"#   6. Kritis_1% = Nilai pembanding (kritis) pada tingkat 1%. | Diperoleh dari: Tabel nilai kritis ADF."
+"#   7. Kritis_5% = Nilai pembanding (kritis) pada tingkat 5%. Dipakai untuk keputusan. | Diperoleh dari: Tabel nilai kritis ADF."
+"#   8. Kritis_10% = Nilai pembanding (kritis) pada tingkat 10%. | Diperoleh dari: Tabel nilai kritis ADF."
+"#   9. Keputusan = Kesimpulan uji: stasioner atau tidak stasioner. | Diperoleh dari: Stasioner bila P_value di bawah 0,05 dan ADF_Statistic lebih kecil dari Kritis_5%."
+"#   10. Dipakai = Apakah bentuk data ini dipakai dalam pemodelan, dan oleh model mana. | Diperoleh dari: Keputusan metodologi penelitian."
+"# Catatan          : baris berawalan tanda # adalah keterangan, bukan data. Tabel data dimulai tepat di bawah garis ini."
+"# ===================================================================================================="
 Seri,Jumlah_Observasi,ADF_Statistic,P_value,Used_Lag,Kritis_1%,Kritis_5%,Kritis_10%,Keputusan,Dipakai
 "Asli (d=0, D=0)",35,-5.745197895881798,6.144416032843899e-07,0,-3.6327426647230316,-2.9485102040816327,-2.6130173469387756,Stasioner (tolak H0),Ya – ARIMA/SARIMA D=0/ARIMAX (keputusan script 05: d=0)
 Differencing 1 (d=1),24,-4.250185934550941,0.0005412196088030774,10,-3.7377092158564813,-2.9922162731481485,-2.635746736111111,Stasioner (tolak H0),Tidak – seri asli sudah stasioner

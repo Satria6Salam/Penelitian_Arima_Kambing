@@ -1,3 +1,18 @@
+"# ===================================================================================================="
+"# KETERANGAN TABEL : 11_rek_stok_testing.csv (dibuat oleh 11_rekomendasi_manajerial.py)"
+"# Isi tabel        : Simulasi manfaat ramalan untuk perencanaan stok selama 9 bulan testing (April - Desember 2025): rencana stok mengikuti ramalan model dibanding cara lama (disamakan dengan tahun lalu)."
+"# Satu baris data  : satu cara merencanakan stok."
+"# Keterangan kolom : nomor. NAMA KOLOM = arti | Diperoleh dari: cara menghitung/sumbernya"
+"#   1. Metode_Rencana_Stok = SARIMA D=1 = stok mengikuti ramalan model final; Seasonal naive = stok disamakan dengan bulan yang sama tahun lalu. | Diperoleh dari: Dua cara yang dibandingkan."
+"#   2. Total_Aktual_Kg = Total permintaan sebenarnya selama 9 bulan (kg). | Diperoleh dari: Jumlah Aktual_Kg 9 bulan."
+"#   3. Total_Rencana_Kg = Total stok yang direncanakan selama 9 bulan (kg). | Diperoleh dari: Jumlah ramalan 9 bulan."
+"#   4. Kelebihan_Stok_Kg = Total stok berlebih (kg) pada bulan-bulan ketika rencana di atas kenyataan. | Diperoleh dari: Jumlah (Rencana - Aktual) untuk bulan yang Rencana lebih besar."
+"#   5. Kekurangan_Stok_Kg = Total kekurangan stok (kg) pada bulan-bulan ketika rencana di bawah kenyataan. | Diperoleh dari: Jumlah (Aktual - Rencana) untuk bulan yang Aktual lebih besar."
+"#   6. Bulan_Kelebihan = Banyaknya bulan yang stoknya berlebih. | Diperoleh dari: Menghitung bulan dengan Rencana lebih besar dari Aktual."
+"#   7. Bulan_Kekurangan = Banyaknya bulan yang stoknya kurang. | Diperoleh dari: Menghitung bulan dengan Aktual lebih besar dari Rencana."
+"#   8. Total_Selisih_Absolut_Kg = Total selisih rencana dan kenyataan tanpa melihat arah (kg). Makin kecil makin baik. | Diperoleh dari: Kelebihan_Stok_Kg + Kekurangan_Stok_Kg."
+"# Catatan          : baris berawalan tanda # adalah keterangan, bukan data. Tabel data dimulai tepat di bawah garis ini."
+"# ===================================================================================================="
 Metode_Rencana_Stok,Total_Aktual_Kg,Total_Rencana_Kg,Kelebihan_Stok_Kg,Kekurangan_Stok_Kg,Bulan_Kelebihan,Bulan_Kekurangan,Total_Selisih_Absolut_Kg
 SARIMA D=1,1023754.8800000001,1000443.8040914462,19560.519348259157,42871.595256812914,2,7,62432.11460507207
 Seasonal naive,1023754.8800000001,847385.4099999999,0.0,176369.46999999997,0,9,176369.46999999997

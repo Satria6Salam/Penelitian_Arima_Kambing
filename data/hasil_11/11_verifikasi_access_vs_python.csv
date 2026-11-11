@@ -1,3 +1,18 @@
+"# ===================================================================================================="
+"# KETERANGAN TABEL : 11_verifikasi_access_vs_python.csv (dibuat oleh 11_implementasi_access.py)"
+"# Isi tabel        : Bukti bahwa angka ramalan yang dihitung MS Access sama dengan yang dihitung Python (statsmodels). Selisih mendekati nol berarti rumus di Access benar."
+"# Satu baris data  : satu angka yang dibandingkan (satu besaran pada satu bulan)."
+"# Keterangan kolom : nomor. NAMA KOLOM = arti | Diperoleh dari: cara menghitung/sumbernya"
+"#   1. Uji = Jenis pembandingan yang dilakukan. | Diperoleh dari: Tiga uji: ramalan bulan depan, ramalan 6 bulan, dan ramalan 1 bulan historis."
+"#   2. Periode = Bulan yang dicatat atau diramal (tahun-bulan). | Diperoleh dari: Kalender; satu baris mewakili satu bulan."
+"#   3. Besaran = Angka yang dibandingkan: ramalan, batas bawah, atau batas atas. | Diperoleh dari: Nama kolom hasil di Access."
+"#   4. Access = Nilai hasil hitungan MS Access (kg). | Diperoleh dari: Dibaca dari query/tabel di database Access."
+"#   5. Python = Nilai hasil hitungan Python statsmodels (kg). | Diperoleh dari: Dari 09_peramalan_jan_jun_2026.csv atau prediksi 1 langkah statsmodels."
+"#   6. Aktual_Kg = Permintaan sebenarnya bulan itu (kg); hanya diisi pada uji historis. | Diperoleh dari: Dari data permintaan."
+"#   7. Selisih = Beda hasil Access dan Python (kg). Mendekati 0 = sama. | Diperoleh dari: Access - Python."
+"#   8. Selisih_Relatif_% = Beda hasil dalam persen terhadap hasil Python. | Diperoleh dari: Selisih / Python x 100."
+"# Catatan          : baris berawalan tanda # adalah keterangan, bukan data. Tabel data dimulai tepat di bawah garis ini."
+"# ===================================================================================================="
 Uji,Periode,Besaran,Access,Python,Aktual_Kg,Selisih,Selisih_Relatif_%
 Query Access qry_11_Ramalan_Bulan_Depan vs statsmodels,2026-01,Prediksi_Kg,71327.29209355298,71327.29222602233,,-0.0001324693439528346,-1.8572041615299932e-07
 Query Access qry_11_Ramalan_Bulan_Depan vs statsmodels,2026-01,Batas_Bawah_95_Kg,60653.262289877806,60653.44309831203,,-0.18080843422649195,-0.0002981008579074776

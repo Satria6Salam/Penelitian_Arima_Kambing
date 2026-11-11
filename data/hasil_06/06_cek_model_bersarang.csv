@@ -1,3 +1,16 @@
+"# ===================================================================================================="
+"# KETERANGAN TABEL : 06_cek_model_bersarang.csv (dibuat oleh 06_pemodelan_forecasting.py)"
+"# Isi tabel        : Pemeriksaan kewajaran estimasi: model yang lebih rumit seharusnya tidak lebih buruk kecocokannya daripada model sederhana yang tercakup di dalamnya."
+"# Satu baris data  : satu pasangan model (sederhana vs lebih rumit)."
+"# Keterangan kolom : nomor. NAMA KOLOM = arti | Diperoleh dari: cara menghitung/sumbernya"
+"#   1. Model_Sederhana = Model yang lebih sederhana dalam pasangan. | Diperoleh dari: Kandidat yang ordenya dan eksogennya tercakup dalam Model_Kompleks."
+"#   2. Model_Kompleks = Model yang lebih rumit dalam pasangan. | Diperoleh dari: Kandidat dengan orde/eksogen lebih banyak, pembedaan sama."
+"#   3. LogL_Sederhana = Log-likelihood model sederhana. | Diperoleh dari: Dari hasil estimasi."
+"#   4. LogL_Kompleks = Log-likelihood model rumit. | Diperoleh dari: Dari hasil estimasi."
+"#   5. Selisih_LogL = Kenaikan kecocokan dari model sederhana ke model rumit. Seharusnya 0 atau positif. | Diperoleh dari: LogL_Kompleks - LogL_Sederhana."
+"#   6. Pelanggaran = Ya = model rumit justru lebih buruk (estimasi belum optimal); Tidak = wajar. | Diperoleh dari: Ya bila LogL_Kompleks lebih kecil dari LogL_Sederhana melebihi toleransi 0,001."
+"# Catatan          : baris berawalan tanda # adalah keterangan, bukan data. Tabel data dimulai tepat di bawah garis ini."
+"# ===================================================================================================="
 Model_Sederhana,Model_Kompleks,LogL_Sederhana,LogL_Kompleks,Selisih_LogL,Pelanggaran
 "ARIMAX(2, 0, 0) + Harga + Iduladha","ARIMAX(2, 0, 1) + Harga + Iduladha",28.354197200293825,28.540151932821114,0.18595473252728922,Tidak
 "ARIMAX(2, 0, 0) + Harga","ARIMAX(2, 0, 0) + Harga + Iduladha",26.807848582880094,28.354197200293825,1.5463486174137309,Tidak

@@ -1,2 +1,17 @@
+"# ===================================================================================================="
+"# KETERANGAN TABEL : 11_rek_kapasitas_puncak.csv (dibuat oleh 11_rekomendasi_manajerial.py)"
+"# Isi tabel        : Kebutuhan kapasitas pada bulan puncak (Iduladha) 2026 dan bukti dari validasi Juni 2025 bahwa batas atas ramalan mampu menampung lonjakan sebenarnya."
+"# Satu baris data  : satu baris ringkasan bulan puncak."
+"# Keterangan kolom : nomor. NAMA KOLOM = arti | Diperoleh dari: cara menghitung/sumbernya"
+"#   1. Periode_Puncak = Bulan dengan ramalan tertinggi. | Diperoleh dari: Bulan dengan Yhat_Kg terbesar pada ramalan 2026."
+"#   2. Ramalan_Puncak_Kg = Ramalan permintaan bulan puncak (kg). | Diperoleh dari: Yhat_Kg bulan puncak."
+"#   3. Batas_Atas_95_Kg = Batas atas interval 95% bulan puncak (kg) = kapasitas yang sebaiknya disiapkan. | Diperoleh dari: Dari 09_peramalan_jan_jun_2026.csv."
+"#   4. Stok_Pengaman_Kg = Tambahan stok di atas ramalan untuk berjaga-jaga (kg). | Diperoleh dari: Batas_Atas_95_Kg - Ramalan_Puncak_Kg."
+"#   5. Validasi_Juni_2025_Ramalan_Kg = Ramalan Juni 2025 pada tahap validasi (kg). | Diperoleh dari: Yhat_Kg Juni 2025 dari 09_peramalan_validasi_apr_sep_2025.csv."
+"#   6. Validasi_Juni_2025_Batas_Atas_Kg = Batas atas ramalan Juni 2025 pada tahap validasi (kg). | Diperoleh dari: Dari file validasi yang sama."
+"#   7. Validasi_Juni_2025_Aktual_Kg = Permintaan sebenarnya Juni 2025 (kg). | Diperoleh dari: Dari file validasi yang sama."
+"#   8. Validasi_Juni_2025_Dalam_Interval = Ya = permintaan sebenarnya Juni 2025 masuk interval ramalan. | Diperoleh dari: Dari file validasi yang sama."
+"# Catatan          : baris berawalan tanda # adalah keterangan, bukan data. Tabel data dimulai tepat di bawah garis ini."
+"# ===================================================================================================="
 Periode_Puncak,Ramalan_Puncak_Kg,Batas_Atas_95_Kg,Stok_Pengaman_Kg,Validasi_Juni_2025_Ramalan_Kg,Validasi_Juni_2025_Batas_Atas_Kg,Validasi_Juni_2025_Aktual_Kg,Validasi_Juni_2025_Dalam_Interval
 2026-06,177279.60823085814,251232.5364616631,73952.92823080497,269021.50450414047,316802.13042660593,274672.06,Ya

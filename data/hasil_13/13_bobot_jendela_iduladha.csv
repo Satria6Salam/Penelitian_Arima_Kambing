@@ -1,2 +1,14 @@
+"# ===================================================================================================="
+"# KETERANGAN TABEL : 13_bobot_jendela_iduladha.csv (dibuat oleh 13_penyesuaian_iduladha.py)"
+"# Isi tabel        : Pembagian masa ramai Iduladha (7 hari sebelum sampai 3 hari sesudah hari raya = 11 hari) ke bulan kalender. Menentukan bulan mana yang menerima lonjakan."
+"# Satu baris data  : satu bulan yang terkena masa ramai Iduladha."
+"# Keterangan kolom : nomor. NAMA KOLOM = arti | Diperoleh dari: cara menghitung/sumbernya"
+"#   1. Tahun = Tahun ramalan. | Diperoleh dari: Dari periode ramalan."
+"#   2. Tanggal_Iduladha = Perkiraan tanggal Iduladha tahun itu. | Diperoleh dari: Daftar tanggal Iduladha di script 13."
+"#   3. Periode = Bulan yang terkena masa ramai Iduladha. | Diperoleh dari: Bulan kalender dari hari-hari masa ramai."
+"#   4. Bobot = Porsi masa ramai yang jatuh di bulan itu (1 = seluruhnya). | Diperoleh dari: Jumlah hari masa ramai di bulan itu / 11 hari."
+"#   5. Dalam_Horizon = Ya = bulan itu termasuk bulan yang diramal; Tidak = di luar rentang ramalan. | Diperoleh dari: Mencocokkan dengan periode ramalan Januari - Juni 2026."
+"# Catatan          : baris berawalan tanda # adalah keterangan, bukan data. Tabel data dimulai tepat di bawah garis ini."
+"# ===================================================================================================="
 Tahun,Tanggal_Iduladha,Periode,Bobot,Dalam_Horizon
 2026,2026-05-27,2026-05,1.0,Ya

@@ -1,3 +1,17 @@
+"# ===================================================================================================="
+"# KETERANGAN TABEL : 06_fitted_training.csv (dibuat oleh 10_ekspor_output_laporan.py)"
+"# Isi tabel        : Perbandingan data latih yang sebenarnya dengan nilai yang dihasilkan tiap model shortlist untuk bulan yang sama (fitted). Makin dekat dengan aktual makin baik model meniru data latih."
+"# Satu baris data  : satu bulan data latih (Januari 2023 - Maret 2025)."
+"# Keterangan kolom : nomor. NAMA KOLOM = arti | Diperoleh dari: cara menghitung/sumbernya"
+"#   1. Periode = Bulan yang dicatat atau diramal (tahun-bulan). | Diperoleh dari: Kalender; satu baris mewakili satu bulan."
+"#   2. Aktual_Kg = Permintaan sebenarnya bulan itu (kg). | Diperoleh dari: Total_Kuantitas_Kg data latih."
+"#   3. Fitted_ARIMA_Kg = Nilai permintaan (kg) menurut model ARIMA untuk bulan data latih. Kosong pada bulan awal yang belum bisa dihitung model. | Diperoleh dari: exp(nilai fitted pada skala logaritma) dari model ARIMA."
+"#   4. Fitted_SARIMA D=0_Kg = Nilai permintaan (kg) menurut model SARIMA D=0 untuk bulan data latih. Kosong pada bulan awal yang belum bisa dihitung model. | Diperoleh dari: exp(nilai fitted pada skala logaritma) dari model SARIMA D=0."
+"#   5. Fitted_SARIMA D=1_Kg = Nilai permintaan (kg) menurut model SARIMA D=1 untuk bulan data latih. Kosong pada bulan awal yang belum bisa dihitung model. | Diperoleh dari: exp(nilai fitted pada skala logaritma) dari model SARIMA D=1."
+"#   6. Fitted_ARIMAX Harga_Kg = Nilai permintaan (kg) menurut model ARIMAX Harga untuk bulan data latih. Kosong pada bulan awal yang belum bisa dihitung model. | Diperoleh dari: exp(nilai fitted pada skala logaritma) dari model ARIMAX Harga."
+"#   7. Fitted_ARIMAX Harga+Iduladha_Kg = Nilai permintaan (kg) menurut model ARIMAX Harga+Iduladha untuk bulan data latih. Kosong pada bulan awal yang belum bisa dihitung model. | Diperoleh dari: exp(nilai fitted pada skala logaritma) dari model ARIMAX Harga+Iduladha."
+"# Catatan          : baris berawalan tanda # adalah keterangan, bukan data. Tabel data dimulai tepat di bawah garis ini."
+"# ===================================================================================================="
 Periode,Aktual_Kg,Fitted_ARIMA_Kg,Fitted_SARIMA D=0_Kg,Fitted_SARIMA D=1_Kg,Fitted_ARIMAX Harga_Kg,Fitted_ARIMAX Harga+Iduladha_Kg
 2023-01,117654.63,103296.85067642387,109320.54618193604,,98964.25894339653,98642.03579135911
 2023-02,106155.92,103296.85067642387,115888.82954892855,,112897.98013944538,114997.33668979009

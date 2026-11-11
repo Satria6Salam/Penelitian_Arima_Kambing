@@ -1,3 +1,21 @@
+"# ===================================================================================================="
+"# KETERANGAN TABEL : 08_model_peramalan.csv (dibuat oleh 08_forecasting_data_testing.py)"
+"# Isi tabel        : Daftar model yang lulus kedua uji residual (Ljung-Box dan Shapiro-Wilk) sehingga boleh dipakai meramal data testing."
+"# Satu baris data  : satu model yang lulus."
+"# Keterangan kolom : nomor. NAMA KOLOM = arti | Diperoleh dari: cara menghitung/sumbernya"
+"#   1. Label = Nama singkat model. ARIMA = tanpa musiman; SARIMA D=0 / SARIMA D=1 = dengan pola musiman 12 bulan; ARIMAX Harga = ditambah data harga; ARIMAX Harga+Iduladha = ditambah harga dan penanda Iduladha; Seasonal naive = pembanding paling sederhana (ramalan = angka bulan yang sama tahun lalu). | Diperoleh dari: Ditetapkan di script 07: satu model terbaik (AIC terendah) dari tiap skenario."
+"#   2. Nama_Model = Nama lengkap model beserta ordenya, misalnya SARIMA(1, 0, 0)x(1, 1, 0, 12). y[t-12] = seasonal naive. | Diperoleh dari: Dari daftar kandidat model yang diestimasi di script 06."
+"#   3. Kelompok = Kelompok pembedaan data: d = pembedaan biasa, D = pembedaan musiman (selisih dengan 12 bulan sebelumnya). | Diperoleh dari: Diambil dari Order dan Seasonal_Order. AIC/BIC hanya adil dibandingkan antar model dalam kelompok yang sama."
+"#   4. Order = Orde non-musiman (p, d, q): p = banyaknya bulan lalu yang dipakai (AR), d = banyaknya pembedaan, q = banyaknya galat lalu yang dipakai (MA). | Diperoleh dari: Ditetapkan saat menyusun daftar kandidat (script 06)."
+"#   5. Seasonal_Order = Orde musiman (P, D, Q, m): sama seperti Order tetapi untuk pola tahunan; m = 12 bulan. (0, 0, 0, 0) berarti model tanpa komponen musiman. | Diperoleh dari: Ditetapkan saat menyusun daftar kandidat (script 06)."
+"#   6. Eksogen = Variabel tambahan dari luar yang dipakai model selain data permintaan itu sendiri. Tanda - berarti tidak ada. | Diperoleh dari: Ditetapkan per skenario (ARIMAX memakai harga dan/atau penanda Iduladha)."
+"#   7. AIC_06 = Skor AIC model (makin kecil makin baik dalam kelompoknya). | Diperoleh dari: Diambil dari hasil script 06."
+"#   8. BIC_06 = Skor BIC model (makin kecil makin baik dalam kelompoknya). | Diperoleh dari: Diambil dari hasil script 06."
+"#   9. Ljung_Box = Lulus = sisa (residual) model tidak berpola lagi. | Diperoleh dari: Hasil uji Ljung-Box di script 07."
+"#   10. Shapiro_Wilk = Lulus = sisa (residual) model menyebar normal. | Diperoleh dari: Hasil uji Shapiro-Wilk di script 07."
+"#   11. MAPE_rolling_07_% = MAPE model pada uji rolling origin (ramal 1 bulan, ulang 9 kali). | Diperoleh dari: Diambil dari 07_metrik_rolling_origin.csv."
+"# Catatan          : baris berawalan tanda # adalah keterangan, bukan data. Tabel data dimulai tepat di bawah garis ini."
+"# ===================================================================================================="
 Label,Nama_Model,Kelompok,Order,Seasonal_Order,Eksogen,AIC_06,BIC_06,Ljung_Box,Shapiro_Wilk,MAPE_rolling_07_%
 SARIMA D=1,"SARIMA(1, 0, 0)x(1, 1, 0, 12)","d=0, D=1","(1, 0, 0)","(1, 1, 0, 12)",-,-12.547538386056239,-10.423387782749609,Lulus,Lulus,6.586261795396102
 ARIMAX Harga,"ARIMAX(2, 0, 0) + Harga","d=0, D=0","(2, 0, 0)","(0, 0, 0, 0)",Harga_Rata2_Per_Kg,-43.61569716576019,-37.13651283573854,Lulus,Lulus,4.003017831878643

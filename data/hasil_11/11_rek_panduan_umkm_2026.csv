@@ -1,3 +1,18 @@
+"# ===================================================================================================="
+"# KETERANGAN TABEL : 11_rek_panduan_umkm_2026.csv (dibuat oleh 11_rekomendasi_manajerial.py)"
+"# Isi tabel        : Panduan untuk UMKM: ramalan tingkat kabupaten diubah menjadi angka perbandingan (indeks) yang bisa dipakai usaha skala berapa pun. Rencana stok = penjualan bulan normal x indeks."
+"# Satu baris data  : satu bulan yang diramal (Januari - Juni 2026)."
+"# Keterangan kolom : nomor. NAMA KOLOM = arti | Diperoleh dari: cara menghitung/sumbernya"
+"#   1. Periode = Bulan yang dicatat atau diramal (tahun-bulan). | Diperoleh dari: Kalender; satu baris mewakili satu bulan."
+"#   2. Indeks_vs_Bulan_Normal = Pengali terhadap penjualan bulan normal (1 = seperti biasa; 2,57 = siapkan 2,57 kali biasanya). | Diperoleh dari: Ramalan bulan itu / rata-rata ramalan bulan-bulan selain bulan puncak."
+"#   3. Perubahan_vs_Tahun_Lalu_% = Perkiraan perubahan dibanding bulan yang sama tahun 2025 (persen; negatif = turun). | Diperoleh dari: (Ramalan / aktual bulan yang sama tahun lalu - 1) x 100."
+"#   4. Faktor_Batas_Bawah = Pengali untuk skenario terendah yang masih wajar. | Diperoleh dari: Batas_Bawah_95_Kg / Yhat_Kg."
+"#   5. Faktor_Batas_Atas = Pengali untuk skenario tertinggi yang masih wajar (untuk kapasitas maksimum). | Diperoleh dari: Batas_Atas_95_Kg / Yhat_Kg."
+"#   6. Stok_Pengaman_% = Tambahan stok berjaga-jaga di atas rencana (persen). | Diperoleh dari: (Batas_Atas_95_Kg / Yhat_Kg - 1) x 100."
+"#   7. Contoh_UMKM_500kg_Rencana_Kg = Contoh rencana stok (kg) untuk satu UMKM yang pada bulan normal menjual 500 kg. | Diperoleh dari: 500 x Indeks_vs_Bulan_Normal."
+"#   8. Contoh_UMKM_500kg_Maks_Kg = Contoh stok/kapasitas maksimum (kg) yang perlu disiapkan UMKM dengan penjualan bulan normal 500 kg. | Diperoleh dari: 500 x Indeks_vs_Bulan_Normal x Faktor_Batas_Atas."
+"# Catatan          : baris berawalan tanda # adalah keterangan, bukan data. Tabel data dimulai tepat di bawah garis ini."
+"# ===================================================================================================="
 Periode,Indeks_vs_Bulan_Normal,Perubahan_vs_Tahun_Lalu_%,Faktor_Batas_Bawah,Faktor_Batas_Atas,Stok_Pengaman_%,Contoh_UMKM_500kg_Rencana_Kg,Contoh_UMKM_500kg_Maks_Kg
 2026-01,1.0337274339856297,-16.46716568174793,0.8503539277239498,1.1759809267613919,17.59809267613919,516.8637169928148,607.8218729185481
 2026-02,1.0338407646448227,-13.582471215938053,0.8000078821142671,1.2499876843177995,24.99876843177995,516.9203823224113,646.1441116758625

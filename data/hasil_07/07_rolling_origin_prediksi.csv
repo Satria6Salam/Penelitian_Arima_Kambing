@@ -1,3 +1,22 @@
+"# ===================================================================================================="
+"# KETERANGAN TABEL : 07_rolling_origin_prediksi.csv (dibuat oleh 07_validasi_diagnostik_evaluasi.py)"
+"# Isi tabel        : Hasil uji rolling origin: model dilatih, meramal 1 bulan ke depan, lalu data aktual bulan itu ditambahkan dan model dilatih ulang; diulang 9 kali (April - Desember 2025)."
+"# Satu baris data  : satu ramalan 1 bulan dari satu model pada satu putaran."
+"# Keterangan kolom : nomor. NAMA KOLOM = arti | Diperoleh dari: cara menghitung/sumbernya"
+"#   1. Label = Nama singkat model. ARIMA = tanpa musiman; SARIMA D=0 / SARIMA D=1 = dengan pola musiman 12 bulan; ARIMAX Harga = ditambah data harga; ARIMAX Harga+Iduladha = ditambah harga dan penanda Iduladha; Seasonal naive = pembanding paling sederhana (ramalan = angka bulan yang sama tahun lalu). | Diperoleh dari: Ditetapkan di script 07: satu model terbaik (AIC terendah) dari tiap skenario."
+"#   2. Nama_Model = Nama lengkap model beserta ordenya, misalnya SARIMA(1, 0, 0)x(1, 1, 0, 12). y[t-12] = seasonal naive. | Diperoleh dari: Dari daftar kandidat model yang diestimasi di script 06."
+"#   3. Putaran = Urutan putaran uji (1-9). | Diperoleh dari: Putaran 1 meramal April 2025, putaran 9 meramal Desember 2025."
+"#   4. Panjang_Data_Latih = Banyaknya bulan data yang dipakai melatih model pada putaran itu. | Diperoleh dari: 27 + (Putaran - 1)."
+"#   5. Periode_Target = Bulan yang diramal pada putaran itu. | Diperoleh dari: Satu bulan setelah data latih putaran itu."
+"#   6. Aktual = Permintaan sebenarnya pada bulan target (kg). | Diperoleh dari: Dari data testing."
+"#   7. Prediksi = Ramalan 1 bulan ke depan (kg). | Diperoleh dari: exp(ramalan log model). ARIMAX memakai harga aktual bulan target. Seasonal naive = aktual 12 bulan sebelumnya."
+"#   8. Error = Selisih kenyataan dan ramalan (kg). Positif = ramalan terlalu rendah. | Diperoleh dari: Aktual - Prediksi."
+"#   9. APE_% = Besar kesalahan ramalan putaran itu dalam persen. | Diperoleh dari: |Aktual - Prediksi| / Aktual x 100."
+"#   10. Optimizer = Cara pencarian parameter yang dipakai pada putaran itu. Tanda - untuk seasonal naive. | Diperoleh dari: Optimizer dengan hasil terbaik saat melatih ulang."
+"#   11. Konvergen = True = proses pencarian parameter selesai dengan baik (menemukan titik terbaik). | Diperoleh dari: Status konvergensi yang dilaporkan optimizer."
+"#   12. Warning = Peringatan dari statsmodels saat estimasi. Tanda - berarti tidak ada. | Diperoleh dari: Dicatat otomatis saat estimasi."
+"# Catatan          : baris berawalan tanda # adalah keterangan, bukan data. Tabel data dimulai tepat di bawah garis ini."
+"# ===================================================================================================="
 Label,Nama_Model,Putaran,Panjang_Data_Latih,Periode_Target,Aktual,Prediksi,Error,APE_%,Optimizer,Konvergen,Warning
 ARIMA,"ARIMA(0, 0, 0)",1,27,2025-04,85689.94,103296.85067642387,-17606.910676423868,20.54723188792508,powell,True,-
 ARIMA,"ARIMA(0, 0, 0)",2,28,2025-05,89364.3,102609.74491298028,-13245.444912980282,14.821852700664898,lbfgs,True,-

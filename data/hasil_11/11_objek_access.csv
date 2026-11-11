@@ -1,3 +1,12 @@
+"# ===================================================================================================="
+"# KETERANGAN TABEL : 11_objek_access.csv (dibuat oleh 11_implementasi_access.py)"
+"# Isi tabel        : Daftar objek (tabel, query, modul, backup) yang dibuat script di database MS Access."
+"# Satu baris data  : satu objek."
+"# Keterangan kolom : nomor. NAMA KOLOM = arti | Diperoleh dari: cara menghitung/sumbernya"
+"#   1. Jenis = Jenis objek: Tabel, Query, Modul VBA, atau Backup database. | Diperoleh dari: Ditetapkan script 11."
+"#   2. Nama = Nama objek di MS Access atau nama filenya. | Diperoleh dari: Ditetapkan script 11."
+"# Catatan          : baris berawalan tanda # adalah keterangan, bukan data. Tabel data dimulai tepat di bawah garis ini."
+"# ===================================================================================================="
 Jenis,Nama
 Tabel,Tbl_Volume_Bulanan
 Tabel,Tbl_Parameter_SARIMA

@@ -54,6 +54,7 @@ from pathlib import Path
 import numpy as np
 import pandas as pd
 
+import keterangan_csv as kk  # keterangan kolom pada setiap CSV hasil
 import penjelasan  # contoh perhitungan rumus di terminal + log_terminal/
 
 
@@ -803,7 +804,7 @@ def ekspor_csv(dataset, volume, transaksi, baseline):
     file_terkunci = []
     for nama, _, tabel in daftar:
         try:
-            tabel.to_csv(DATA_DIR / nama, index=False)
+            kk.simpan_csv(tabel, DATA_DIR / nama, index=False)
         except PermissionError:
             # Windows mengunci file yang sedang dibuka (misalnya di Excel),
             # sehingga Python tidak bisa menimpanya.
@@ -824,7 +825,7 @@ def validasi_dataset(transaksi):
     dan memeriksa apakah datanya layak masuk ke uji ADF dan pemodelan SARIMAX.
     Mengembalikan list (nama pemeriksaan, lolos True/False, keterangan).
     """
-    df = pd.read_csv(DATA_DIR / "dataset_sarimax.csv", parse_dates=["Periode"])
+    df = kk.baca_csv(DATA_DIR / "dataset_sarimax.csv", parse_dates=["Periode"])
     selisih_bulan = df["Periode"].dt.to_period("M").astype(int).diff().dropna()
     total_dataset = df["Permintaan_Kg"].sum()
     total_transaksi = transaksi["Kuantitas_Kg"].sum()

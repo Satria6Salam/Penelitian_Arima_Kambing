@@ -1,3 +1,16 @@
+"# ===================================================================================================="
+"# KETERANGAN TABEL : 09_diagnostik_model_final.csv (dibuat oleh 09_peramalan_visualisasi.py)"
+"# Isi tabel        : Uji kelayakan model final (dilatih 36 bulan) dari sisa (residual)-nya: tidak berpola (Ljung-Box) dan menyebar normal (Shapiro-Wilk)."
+"# Satu baris data  : satu uji."
+"# Keterangan kolom : nomor. NAMA KOLOM = arti | Diperoleh dari: cara menghitung/sumbernya"
+"#   1. Jumlah_Residual = Banyaknya residual yang diuji. | Diperoleh dari: 36 bulan dikurangi 12 bulan awal yang terpakai pembedaan musiman."
+"#   2. Uji = Nama uji dan lag-nya. | Diperoleh dari: Ljung-Box lag 6, 9, 12 dan Shapiro-Wilk."
+"#   3. Statistik = Nilai statistik uji (Q untuk Ljung-Box, W untuk Shapiro-Wilk). | Diperoleh dari: Dihitung dari residual model final."
+"#   4. df = Derajat bebas uji Ljung-Box. Kosong untuk Shapiro-Wilk. | Diperoleh dari: Lag - banyaknya koefisien AR/MA model (2)."
+"#   5. P_value = P-value uji. Di atas 0,05 = lulus. | Diperoleh dari: Dari statistik uji."
+"#   6. Keputusan = Lulus (white noise) = residual tidak berpola; Lulus (normal) = residual normal; Gagal = syarat tidak terpenuhi. | Diperoleh dari: Lulus bila P_value di atas 0,05."
+"# Catatan          : baris berawalan tanda # adalah keterangan, bukan data. Tabel data dimulai tepat di bawah garis ini."
+"# ===================================================================================================="
 Jumlah_Residual,Uji,Statistik,df,P_value,Keputusan
 24,Ljung-Box lag 6,9.058898841904787,4.0,0.05964403278416402,Lulus (white noise)
 24,Ljung-Box lag 9,10.846421436746041,7.0,0.14545975241759967,Lulus (white noise)

@@ -1,3 +1,19 @@
+"# ===================================================================================================="
+"# KETERANGAN TABEL : 08_multistep_vs_rolling.csv (dibuat oleh 08_forecasting_data_testing.py)"
+"# Isi tabel        : Perbandingan dua cara meramal data testing: sekaligus 9 bulan (multi-step, script 08) dan 1 bulan dengan latih ulang tiap bulan (rolling origin, script 07)."
+"# Satu baris data  : satu bulan dari satu model."
+"# Keterangan kolom : nomor. NAMA KOLOM = arti | Diperoleh dari: cara menghitung/sumbernya"
+"#   1. Label = Nama singkat model. ARIMA = tanpa musiman; SARIMA D=0 / SARIMA D=1 = dengan pola musiman 12 bulan; ARIMAX Harga = ditambah data harga; ARIMAX Harga+Iduladha = ditambah harga dan penanda Iduladha; Seasonal naive = pembanding paling sederhana (ramalan = angka bulan yang sama tahun lalu). | Diperoleh dari: Ditetapkan di script 07: satu model terbaik (AIC terendah) dari tiap skenario."
+"#   2. Periode = Bulan yang dicatat atau diramal (tahun-bulan). | Diperoleh dari: Kalender; satu baris mewakili satu bulan."
+"#   3. Horizon = Jarak bulan yang diramal dari bulan terakhir data latih (1 = satu bulan ke depan). | Diperoleh dari: Dihitung berurutan mulai dari bulan pertama setelah data latih."
+"#   4. Aktual_Kg = Permintaan yang benar-benar terjadi pada bulan itu (kg). | Diperoleh dari: Diambil dari data (Total_Kuantitas_Kg)."
+"#   5. Prediksi_MultiStep_Kg = Ramalan cara sekaligus 9 bulan (kg). | Diperoleh dari: Prediksi_Kg dari 08_peramalan_testing.csv."
+"#   6. APE_MultiStep_% = Kesalahan persen ramalan cara sekaligus. | Diperoleh dari: |Aktual - Prediksi_MultiStep| / Aktual x 100."
+"#   7. Prediksi_Rolling_Kg = Ramalan cara 1 bulan dengan latih ulang (kg). | Diperoleh dari: Prediksi dari 07_rolling_origin_prediksi.csv."
+"#   8. APE_Rolling_% = Kesalahan persen ramalan cara rolling origin. | Diperoleh dari: |Aktual - Prediksi_Rolling| / Aktual x 100."
+"#   9. Selisih_APE_poin = Beda kesalahan kedua cara (poin persen). Positif = cara sekaligus lebih meleset. | Diperoleh dari: APE_MultiStep_% - APE_Rolling_%."
+"# Catatan          : baris berawalan tanda # adalah keterangan, bukan data. Tabel data dimulai tepat di bawah garis ini."
+"# ===================================================================================================="
 Label,Periode,Horizon,Aktual_Kg,Prediksi_MultiStep_Kg,APE_MultiStep_%,Prediksi_Rolling_Kg,APE_Rolling_%,Selisih_APE_poin
 SARIMA D=1,2025-04,1,85689.94,94591.06227793726,10.387593080281375,94591.06227793726,10.387593080281375,0.0
 SARIMA D=1,2025-05,2,89364.3,84589.28317673353,5.343315869163047,77297.91944432941,13.502461895489128,-8.15914602632608

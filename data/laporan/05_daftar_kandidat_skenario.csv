@@ -1,3 +1,18 @@
+"# ===================================================================================================="
+"# KETERANGAN TABEL : 05_daftar_kandidat_skenario.csv (dibuat oleh 10_ekspor_output_laporan.py)"
+"# Isi tabel        : Daftar 28 kandidat model yang dicoba, dikelompokkan menurut skenario pemodelan."
+"# Satu baris data  : satu kandidat model."
+"# Keterangan kolom : nomor. NAMA KOLOM = arti | Diperoleh dari: cara menghitung/sumbernya"
+"#   1. Skenario = Keluarga model: ARIMA, SARIMA, atau ARIMAX. | Diperoleh dari: Ditetapkan saat menyusun daftar kandidat (script 06)."
+"#   2. Skenario_Detail = Skenario lebih rinci: ARIMA, SARIMA, ARIMAX Harga, atau ARIMAX Harga+Iduladha. | Diperoleh dari: Dari Skenario dan variabel eksogennya."
+"#   3. Nama_Model = Nama lengkap model beserta ordenya, misalnya SARIMA(1, 0, 0)x(1, 1, 0, 12). y[t-12] = seasonal naive. | Diperoleh dari: Dari daftar kandidat model yang diestimasi di script 06."
+"#   4. Order = Orde non-musiman (p, d, q): p = banyaknya bulan lalu yang dipakai (AR), d = banyaknya pembedaan, q = banyaknya galat lalu yang dipakai (MA). | Diperoleh dari: Ditetapkan saat menyusun daftar kandidat (script 06)."
+"#   5. Seasonal_Order = Orde musiman (P, D, Q, m): sama seperti Order tetapi untuk pola tahunan; m = 12 bulan. (0, 0, 0, 0) berarti model tanpa komponen musiman. | Diperoleh dari: Ditetapkan saat menyusun daftar kandidat (script 06)."
+"#   6. Eksogen = Variabel tambahan dari luar yang dipakai model selain data permintaan itu sendiri. Tanda - berarti tidak ada. | Diperoleh dari: Ditetapkan per skenario (ARIMAX memakai harga dan/atau penanda Iduladha)."
+"#   7. Kelompok_Differencing = Kelompok pembedaan data: d = pembedaan biasa, D = pembedaan musiman (selisih dengan 12 bulan sebelumnya). | Diperoleh dari: Diambil dari Order dan Seasonal_Order. AIC/BIC hanya adil dibandingkan antar model dalam kelompok yang sama."
+"#   8. Status = Berhasil = model selesai diestimasi; Gagal = tidak berhasil. | Diperoleh dari: Dari 06_hasil_estimasi.csv."
+"# Catatan          : baris berawalan tanda # adalah keterangan, bukan data. Tabel data dimulai tepat di bawah garis ini."
+"# ===================================================================================================="
 Skenario,Skenario_Detail,Nama_Model,Order,Seasonal_Order,Eksogen,Kelompok_Differencing,Status
 ARIMA,ARIMA,"ARIMA(0, 0, 0)","(0, 0, 0)","(0, 0, 0, 0)",-,"d=0, D=0",Berhasil
 ARIMA,ARIMA,"ARIMA(1, 0, 0)","(1, 0, 0)","(0, 0, 0, 0)",-,"d=0, D=0",Berhasil

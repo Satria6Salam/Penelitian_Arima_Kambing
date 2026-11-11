@@ -1,3 +1,14 @@
+"# ===================================================================================================="
+"# KETERANGAN TABEL : dataset_pra_proses_final.csv (dibuat oleh 04_pra_proses_data.py)"
+"# Isi tabel        : Data bulanan siap analisis hasil pra-proses: struk transaksi dijumlahkan per bulan, bulan kosong diisi interpolasi, dan pencilan (outlier) diperiksa dengan metode IQR."
+"# Satu baris data  : satu bulan (Januari 2023 - Desember 2025, 36 bulan)."
+"# Keterangan kolom : nomor. NAMA KOLOM = arti | Diperoleh dari: cara menghitung/sumbernya"
+"#   1. Periode = Bulan yang dicatat atau diramal (tahun-bulan). | Diperoleh dari: Kalender; satu baris mewakili satu bulan."
+"#   2. Jumlah_Transaksi = Banyaknya struk transaksi pada bulan itu. | Diperoleh dari: Menghitung jumlah baris transaksi per bulan (script 04)."
+"#   3. Total_Kuantitas_Kg = Permintaan daging kambing seluruh Kabupaten Malang pada bulan itu (kg). Inilah angka yang diramal. | Diperoleh dari: Jumlah Kuantitas_Kg semua struk bulan itu. Nilai di luar batas IQR dipangkas, kecuali bulan Iduladha (Juni) yang dipertahankan."
+"#   4. Harga_Rata2_Per_Kg = Harga jual rata-rata per kg pada bulan itu (rupiah). | Diperoleh dari: Rata-rata Harga_Final semua struk transaksi bulan itu, dibulatkan (script 04)."
+"# Catatan          : baris berawalan tanda # adalah keterangan, bukan data. Tabel data dimulai tepat di bawah garis ini."
+"# ===================================================================================================="
 Periode,Jumlah_Transaksi,Total_Kuantitas_Kg,Harga_Rata2_Per_Kg
 2023-01-01,5867,117654.63,120939.0
 2023-02-01,5296,106155.92,121180.0

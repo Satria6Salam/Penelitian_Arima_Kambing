@@ -1,3 +1,19 @@
+"# ===================================================================================================="
+"# KETERANGAN TABEL : baseline_bps.csv (dibuat oleh 03_generate_data.py)"
+"# Isi tabel        : Angka dasar (baseline) permintaan per tahun yang diturunkan dari data produksi daging kambing BPS Kabupaten Malang."
+"# Satu baris data  : satu tahun (2023, 2024, 2025)."
+"# Keterangan kolom : nomor. NAMA KOLOM = arti | Diperoleh dari: cara menghitung/sumbernya"
+"#   1. Tahun = Tahun kalender. | Diperoleh dari: Diambil dari Periode."
+"#   2. Karkas_Tahunan_Kab = Produksi karkas kambing Kabupaten Malang dalam setahun (kg). | Diperoleh dari: Data BPS; bila tidak tersedia untuk tahun itu, ditaksir dari perbandingan tahun lain."
+"#   3. Karkas_Bulanan_Kab = Produksi karkas rata-rata per bulan (kg). | Diperoleh dari: Karkas_Tahunan_Kab / 12."
+"#   4. Mu_Lokal = Baseline permintaan bulanan pasar lokal (kg) = angka dasar sebelum ditambah tren, musim, dan acak. | Diperoleh dari: Sama dengan Karkas_Bulanan_Kab (tingkat kabupaten, tidak dibagi jumlah UMKM)."
+"#   5. Diestimasi = True = angka karkas tahun itu hasil taksiran; False = langsung dari BPS. | Diperoleh dari: True bila kolom karkas pada data BPS tahun itu kosong."
+"#   6. Rasio_Daging Murni = Porsi produk Daging Murni dari total empat jenis produk (0,38 berarti 38%). | Diperoleh dari: Produksi Daging Murni / (Daging Murni + Karkas + Jeroan + Daging Variasi) dari data BPS tahun itu."
+"#   7. Rasio_Karkas = Porsi produk Karkas dari total empat jenis produk (0,38 berarti 38%). | Diperoleh dari: Produksi Karkas / (Daging Murni + Karkas + Jeroan + Daging Variasi) dari data BPS tahun itu."
+"#   8. Rasio_Jeroan = Porsi produk Jeroan dari total empat jenis produk (0,38 berarti 38%). | Diperoleh dari: Produksi Jeroan / (Daging Murni + Karkas + Jeroan + Daging Variasi) dari data BPS tahun itu."
+"#   9. Rasio_Daging Variasi = Porsi produk Daging Variasi dari total empat jenis produk (0,38 berarti 38%). | Diperoleh dari: Produksi Daging Variasi / (Daging Murni + Karkas + Jeroan + Daging Variasi) dari data BPS tahun itu."
+"# Catatan          : baris berawalan tanda # adalah keterangan, bukan data. Tabel data dimulai tepat di bawah garis ini."
+"# ===================================================================================================="
 Tahun,Karkas_Tahunan_Kab,Karkas_Bulanan_Kab,Mu_Lokal,Diestimasi,Rasio_Daging Murni,Rasio_Karkas,Rasio_Jeroan,Rasio_Daging Variasi
 2023,1346186.3070930801,112182.19225775667,112182.19225775667,True,0.381048205609302,0.5183260815072289,0.07902025813924121,0.021605454744227887
 2024,1048096.31,87341.35916666668,87341.35916666668,False,0.4959050263134961,0.37299469006861363,0.10298246693157864,0.02811781668631162

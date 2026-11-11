@@ -1,3 +1,17 @@
+"# ===================================================================================================="
+"# KETERANGAN TABEL : dataset_sarimax.csv (dibuat oleh 03_generate_data.py)"
+"# Isi tabel        : Dataset utama 36 bulan hasil pembangkitan data: permintaan bulanan beserta harga dan jumlah pesanan."
+"# Satu baris data  : satu bulan (Januari 2023 - Desember 2025)."
+"# Keterangan kolom : nomor. NAMA KOLOM = arti | Diperoleh dari: cara menghitung/sumbernya"
+"#   1. Periode = Bulan yang dicatat atau diramal (tahun-bulan). | Diperoleh dari: Kalender; satu baris mewakili satu bulan."
+"#   2. t = Nomor urut bulan sejak awal data (1 = Januari 2023). | Diperoleh dari: Dihitung berurutan: Januari 2023 = 1, Februari 2023 = 2, dan seterusnya."
+"#   3. Tahun = Tahun kalender. | Diperoleh dari: Diambil dari Periode."
+"#   4. Bulan = Nomor bulan dalam setahun (1 = Januari ... 12 = Desember). | Diperoleh dari: Diambil dari Periode."
+"#   5. Permintaan_Kg = Permintaan daging kambing seluruh Kabupaten Malang pada bulan itu (kg). | Diperoleh dari: Volume_Akhir_Kg dari volume_bulanan.csv (baseline BPS x tren x musim Iduladha + acak)."
+"#   6. Harga_Rata2_Per_Kg = Harga jual rata-rata per kg bulan itu (rupiah), tertimbang volume. | Diperoleh dari: Total pendapatan bulan itu / total kg bulan itu, dibulatkan."
+"#   7. Jumlah_Pesanan = Banyaknya struk transaksi bulan itu. | Diperoleh dari: Menghitung baris transaksi per bulan."
+"# Catatan          : baris berawalan tanda # adalah keterangan, bukan data. Tabel data dimulai tepat di bawah garis ini."
+"# ===================================================================================================="
 Periode,t,Tahun,Bulan,Permintaan_Kg,Harga_Rata2_Per_Kg,Jumlah_Pesanan
 2023-01-01,1,2023,1,117654.63,120990.0,5867
 2023-02-01,2,2023,2,106155.92,121406.0,5296

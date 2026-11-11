@@ -53,6 +53,7 @@ import statsmodels
 
 from pathlib import Path
 
+import keterangan_csv as kk  # keterangan kolom pada setiap CSV hasil
 import estimasi_model as em
 import penjelasan  # contoh perhitungan rumus di terminal + log_terminal/
 
@@ -208,7 +209,7 @@ def gabungkan_label_iduladha(df):
     if not IDULADHA_CSV.exists():
         raise FileNotFoundError(f"File label Iduladha tidak ditemukan: {IDULADHA_CSV}")
 
-    df_label = pd.read_csv(IDULADHA_CSV)
+    df_label = kk.baca_csv(IDULADHA_CSV)
 
     for kolom in ["Periode", IDULADHA_COL]:
         if kolom not in df_label.columns:
@@ -276,7 +277,7 @@ def pemecahan_dan_ekspor_dataset(
 
     config = muat_konfigurasi(config_filepath)
 
-    df = pd.read_csv(csv_filepath)
+    df = kk.baca_csv(csv_filepath)
 
     for kolom in ["Periode", TARGET_COL, PRICE_COL]:
         if kolom not in df.columns:
@@ -323,8 +324,8 @@ def pemecahan_dan_ekspor_dataset(
     train_df = df.iloc[:train_size].copy()
     test_df = df.iloc[train_size:].copy()
 
-    train_df.reset_index().to_csv(TRAIN_CSV, index=False)
-    test_df.reset_index().to_csv(TEST_CSV, index=False)
+    kk.simpan_csv(train_df.reset_index(), TRAIN_CSV, index=False)
+    kk.simpan_csv(test_df.reset_index(), TEST_CSV, index=False)
 
     print("\n[INFORMASI DATASET]")
     print(f"Jumlah observasi       : {total_obs}")
@@ -628,7 +629,7 @@ def latih_semua_kandidat(train_df, daftar_kandidat):
         hasil_estimasi.append(baris)
 
     df_estimasi = pd.DataFrame(hasil_estimasi)
-    df_estimasi.to_csv(HASIL_ESTIMASI_CSV, index=False)
+    kk.simpan_csv(df_estimasi, HASIL_ESTIMASI_CSV, index=False)
 
     print("\n" + "=" * 75)
     print("RINGKASAN PROSES FITTING")
@@ -670,7 +671,7 @@ def bandingkan_aic_bic(df_estimasi):
 
     if df_valid.empty:
         print("Tidak ada kandidat yang berhasil diestimasi.")
-        df_estimasi.to_csv(HASIL_AIC_BIC_CSV, index=False)
+        kk.simpan_csv(df_estimasi, HASIL_AIC_BIC_CSV, index=False)
         return df_estimasi
 
     kelompok = df_valid.groupby("Kelompok_Differencing")
@@ -726,7 +727,7 @@ def bandingkan_aic_bic(df_estimasi):
     df_gagal = df_estimasi[df_estimasi["Status"] == "Gagal"]
 
     df_hasil = pd.concat([df_valid, df_gagal], ignore_index=True)
-    df_hasil.to_csv(HASIL_AIC_BIC_CSV, index=False)
+    kk.simpan_csv(df_hasil, HASIL_AIC_BIC_CSV, index=False)
 
     print("\nHasil perbandingan disimpan ke:")
     print(HASIL_AIC_BIC_CSV)
@@ -794,7 +795,7 @@ def cek_model_bersarang(df_hasil):
     df_nested = pd.DataFrame(baris, columns=[
         "Model_Sederhana", "Model_Kompleks", "LogL_Sederhana",
         "LogL_Kompleks", "Selisih_LogL", "Pelanggaran"])
-    df_nested.to_csv(BERSARANG_CSV, index=False)
+    kk.simpan_csv(df_nested, BERSARANG_CSV, index=False)
 
     pelanggaran = df_nested[df_nested["Pelanggaran"] == "Ya"]
     print(f"Pasangan bersarang diperiksa : {len(df_nested)}")

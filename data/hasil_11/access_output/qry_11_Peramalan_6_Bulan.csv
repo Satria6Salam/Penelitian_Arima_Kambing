@@ -1,3 +1,18 @@
+"# ===================================================================================================="
+"# KETERANGAN TABEL : qry_11_Peramalan_6_Bulan.csv (dibuat oleh ekspor query MS Access qry_11_Peramalan_6_Bulan)"
+"# Isi tabel        : Hasil query qry_11_Peramalan_6_Bulan: tampilan ramalan 6 bulan dari Tbl_Peramalan dengan angka dibulatkan."
+"# Satu baris data  : satu bulan yang diramal."
+"# Keterangan kolom : nomor. NAMA KOLOM = arti | Diperoleh dari: cara menghitung/sumbernya"
+"#   1. Nama_Model = Nama model yang dipakai. | Diperoleh dari: Dari Tbl_Peramalan."
+"#   2. Bulan = Bulan yang diramal (nama bulan dan tahun). | Diperoleh dari: Dari Periode di Tbl_Peramalan."
+"#   3. Horizon = Jarak bulan yang diramal dari bulan terakhir data latih (1 = satu bulan ke depan). | Diperoleh dari: Dihitung berurutan mulai dari bulan pertama setelah data latih."
+"#   4. Ramalan_Kg = Ramalan permintaan (kg), dibulatkan. | Diperoleh dari: Prediksi_Kg di Tbl_Peramalan."
+"#   5. Batas_Bawah_95 = Batas bawah interval 95% (kg), dibulatkan. | Diperoleh dari: Batas_Bawah_95_Kg di Tbl_Peramalan."
+"#   6. Batas_Atas_95 = Batas atas interval 95% (kg), dibulatkan. | Diperoleh dari: Batas_Atas_95_Kg di Tbl_Peramalan."
+"#   7. Sumber = Asal hitungan ramalan. | Diperoleh dari: Dari Tbl_Peramalan."
+"#   8. Tanggal_Dibuat = Waktu ramalan disimpan. | Diperoleh dari: Dari Tbl_Peramalan."
+"# Catatan          : baris berawalan tanda # adalah keterangan, bukan data. Tabel data dimulai tepat di bawah garis ini."
+"# ===================================================================================================="
 Nama_Model,Bulan,Horizon,Ramalan_Kg,Batas_Bawah_95,Batas_Atas_95,Sumber,Tanggal_Dibuat
 "SARIMA(1,0,0)x(1,1,0,12) log",January 2026,1,71327.0,60653.0,83880.0,Python (rumus rekursif = modul VBA),2026-11-03 17:40:27
 "SARIMA(1,0,0)x(1,1,0,12) log",February 2026,2,71335.0,57069.0,89168.0,Python (rumus rekursif = modul VBA),2026-11-03 17:40:27

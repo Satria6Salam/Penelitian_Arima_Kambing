@@ -1,3 +1,13 @@
+"# ===================================================================================================="
+"# KETERANGAN TABEL : 08_cek_data_testing.csv (dibuat oleh 08_forecasting_data_testing.py)"
+"# Isi tabel        : Daftar pemeriksaan bahwa data uji (testing) lengkap dan pembagian data latih/uji benar sebelum dipakai meramal."
+"# Satu baris data  : satu butir pemeriksaan."
+"# Keterangan kolom : nomor. NAMA KOLOM = arti | Diperoleh dari: cara menghitung/sumbernya"
+"#   1. Pemeriksaan = Hal yang diperiksa. | Diperoleh dari: Daftar pemeriksaan tetap di script 08."
+"#   2. Hasil = Temuan pemeriksaan. | Diperoleh dari: Dihitung dari 06_training_set.csv dan 06_testing_set.csv."
+"#   3. Lulus = Ya = sesuai yang diharapkan; Tidak = ada masalah. | Diperoleh dari: Membandingkan temuan dengan syaratnya."
+"# Catatan          : baris berawalan tanda # adalah keterangan, bukan data. Tabel data dimulai tepat di bawah garis ini."
+"# ===================================================================================================="
 Pemeriksaan,Hasil,Lulus
 Jumlah baris testing,9,Ya
 Jumlah baris training,27,Ya

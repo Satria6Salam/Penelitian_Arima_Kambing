@@ -40,6 +40,7 @@ from pathlib import Path
 from scipy import stats
 from statsmodels.stats.diagnostic import acorr_ljungbox
 
+import keterangan_csv as kk  # keterangan kolom pada setiap CSV hasil
 import estimasi_model as em
 import penjelasan  # contoh perhitungan rumus di terminal + log_terminal/
 
@@ -108,8 +109,8 @@ def muat_data():
     for f in [TRAIN_CSV, TEST_CSV]:
         if not f.exists():
             raise FileNotFoundError(f"File tidak ditemukan: {f}. Jalankan script 06 dulu.")
-    train = pd.read_csv(TRAIN_CSV, parse_dates=["Periode"]).set_index("Periode").asfreq("MS")
-    test = pd.read_csv(TEST_CSV, parse_dates=["Periode"]).set_index("Periode").asfreq("MS")
+    train = kk.baca_csv(TRAIN_CSV, parse_dates=["Periode"]).set_index("Periode").asfreq("MS")
+    test = kk.baca_csv(TEST_CSV, parse_dates=["Periode"]).set_index("Periode").asfreq("MS")
     if HORIZON > len(test):
         raise ValueError(f"HORIZON {HORIZON} melebihi panjang data testing ({len(test)} bulan).")
     return train, test
@@ -266,8 +267,8 @@ def bagian_validasi(train, test):
                       aktual=test[TARGET_COL].values[:HORIZON],
                       iduladha=["Ya" if k > 1 else "Tidak"
                                 for k in test["Koefisien_Musim"].values[:HORIZON]])
-    df_param.to_csv(VALIDASI_DIR / "09_parameter_model_validasi.csv", index=False)
-    df.to_csv(VALIDASI_DIR / "09_peramalan_validasi_apr_sep_2025.csv", index=False)
+    kk.simpan_csv(df_param, VALIDASI_DIR / "09_parameter_model_validasi.csv", index=False)
+    kk.simpan_csv(df, VALIDASI_DIR / "09_peramalan_validasi_apr_sep_2025.csv", index=False)
     fan_chart(train, df, VALIDASI_DIR / "grafik" / "09_fan_chart_validasi.png",
               "Validasi Peramalan Apr–Sep 2025 (parameter dari 27 bulan training)",
               "Data aktual historis (training)", "Iduladha Jun 2025")
@@ -297,9 +298,9 @@ def bagian_utama(train, test):
                             periods=HORIZON, freq="MS")
     df = ekstrapolasi(result, data_penuh, periode)
 
-    df_param.to_csv(OUTPUT_DIR / "09_parameter_model_final.csv", index=False)
-    df_diag.to_csv(OUTPUT_DIR / "09_diagnostik_model_final.csv", index=False)
-    df.to_csv(OUTPUT_DIR / "09_peramalan_jan_jun_2026.csv", index=False)
+    kk.simpan_csv(df_param, OUTPUT_DIR / "09_parameter_model_final.csv", index=False)
+    kk.simpan_csv(df_diag, OUTPUT_DIR / "09_diagnostik_model_final.csv", index=False)
+    kk.simpan_csv(df, OUTPUT_DIR / "09_peramalan_jan_jun_2026.csv", index=False)
 
     fan_chart(data_penuh, df, OUTPUT_DIR / "grafik" / "09_fan_chart.png",
               f"Fan Chart Peramalan Permintaan Daging Kambing {periode[0]:%b %Y}–{periode[-1]:%b %Y}",

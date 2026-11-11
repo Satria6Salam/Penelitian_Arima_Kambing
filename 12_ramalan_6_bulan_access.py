@@ -42,6 +42,7 @@ import numpy as np
 import pandas as pd
 import pyodbc
 
+import keterangan_csv as kk  # keterangan kolom pada setiap CSV hasil
 from koneksi import DB_PATH, ACCESS_DRIVER
 
 # Tanpa connection pooling agar file salinan uji bisa dihapus setelah dipakai
@@ -231,7 +232,7 @@ def main():
     print(f"Query dibuat         : {', '.join(QUERIES)}")
 
     # 3. Uji di database asli: ODBC dan Access asli (DAO) vs statsmodels
-    ref = pd.read_csv(REF_CSV).rename(columns={"Yhat_Kg": "Ramalan_Kg"})
+    ref = kk.baca_csv(REF_CSV).rename(columns={"Yhat_Kg": "Ramalan_Kg"})
     ref = normalisasi(ref)
     odbc = normalisasi(baca_odbc(DB_PATH, "SELECT * FROM qry_12_Ramalan_6_Bulan"))
     dao = normalisasi(baca_dao(str(DB_PATH), "qry_12_Ramalan_6_Bulan"))
@@ -245,7 +246,7 @@ def main():
     for q in ["qry_11_Ramalan_Bulan_Depan", "qry_11_Peramalan_6_Bulan", "qry_11_Volume_Bulanan",
               "qry_11_Faktor_Musiman", "qry_11_Ramalan_1_Bulan_Historis"]:
         q11[q] = len(baca_dao(str(DB_PATH), q))
-    dao.to_csv(OUT / "12_hasil_qry_12_Ramalan_6_Bulan_access.csv", index=False)
+    kk.simpan_csv(dao, OUT / "12_hasil_qry_12_Ramalan_6_Bulan_access.csv", index=False)
 
     # 4. Uji dinamis di SALINAN database
     with tempfile.TemporaryDirectory(ignore_cleanup_errors=True) as tmp:
@@ -262,8 +263,8 @@ def main():
         py_baru = normalisasi(ramalan_python(salinan))
     ver = pd.concat([ver, bandingkan(dao_baru, py_baru, "Access_DAO", "Python_rumus_sama",
                                      "Uji dinamis (+data Jan 2026 dummy) di salinan database")])
-    ver.to_csv(OUT / "12_verifikasi_ramalan_6_bulan.csv", index=False)
-    dao_baru.to_csv(OUT / "12_uji_dinamis_ramalan_feb_jul_2026.csv", index=False)
+    kk.simpan_csv(ver, OUT / "12_verifikasi_ramalan_6_bulan.csv", index=False)
+    kk.simpan_csv(dao_baru, OUT / "12_uji_dinamis_ramalan_feb_jul_2026.csv", index=False)
 
     # 5. Dokumentasi SQL
     teks = ["-- Query ramalan 6 bulan murni MS Access (dibuat oleh 12_ramalan_6_bulan_access.py).",

@@ -1,3 +1,23 @@
+"# ===================================================================================================="
+"# KETERANGAN TABEL : 07_parameter_estimasi.csv (dibuat oleh 07_validasi_diagnostik_evaluasi.py)"
+"# Isi tabel        : Nilai parameter (koefisien) seluruh 28 kandidat model beserta uji signifikansinya. Menjawab: seberapa besar dan seberapa nyata pengaruh tiap komponen model."
+"# Satu baris data  : satu parameter dari satu model."
+"# Keterangan kolom : nomor. NAMA KOLOM = arti | Diperoleh dari: cara menghitung/sumbernya"
+"#   1. Nama_Model = Nama lengkap model beserta ordenya, misalnya SARIMA(1, 0, 0)x(1, 1, 0, 12). y[t-12] = seasonal naive. | Diperoleh dari: Dari daftar kandidat model yang diestimasi di script 06."
+"#   2. Kelompok = Kelompok pembedaan data: d = pembedaan biasa, D = pembedaan musiman (selisih dengan 12 bulan sebelumnya). | Diperoleh dari: Diambil dari Order dan Seasonal_Order. AIC/BIC hanya adil dibandingkan antar model dalam kelompok yang sama."
+"#   3. Parameter = Nama parameter model. intercept = nilai dasar; ar.L1/ar.L2 = pengaruh 1/2 bulan sebelumnya; ma.L1 = pengaruh galat bulan sebelumnya; ar.S.L12/ma.S.L12 = pengaruh bulan yang sama tahun lalu; Harga_Rata2_Per_Kg / Koefisien_Musim = pengaruh variabel eksogen; sigma2 = ragam galat model. | Diperoleh dari: Nama baku dari statsmodels sesuai orde model."
+"#   4. Koefisien = Besar pengaruh parameter tersebut di dalam model (pada skala logaritma). Tanda negatif berarti arah pengaruh berlawanan. | Diperoleh dari: Hasil estimasi kemungkinan maksimum (MLE) statsmodels."
+"#   5. Std_Error = Galat baku koefisien: seberapa tidak pasti nilai koefisien. Makin kecil dibanding koefisiennya makin meyakinkan. | Diperoleh dari: Dihitung statsmodels dari kelengkungan fungsi likelihood."
+"#   6. z = Nilai uji z: berapa kali lipat koefisien dibanding galat bakunya. | Diperoleh dari: Koefisien / Std_Error."
+"#   7. P_value = Peluang koefisien sebesar itu muncul hanya karena kebetulan. Di bawah 0,05 = pengaruhnya nyata (signifikan). | Diperoleh dari: Dari nilai z dengan sebaran normal baku."
+"#   8. CI95_Bawah = Batas bawah rentang 95% untuk nilai koefisien yang sebenarnya. | Diperoleh dari: Koefisien - 1,96 x Std_Error."
+"#   9. CI95_Atas = Batas atas rentang 95% untuk nilai koefisien yang sebenarnya. | Diperoleh dari: Koefisien + 1,96 x Std_Error."
+"#   10. Signifikan_5% = Ya = pengaruh parameter nyata (P_value di bawah 0,05); Tidak = belum terbukti nyata; - = tidak diuji (sigma2). | Diperoleh dari: Membandingkan P_value dengan 0,05."
+"#   11. LogL = Ukuran seberapa cocok model dengan data latih (pada skala logaritma). Makin besar makin cocok. | Diperoleh dari: Nilai log-likelihood hasil estimasi statsmodels."
+"#   12. AIC = Skor kecocokan model yang memberi penalti pada model rumit. Makin kecil makin baik (hanya dibandingkan dalam kelompok d, D yang sama). | Diperoleh dari: -2 x Log_Likelihood + 2 x Jumlah_Parameter."
+"#   13. BIC = Seperti AIC tetapi penalti untuk model rumit lebih berat. Makin kecil makin baik. | Diperoleh dari: -2 x Log_Likelihood + Jumlah_Parameter x ln(nobs_effective)."
+"# Catatan          : baris berawalan tanda # adalah keterangan, bukan data. Tabel data dimulai tepat di bawah garis ini."
+"# ===================================================================================================="
 Nama_Model,Kelompok,Parameter,Koefisien,Std_Error,z,P_value,CI95_Bawah,CI95_Atas,Signifikan_5%,LogL,AIC,BIC
 "ARIMAX(2, 0, 0) + Harga + Iduladha","d=0, D=0",intercept,-4.39551331502227,5.706728265717001,-0.7702335051465801,0.4411613923345613,-15.580495185384315,6.789468555339776,Tidak,28.354197200293825,-44.70839440058765,-36.933373204561676
 "ARIMAX(2, 0, 0) + Harga + Iduladha","d=0, D=0",Harga_Rata2_Per_Kg,4.490139728363613,4.3004326477560495,1.0441134872107698,0.29643288656655964,-3.938553379178468,12.918832835905693,Tidak,28.354197200293825,-44.70839440058765,-36.933373204561676

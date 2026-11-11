@@ -1,3 +1,17 @@
+"# ===================================================================================================="
+"# KETERANGAN TABEL : tabel_dekomposisi_hasil.csv (dibuat oleh 05_eksplorasi_data.py)"
+"# Isi tabel        : Data bulanan yang diurai (dekomposisi aditif, periode 12 bulan) menjadi tiga bagian: tren, musiman, dan sisa. Permintaan = Trend + Seasonal + Residual."
+"# Satu baris data  : satu bulan (Januari 2023 - Desember 2025)."
+"# Keterangan kolom : nomor. NAMA KOLOM = arti | Diperoleh dari: cara menghitung/sumbernya"
+"#   1. Periode = Bulan yang dicatat atau diramal (tahun-bulan). | Diperoleh dari: Kalender; satu baris mewakili satu bulan."
+"#   2. Jumlah_Transaksi = Banyaknya struk transaksi pada bulan itu. | Diperoleh dari: Menghitung jumlah baris transaksi per bulan (script 04)."
+"#   3. Total_Kuantitas_Kg = Permintaan daging kambing seluruh Kabupaten Malang pada bulan itu (kg). Inilah angka yang diramal. | Diperoleh dari: Jumlah Kuantitas_Kg semua struk transaksi pada bulan itu (script 04)."
+"#   4. Harga_Rata2_Per_Kg = Harga jual rata-rata per kg pada bulan itu (rupiah). | Diperoleh dari: Rata-rata Harga_Final semua struk transaksi bulan itu, dibulatkan (script 04)."
+"#   5. Trend_Kg = Arah umum jangka panjang permintaan (kg). Kosong pada 6 bulan pertama dan 6 bulan terakhir. | Diperoleh dari: Rata-rata bergerak terpusat 12 bulan."
+"#   6. Seasonal_Kg = Efek musiman bulan itu (kg): berapa kg bulan tersebut biasanya di atas (+) atau di bawah (-) tren. Nilainya sama untuk bulan yang sama tiap tahun. | Diperoleh dari: Rata-rata (data - tren) untuk bulan kalender yang sama, lalu dipusatkan agar jumlah setahun = 0."
+"#   7. Residual_Kg = Sisa yang tidak terjelaskan tren maupun musim (kg). | Diperoleh dari: Total_Kuantitas_Kg - Trend_Kg - Seasonal_Kg."
+"# Catatan          : baris berawalan tanda # adalah keterangan, bukan data. Tabel data dimulai tepat di bawah garis ini."
+"# ===================================================================================================="
 Periode,Jumlah_Transaksi,Total_Kuantitas_Kg,Harga_Rata2_Per_Kg,Trend_Kg,Seasonal_Kg,Residual_Kg
 2023-01-01,5867,117654.63,120939.0,,-14277.48,
 2023-02-01,5296,106155.92,121180.0,,-15331.07,

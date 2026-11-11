@@ -43,6 +43,7 @@ from scipy import stats
 from statsmodels.graphics.gofplots import qqplot
 from statsmodels.stats.diagnostic import acorr_ljungbox
 
+import keterangan_csv as kk  # keterangan kolom pada setiap CSV hasil
 import estimasi_model as em
 import penjelasan  # contoh perhitungan rumus di terminal + log_terminal/
 
@@ -162,9 +163,9 @@ def muat_data():
                 f"File tidak ditemukan: {f}. Jalankan 06_pemodelan_forecasting.py dulu."
             )
 
-    train = pd.read_csv(TRAIN_CSV, parse_dates=["Periode"]).set_index("Periode").asfreq("MS")
-    test = pd.read_csv(TEST_CSV, parse_dates=["Periode"]).set_index("Periode").asfreq("MS")
-    df_aic = pd.read_csv(AIC_BIC_CSV)
+    train = kk.baca_csv(TRAIN_CSV, parse_dates=["Periode"]).set_index("Periode").asfreq("MS")
+    test = kk.baca_csv(TEST_CSV, parse_dates=["Periode"]).set_index("Periode").asfreq("MS")
+    df_aic = kk.baca_csv(AIC_BIC_CSV)
 
     kandidat = []
     for _, r in df_aic[df_aic["Status"] != "Gagal"].iterrows():
@@ -252,8 +253,8 @@ def estimasi_parameter(train, kandidat):
 
     df_param = pd.DataFrame(baris_param)
     df_opt = pd.DataFrame(baris_opt)
-    df_param.to_csv(PARAMETER_CSV, index=False)
-    df_opt.to_csv(OPTIMUM_CSV, index=False)
+    kk.simpan_csv(df_param, PARAMETER_CSV, index=False)
+    kk.simpan_csv(df_opt, OPTIMUM_CSV, index=False)
 
     selisih_06 = (df_opt["LogL_07"] - df_opt["LogL_06"]).abs().max()
     print(f"Konsistensi dengan script 06   : selisih LogL maks {selisih_06:.2e}")
@@ -295,11 +296,11 @@ def pilih_shortlist(kandidat):
         shortlist.append({**terpilih, "Label": label})
         print(f"- {label:<22}: {terpilih['Nama_Model']:<36} AIC {terpilih['AIC_06']:.4f}")
 
-    pd.DataFrame([{
+    kk.simpan_csv(pd.DataFrame([{
         "Label": s["Label"], "Nama_Model": s["Nama_Model"], "Kelompok": s["Kelompok"],
         "Order": str(s["order"]), "Seasonal_Order": str(s["seasonal_order"]),
         "Eksogen": s["Eksogen"], "AIC_06": s["AIC_06"], "BIC_06": s["BIC_06"],
-    } for s in shortlist]).to_csv(SHORTLIST_CSV, index=False)
+    } for s in shortlist]), SHORTLIST_CSV, index=False)
     return shortlist
 
 
@@ -378,7 +379,7 @@ def diagnostik_residual(shortlist, hasil_fit):
 
     SUMMARY_TXT.write_text("".join(teks_summary), encoding="utf-8")
     df = pd.DataFrame(baris)
-    df.to_csv(DIAGNOSTIK_CSV, index=False)
+    kk.simpan_csv(df, DIAGNOSTIK_CSV, index=False)
     print(f"\nDiagnostik disimpan ke : {DIAGNOSTIK_CSV}")
     print(f"Q-Q plot disimpan ke   : {GRAFIK_DIR}")
     return df
@@ -440,7 +441,7 @@ def rolling_origin(train, test, shortlist):
     print(f"- {LABEL_NAIVE:<22} selesai (pembanding)")
 
     df = pd.DataFrame(baris)
-    df.to_csv(ROLLING_CSV, index=False)
+    kk.simpan_csv(df, ROLLING_CSV, index=False)
     print(f"\nPrediksi per putaran disimpan ke: {ROLLING_CSV}")
     return df
 
@@ -475,7 +476,7 @@ def hitung_metrik_rolling(df_roll):
             df["MAPE_%"] < float(mape_naive.iloc[0]), "Ya", "Tidak")
     df.loc[df["Label"] == LABEL_NAIVE, "Lebih_baik_dari_naive"] = "-"
     df = df.sort_values("MAPE_%")
-    df.to_csv(METRIK_CSV, index=False)
+    kk.simpan_csv(df, METRIK_CSV, index=False)
 
     print(df[["Label", "MAPE_%", "RMSE", "MAE", "MSE", "R2", "APE_maks_%"]].to_string(
         index=False, float_format=lambda x: f"{x:,.3f}"))

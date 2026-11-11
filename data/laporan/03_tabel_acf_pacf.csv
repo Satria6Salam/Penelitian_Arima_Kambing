@@ -1,3 +1,17 @@
+"# ===================================================================================================="
+"# KETERANGAN TABEL : 03_tabel_acf_pacf.csv (dibuat oleh 10_ekspor_output_laporan.py)"
+"# Isi tabel        : Nilai ACF dan PACF data permintaan asli per lag (jarak bulan). Dipakai untuk melihat pola musiman dan memilih orde model; nilai besar di lag 12 menandakan pola tahunan."
+"# Satu baris data  : satu lag (0 sampai 12 atau lebih)."
+"# Keterangan kolom : nomor. NAMA KOLOM = arti | Diperoleh dari: cara menghitung/sumbernya"
+"#   1. Lag_k = Jarak waktu dalam bulan (lag 12 = dibandingkan dengan 12 bulan sebelumnya). | Diperoleh dari: Urutan 0, 1, 2, ..."
+"#   2. Nilai_ACF = Kekuatan hubungan data dengan dirinya sendiri k bulan sebelumnya (-1 sampai 1). | Diperoleh dari: Fungsi autokorelasi (statsmodels)."
+"#   3. ACF_Batas_Signifikansi = Ambang batas: ACF dianggap nyata bila besarnya melebihi angka ini. | Diperoleh dari: Setengah lebar selang kepercayaan 95% (rumus Bartlett)."
+"#   4. ACF_Signifikan = True = hubungan pada lag itu nyata. | Diperoleh dari: True bila |Nilai_ACF| lebih besar dari ACF_Batas_Signifikansi."
+"#   5. Nilai_PACF = Kekuatan hubungan langsung dengan k bulan sebelumnya setelah pengaruh lag di antaranya dihilangkan. | Diperoleh dari: Fungsi autokorelasi parsial (metode Yule-Walker)."
+"#   6. PACF_Batas_Signifikansi = Ambang batas: PACF dianggap nyata bila besarnya melebihi angka ini. | Diperoleh dari: Setengah lebar selang kepercayaan 95%."
+"#   7. PACF_Signifikan = True = hubungan langsung pada lag itu nyata. | Diperoleh dari: True bila |Nilai_PACF| lebih besar dari PACF_Batas_Signifikansi."
+"# Catatan          : baris berawalan tanda # adalah keterangan, bukan data. Tabel data dimulai tepat di bawah garis ini."
+"# ===================================================================================================="
 Lag_k,Nilai_ACF,ACF_Batas_Signifikansi,ACF_Signifikan,Nilai_PACF,PACF_Batas_Signifikansi,PACF_Signifikan
 0,1.0,0.0,False,1.0,0.0,False
 1,-0.002395699325505722,0.326660664090009,False,-0.0024641478776630333,0.326660664090009,False

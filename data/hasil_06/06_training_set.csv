@@ -1,3 +1,15 @@
+"# ===================================================================================================="
+"# KETERANGAN TABEL : 06_training_set.csv (dibuat oleh 06_pemodelan_forecasting.py)"
+"# Isi tabel        : Data latih (training): 75% data pertama secara urutan waktu, dipakai untuk membangun model."
+"# Satu baris data  : satu bulan (Januari 2023 - Maret 2025, 27 bulan)."
+"# Keterangan kolom : nomor. NAMA KOLOM = arti | Diperoleh dari: cara menghitung/sumbernya"
+"#   1. Periode = Bulan yang dicatat atau diramal (tahun-bulan). | Diperoleh dari: Kalender; satu baris mewakili satu bulan."
+"#   2. Jumlah_Transaksi = Banyaknya struk transaksi pada bulan itu. | Diperoleh dari: Menghitung jumlah baris transaksi per bulan (script 04)."
+"#   3. Total_Kuantitas_Kg = Permintaan daging kambing seluruh Kabupaten Malang pada bulan itu (kg). Inilah angka yang diramal. | Diperoleh dari: Jumlah Kuantitas_Kg semua struk transaksi pada bulan itu (script 04)."
+"#   4. Harga_Rata2_Per_Kg = Harga jual rata-rata per kg pada bulan itu (rupiah). | Diperoleh dari: Rata-rata Harga_Final semua struk transaksi bulan itu, dibulatkan (script 04)."
+"#   5. Koefisien_Musim = Penanda bulan Iduladha: 1 = bulan biasa; 2,717 = bulan Iduladha (permintaan sekitar 2,7 kali bulan biasa). | Diperoleh dari: Pengali musiman yang dipakai saat membangkitkan data (script 03): 1 + (22.359 - 8.229) / 8.229 = 2,717."
+"# Catatan          : baris berawalan tanda # adalah keterangan, bukan data. Tabel data dimulai tepat di bawah garis ini."
+"# ===================================================================================================="
 Periode,Jumlah_Transaksi,Total_Kuantitas_Kg,Harga_Rata2_Per_Kg,Koefisien_Musim
 2023-01-01,5867,117654.63,120939.0,1.0
 2023-02-01,5296,106155.92,121180.0,1.0

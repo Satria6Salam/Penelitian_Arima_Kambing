@@ -1,3 +1,14 @@
+"# ===================================================================================================="
+"# KETERANGAN TABEL : 12_uji_dinamis_ramalan_feb_jul_2026.csv (dibuat oleh 12_ramalan_6_bulan_access.py)"
+"# Isi tabel        : Uji bahwa ramalan di MS Access otomatis bergeser saat data baru diisi: pada SALINAN database ditambahkan data contoh Januari 2026 (ramalan Januari + 5%), hasilnya ramalan menjadi Februari - Juli 2026."
+"# Satu baris data  : satu bulan yang diramal setelah data contoh ditambahkan."
+"# Keterangan kolom : nomor. NAMA KOLOM = arti | Diperoleh dari: cara menghitung/sumbernya"
+"#   1. Periode = Bulan yang diramal. | Diperoleh dari: Enam bulan setelah data terakhir di Tbl_Volume_Bulanan."
+"#   2. Ramalan_Kg = Ramalan permintaan (kg) hasil query MS Access. | Diperoleh dari: Query qry_12_Ramalan_6_Bulan: rumus SARIMA(1,0,0)x(1,1,0,12) log ditulis dalam SQL."
+"#   3. Batas_Bawah_95_Kg = Batas bawah interval 95% (kg). | Diperoleh dari: exp(ramalan log - 1,96 x galat baku ramalan) dalam SQL."
+"#   4. Batas_Atas_95_Kg = Batas atas interval 95% (kg). | Diperoleh dari: exp(ramalan log + 1,96 x galat baku ramalan) dalam SQL."
+"# Catatan          : baris berawalan tanda # adalah keterangan, bukan data. Tabel data dimulai tepat di bawah garis ini."
+"# ===================================================================================================="
 Periode,Ramalan_Kg,Batas_Bawah_95_Kg,Batas_Atas_95_Kg
 2026-02,74704.45156546087,63525.22378001278,87851.01022268554
 2026-03,72459.53387733655,57968.198220588325,90573.52498246402

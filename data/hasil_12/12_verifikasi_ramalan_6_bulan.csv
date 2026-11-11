@@ -1,3 +1,18 @@
+"# ===================================================================================================="
+"# KETERANGAN TABEL : 12_verifikasi_ramalan_6_bulan.csv (dibuat oleh 12_ramalan_6_bulan_access.py)"
+"# Isi tabel        : Bukti bahwa ramalan 6 bulan dari query MS Access sama dengan hasil Python. Selisih mendekati nol berarti query Access benar."
+"# Satu baris data  : satu angka yang dibandingkan (satu besaran pada satu bulan)."
+"# Keterangan kolom : nomor. NAMA KOLOM = arti | Diperoleh dari: cara menghitung/sumbernya"
+"#   1. Uji = Jenis pembandingan: Access asli (DAO) vs statsmodels, driver ODBC vs statsmodels, atau uji dinamis di salinan database. | Diperoleh dari: Tiga uji di script 12."
+"#   2. Periode = Bulan yang dicatat atau diramal (tahun-bulan). | Diperoleh dari: Kalender; satu baris mewakili satu bulan."
+"#   3. Besaran = Angka yang dibandingkan: ramalan, batas bawah, atau batas atas. | Diperoleh dari: Nama kolom hasil query."
+"#   4. Access_DAO = Nilai dari MS Access asli (mesin DAO) (kg). Kosong bila uji tidak memakainya. | Diperoleh dari: Menjalankan query lewat MS Access."
+"#   5. Python_statsmodels = Nilai pembanding dari Python statsmodels (kg). | Diperoleh dari: Dari 09_peramalan_jan_jun_2026.csv."
+"#   6. Selisih_Relatif_% = Beda hasil Access dengan pembandingnya (persen). Mendekati 0 = sama. | Diperoleh dari: (nilai Access - nilai pembanding) / nilai pembanding x 100."
+"#   7. Access_ODBC = Nilai dari driver ODBC Access (kg). Kosong bila uji tidak memakainya. | Diperoleh dari: Menjalankan query lewat pyodbc."
+"#   8. Python_rumus_sama = Nilai pembanding dari Python dengan rumus yang sama seperti query (kg); dipakai pada uji dinamis. | Diperoleh dari: Rumus rekursif SARIMA dihitung ulang di Python dari data salinan database."
+"# Catatan          : baris berawalan tanda # adalah keterangan, bukan data. Tabel data dimulai tepat di bawah garis ini."
+"# ===================================================================================================="
 Uji,Periode,Besaran,Access_DAO,Python_statsmodels,Selisih_Relatif_%,Access_ODBC,Python_rumus_sama
 MS Access asli (DAO) vs statsmodels,2026-01,Ramalan_Kg,71327.29209355311,71327.29222602233,-1.8572023253851884e-07,,
 MS Access asli (DAO) vs statsmodels,2026-01,Batas_Bawah_95_Kg,60653.442959752814,60653.44309831203,-2.2844411056419581e-07,,

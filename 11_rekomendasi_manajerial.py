@@ -24,6 +24,8 @@ import pandas as pd
 
 from pathlib import Path
 
+import keterangan_csv as kk  # keterangan kolom pada setiap CSV hasil
+
 
 # =============================================================================
 # PENGATURAN PATH
@@ -68,7 +70,7 @@ def tabel_md(df, kolom, fmt=None):
 # =============================================================================
 
 def analisis_stok():
-    df = pd.read_csv(PERAMALAN_TEST_CSV)
+    df = kk.baca_csv(PERAMALAN_TEST_CSV)
     baris = []
     for label in [MODEL, PEMBANDING]:
         isi = df[df["Label"] == label]
@@ -94,13 +96,13 @@ def analisis_stok():
         if n["Kekurangan_Stok_Kg"] > 0 else np.nan,
         "Penurunan_Selisih_Total_%": (1 - m["Total_Selisih_Absolut_Kg"] / n["Total_Selisih_Absolut_Kg"]) * 100,
     }
-    hasil.to_csv(OUT / "11_rek_stok_testing.csv", index=False)
+    kk.simpan_csv(hasil, OUT / "11_rek_stok_testing.csv", index=False)
 
     per_bulan = df[df["Label"].isin([MODEL, PEMBANDING])].pivot(
         index="Periode", columns="Label", values="Prediksi_Kg").reset_index()
     per_bulan.insert(1, "Aktual_Kg", df[df["Label"] == MODEL].set_index("Periode")
                      .loc[per_bulan["Periode"], "Aktual_Kg"].values)
-    per_bulan.to_csv(OUT / "11_rek_stok_per_bulan.csv", index=False)
+    kk.simpan_csv(per_bulan, OUT / "11_rek_stok_per_bulan.csv", index=False)
     return hasil, pengurangan, per_bulan
 
 
@@ -109,7 +111,7 @@ def analisis_stok():
 # =============================================================================
 
 def analisis_pakan():
-    f = pd.read_csv(PERAMALAN_2026_CSV)
+    f = kk.baca_csv(PERAMALAN_2026_CSV)
     rata = f["Yhat_Kg"].mean()
     normal = f[f["Yhat_Kg"] < f["Yhat_Kg"].max()]["Yhat_Kg"].mean()
     tab = pd.DataFrame({
@@ -119,7 +121,7 @@ def analisis_pakan():
         "Indeks_vs_Bulan_Normal": f["Yhat_Kg"] / normal,
         "Batas_Atas_95_Kg": f["Batas_Atas_95_Kg"],
     })
-    tab.to_csv(OUT / "11_rek_indeks_kebutuhan_2026.csv", index=False)
+    kk.simpan_csv(tab, OUT / "11_rek_indeks_kebutuhan_2026.csv", index=False)
     return tab, normal
 
 
@@ -128,9 +130,9 @@ def analisis_pakan():
 # =============================================================================
 
 def analisis_kapasitas():
-    f = pd.read_csv(PERAMALAN_2026_CSV)
+    f = kk.baca_csv(PERAMALAN_2026_CSV)
     puncak = f.loc[f["Yhat_Kg"].idxmax()]
-    val = pd.read_csv(VALIDASI_09_CSV)
+    val = kk.baca_csv(VALIDASI_09_CSV)
     juni = val[val["Periode"] == "2025-06"].iloc[0]
     hasil = pd.DataFrame([{
         "Periode_Puncak": puncak["Periode"],
@@ -142,7 +144,7 @@ def analisis_kapasitas():
         "Validasi_Juni_2025_Aktual_Kg": juni["Aktual_Kg"],
         "Validasi_Juni_2025_Dalam_Interval": juni["Aktual_dalam_Interval"],
     }])
-    hasil.to_csv(OUT / "11_rek_kapasitas_puncak.csv", index=False)
+    kk.simpan_csv(hasil, OUT / "11_rek_kapasitas_puncak.csv", index=False)
     return hasil.iloc[0]
 
 
@@ -162,8 +164,8 @@ CONTOH_UMKM_KG = 500        # contoh penjualan bulan normal satu UMKM (ilustrasi
 
 
 def analisis_umkm():
-    f = pd.read_csv(PERAMALAN_2026_CSV)
-    d = pd.read_csv(DATASET_CSV, parse_dates=["Periode"])
+    f = kk.baca_csv(PERAMALAN_2026_CSV)
+    d = kk.baca_csv(DATASET_CSV, parse_dates=["Periode"])
     lalu = d.set_index(d["Periode"].dt.strftime("%Y-%m"))["Total_Kuantitas_Kg"]
     periode_lalu = pd.to_datetime(f["Periode"]) - pd.DateOffset(years=1)
     aktual_lalu = lalu.reindex(periode_lalu.dt.strftime("%Y-%m")).values
@@ -180,7 +182,7 @@ def analisis_umkm():
     tab[f"Contoh_UMKM_{CONTOH_UMKM_KG}kg_Rencana_Kg"] = CONTOH_UMKM_KG * tab["Indeks_vs_Bulan_Normal"]
     tab[f"Contoh_UMKM_{CONTOH_UMKM_KG}kg_Maks_Kg"] = (CONTOH_UMKM_KG * tab["Indeks_vs_Bulan_Normal"]
                                                       * tab["Faktor_Batas_Atas"])
-    tab.to_csv(OUT / "11_rek_panduan_umkm_2026.csv", index=False)
+    kk.simpan_csv(tab, OUT / "11_rek_panduan_umkm_2026.csv", index=False)
     return tab
 
 
@@ -189,8 +191,8 @@ def analisis_umkm():
 # =============================================================================
 
 def analisis_harga():
-    d = pd.read_csv(DATASET_CSV, parse_dates=["Periode"])
-    v = pd.read_csv(VOLUME_CSV, parse_dates=["Periode"])[["Periode", "Koefisien_Musim"]]
+    d = kk.baca_csv(DATASET_CSV, parse_dates=["Periode"])
+    v = kk.baca_csv(VOLUME_CSV, parse_dates=["Periode"])[["Periode", "Koefisien_Musim"]]
     d = d.merge(v, on="Periode")
     d["Kategori"] = np.where(d["Koefisien_Musim"] > 1, "Bulan Iduladha", "Bulan biasa")
     tab = d.groupby("Kategori").agg(
@@ -204,7 +206,7 @@ def analisis_harga():
     idul = tab.set_index("Kategori").loc["Bulan Iduladha"]
     selisih_pct = (idul["Harga_Rata2_Per_Kg"] / biasa["Harga_Rata2_Per_Kg"] - 1) * 100
     tab["Selisih_vs_Bulan_Biasa_%"] = (tab["Harga_Rata2_Per_Kg"] / biasa["Harga_Rata2_Per_Kg"] - 1) * 100
-    tab.to_csv(OUT / "11_rek_harga_historis.csv", index=False)
+    kk.simpan_csv(tab, OUT / "11_rek_harga_historis.csv", index=False)
     return tab, biasa, idul, selisih_pct
 
 
@@ -213,9 +215,9 @@ def analisis_harga():
 # =============================================================================
 
 def tulis(stok, kurang, per_bulan, pakan, normal, kap, harga, biasa, idul, selisih_pct, umkm):
-    ev = pd.read_csv(EVAL_TEST_CSV).set_index("Label")
-    met7 = pd.read_csv(METRIK_07_CSV).set_index("Label")
-    val = pd.read_csv(VALIDASI_09_CSV)
+    ev = kk.baca_csv(EVAL_TEST_CSV).set_index("Label")
+    met7 = kk.baca_csv(METRIK_07_CSV).set_index("Label")
+    val = kk.baca_csv(VALIDASI_09_CSV)
     mape_val = val["APE_%"].mean()
     m, n = stok.iloc[0], stok.iloc[1]
     f0 = lambda x: rp(x)

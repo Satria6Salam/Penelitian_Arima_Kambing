@@ -39,6 +39,7 @@ import statsmodels
 from pathlib import Path
 from scipy import stats
 
+import keterangan_csv as kk  # keterangan kolom pada setiap CSV hasil
 import estimasi_model as em
 import penjelasan  # contoh perhitungan rumus di terminal + log_terminal/
 
@@ -145,7 +146,7 @@ def cek_data_testing(train, test):
     ]
     df = pd.DataFrame(baris, columns=["Pemeriksaan", "Hasil", "Lulus"])
     df["Lulus"] = df["Lulus"].map({True: "Ya", False: "Tidak"})
-    df.to_csv(CEK_DATA_CSV, index=False)
+    kk.simpan_csv(df, CEK_DATA_CSV, index=False)
 
     print("\n[PEMERIKSAAN DATA TESTING]")
     print(df.to_string(index=False))
@@ -163,16 +164,16 @@ def muat_data_dan_model():
         if not f.exists():
             raise FileNotFoundError(f"File tidak ditemukan: {f}. Jalankan script 06 dan 07 dulu.")
 
-    train = pd.read_csv(TRAIN_CSV, parse_dates=["Periode"]).set_index("Periode").asfreq("MS")
-    test = pd.read_csv(TEST_CSV, parse_dates=["Periode"]).set_index("Periode").asfreq("MS")
+    train = kk.baca_csv(TRAIN_CSV, parse_dates=["Periode"]).set_index("Periode").asfreq("MS")
+    test = kk.baca_csv(TEST_CSV, parse_dates=["Periode"]).set_index("Periode").asfreq("MS")
 
     cek = cek_data_testing(train, test)
 
-    shortlist = pd.read_csv(SHORTLIST_CSV)
-    diag = pd.read_csv(DIAGNOSTIK_CSV)
+    shortlist = kk.baca_csv(SHORTLIST_CSV)
+    diag = kk.baca_csv(DIAGNOSTIK_CSV)
     df = shortlist.merge(diag[["Label", "Ljung_Box", "Shapiro_Wilk"]], on="Label")
     if METRIK_07_CSV.exists():
-        met = pd.read_csv(METRIK_07_CSV)[["Label", "MAPE_%"]].rename(
+        met = kk.baca_csv(METRIK_07_CSV)[["Label", "MAPE_%"]].rename(
             columns={"MAPE_%": "MAPE_rolling_07_%"})
         df = df.merge(met, on="Label", how="left")
 
@@ -196,7 +197,7 @@ def muat_data_dan_model():
         "exog": [] if r["Eksogen"] == "-" else [e.strip() for e in r["Eksogen"].split(",")],
     } for _, r in valid.iterrows()]
 
-    valid.to_csv(MODEL_CSV, index=False)
+    kk.simpan_csv(valid, MODEL_CSV, index=False)
     return train, test, model, cek
 
 
@@ -269,7 +270,7 @@ def peramalan(train, test, model):
         })
 
     df = pd.DataFrame(baris)
-    df.to_csv(PERAMALAN_CSV, index=False)
+    kk.simpan_csv(df, PERAMALAN_CSV, index=False)
     print(f"\nPeramalan per bulan disimpan ke: {PERAMALAN_CSV}")
     return df
 
@@ -307,7 +308,7 @@ def evaluasi(df):
         baris.append(info)
 
     df_eval = pd.DataFrame(baris).sort_values("MAPE_%")
-    df_eval.to_csv(EVALUASI_CSV, index=False)
+    kk.simpan_csv(df_eval, EVALUASI_CSV, index=False)
 
     kolom = ["Label", "MAPE_%", "RMSE", "MAE", "R2", "Bias_rata2_Kg", "APE_maks_%",
              "Bulan_APE_maks", "Cakupan_CI_95_%", "Lebar_CI_rata2_%_aktual"]
@@ -334,7 +335,7 @@ def banding_rolling(df):
         print("File rolling origin script 07 tidak ditemukan; dilewati.")
         return pd.DataFrame()
 
-    roll = pd.read_csv(ROLLING_07_CSV)[["Label", "Periode_Target", "Prediksi", "APE_%"]]
+    roll = kk.baca_csv(ROLLING_07_CSV)[["Label", "Periode_Target", "Prediksi", "APE_%"]]
     roll = roll.rename(columns={"Periode_Target": "Periode", "Prediksi": "Prediksi_Rolling_Kg",
                                 "APE_%": "APE_Rolling_%"})
     gabung = df.merge(roll, on=["Label", "Periode"], how="inner")
@@ -342,7 +343,7 @@ def banding_rolling(df):
                      "Prediksi_Rolling_Kg", "APE_Rolling_%"]].rename(
         columns={"Prediksi_Kg": "Prediksi_MultiStep_Kg", "APE_%": "APE_MultiStep_%"})
     gabung["Selisih_APE_poin"] = gabung["APE_MultiStep_%"] - gabung["APE_Rolling_%"]
-    gabung.to_csv(BANDING_07_CSV, index=False)
+    kk.simpan_csv(gabung, BANDING_07_CSV, index=False)
 
     ringkas = gabung.groupby("Label", sort=False).agg(
         MAPE_MultiStep=("APE_MultiStep_%", "mean"),

@@ -1,3 +1,15 @@
+"# ===================================================================================================="
+"# KETERANGAN TABEL : 11_rek_indeks_kebutuhan_2026.csv (dibuat oleh 11_rekomendasi_manajerial.py)"
+"# Isi tabel        : Indeks kebutuhan pasokan Januari - Juni 2026: perbandingan ramalan tiap bulan terhadap rata-rata, untuk merencanakan pasokan ternak dan pakan."
+"# Satu baris data  : satu bulan yang diramal."
+"# Keterangan kolom : nomor. NAMA KOLOM = arti | Diperoleh dari: cara menghitung/sumbernya"
+"#   1. Periode = Bulan yang dicatat atau diramal (tahun-bulan). | Diperoleh dari: Kalender; satu baris mewakili satu bulan."
+"#   2. Ramalan_Kg = Ramalan permintaan bulan itu (kg). | Diperoleh dari: Yhat_Kg dari 09_peramalan_jan_jun_2026.csv."
+"#   3. Indeks_vs_Rata2_6_Bulan = Perbandingan dengan rata-rata 6 bulan (1 = sama dengan rata-rata; 2 = dua kali lipat). | Diperoleh dari: Ramalan_Kg / rata-rata Ramalan_Kg 6 bulan."
+"#   4. Indeks_vs_Bulan_Normal = Perbandingan dengan bulan normal (1 = seperti bulan biasa; 2,57 = 2,57 kali bulan biasa). | Diperoleh dari: Ramalan_Kg / rata-rata Ramalan_Kg bulan-bulan selain bulan puncak."
+"#   5. Batas_Atas_95_Kg = Batas atas interval 95% (kg), acuan kapasitas maksimum. | Diperoleh dari: Dari 09_peramalan_jan_jun_2026.csv."
+"# Catatan          : baris berawalan tanda # adalah keterangan, bukan data. Tabel data dimulai tepat di bawah garis ini."
+"# ===================================================================================================="
 Periode,Ramalan_Kg,Indeks_vs_Rata2_6_Bulan,Indeks_vs_Bulan_Normal,Batas_Atas_95_Kg
 2026-01,71327.29222602233,0.8194142622489281,1.0337274339856297,83879.53521533836
 2026-02,71335.11205239112,0.8195040971081374,1.0338407646448227,89168.01152491913

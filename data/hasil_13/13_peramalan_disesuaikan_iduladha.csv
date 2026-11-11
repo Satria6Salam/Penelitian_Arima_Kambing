@@ -1,3 +1,22 @@
+"# ===================================================================================================="
+"# KETERANGAN TABEL : 13_peramalan_disesuaikan_iduladha.csv (dibuat oleh 13_penyesuaian_iduladha.py)"
+"# Isi tabel        : Ramalan 2026 setelah puncak Iduladha digeser ke bulan Iduladha yang sebenarnya. Model belajar dari data dengan Iduladha di bulan Juni, padahal Iduladha 2026 jatuh sekitar 27 Mei, jadi lonjakan dipindah ke Mei."
+"# Satu baris data  : satu bulan yang diramal (Januari - Juni 2026)."
+"# Keterangan kolom : nomor. NAMA KOLOM = arti | Diperoleh dari: cara menghitung/sumbernya"
+"#   1. h = Urutan bulan ke depan yang diramal (1 = bulan pertama setelah data terakhir). | Diperoleh dari: Dihitung berurutan 1 sampai 6."
+"#   2. Periode = Bulan yang dicatat atau diramal (tahun-bulan). | Diperoleh dari: Kalender; satu baris mewakili satu bulan."
+"#   3. Yhat_Kg = Ramalan asli model sebelum disesuaikan (kg). | Diperoleh dari: Dari 09_peramalan_jan_jun_2026.csv."
+"#   4. Bobot_Iduladha = Porsi masa ramai Iduladha (7 hari sebelum sampai 3 hari sesudah) yang jatuh di bulan itu (0 sampai 1). | Diperoleh dari: Jumlah hari masa ramai yang ada di bulan itu / 11 hari."
+"#   5. Pengali_R = Pengali lonjakan Iduladha untuk bulan itu (1 = tidak ada lonjakan). | Diperoleh dari: R pangkat Bobot_Iduladha; R = ramalan bulan lonjakan model / ramalan bulan normal sebelumnya."
+"#   6. Dasar_Kg = Ramalan tanpa efek Iduladha (kg). | Diperoleh dari: Bulan lonjakan model: Yhat_Kg / R; bulan lain: sama dengan Yhat_Kg."
+"#   7. Yhat_Disesuaikan_Kg = RAMALAN SETELAH DISESUAIKAN (kg): angka yang dipakai untuk perencanaan. | Diperoleh dari: Dasar_Kg x Pengali_R."
+"#   8. Batas_Bawah_95_Disesuaikan_Kg = Batas bawah interval 95% setelah disesuaikan (kg). | Diperoleh dari: Batas bawah asli dilepas efek Iduladha-nya lalu dikali Pengali_R."
+"#   9. Batas_Atas_95_Disesuaikan_Kg = Batas atas interval 95% setelah disesuaikan (kg); acuan kapasitas maksimum. | Diperoleh dari: Batas atas asli dilepas efek Iduladha-nya lalu dikali Pengali_R."
+"#   10. Selisih_vs_Model_Kg = Perubahan akibat penyesuaian (kg). Positif = naik; negatif = turun. | Diperoleh dari: Yhat_Disesuaikan_Kg - Yhat_Kg."
+"#   11. Indeks_vs_Bulan_Normal_Disesuaikan = Pengali terhadap bulan normal setelah disesuaikan (untuk UMKM). | Diperoleh dari: Yhat_Disesuaikan_Kg / rata-rata Yhat_Disesuaikan_Kg bulan tanpa Iduladha."
+"#   12. Faktor_Batas_Atas = Pengali untuk skenario tertinggi yang masih wajar. | Diperoleh dari: Batas_Atas_95_Disesuaikan_Kg / Yhat_Disesuaikan_Kg."
+"# Catatan          : baris berawalan tanda # adalah keterangan, bukan data. Tabel data dimulai tepat di bawah garis ini."
+"# ===================================================================================================="
 h,Periode,Yhat_Kg,Bobot_Iduladha,Pengali_R,Dasar_Kg,Yhat_Disesuaikan_Kg,Batas_Bawah_95_Disesuaikan_Kg,Batas_Atas_95_Disesuaikan_Kg,Selisih_vs_Model_Kg,Indeks_vs_Bulan_Normal_Disesuaikan,Faktor_Batas_Atas
 1,2026-01,71327.29222602233,0.0,1.0,71327.29222602233,71327.29222602233,60653.44309831203,83879.53521533836,0.0,1.0337274339856297,1.1759809267613919
 2,2026-02,71335.11205239112,0.0,1.0,71335.11205239112,71335.11205239112,57068.65191341735,89168.01152491913,0.0,1.0338407646448227,1.2499876843177995

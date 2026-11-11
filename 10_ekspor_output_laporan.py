@@ -35,6 +35,7 @@ from statsmodels.tsa.stattools import adfuller, acf, pacf
 from statsmodels.graphics.tsaplots import plot_acf, plot_pacf
 import matplotlib.dates as mdates
 
+import keterangan_csv as kk  # keterangan kolom pada setiap CSV hasil
 import estimasi_model as em
 
 
@@ -103,8 +104,8 @@ def adf_baris(seri, label):
 
 
 def muat_train_test():
-    tr = pd.read_csv(H06 / "06_training_set.csv", parse_dates=["Periode"]).set_index("Periode").asfreq("MS")
-    te = pd.read_csv(H06 / "06_testing_set.csv", parse_dates=["Periode"]).set_index("Periode").asfreq("MS")
+    tr = kk.baca_csv(H06 / "06_training_set.csv", parse_dates=["Periode"]).set_index("Periode").asfreq("MS")
+    te = kk.baca_csv(H06 / "06_testing_set.csv", parse_dates=["Periode"]).set_index("Periode").asfreq("MS")
     return tr, te
 
 
@@ -114,13 +115,13 @@ def muat_train_test():
 
 def ekspor_adf_diff_acf(indeks):
     print("[1-3] ADF, differencing, ACF & PACF")
-    df = pd.read_csv(DATASET_CSV, parse_dates=["Periode"]).set_index("Periode")
+    df = kk.baca_csv(DATASET_CSV, parse_dates=["Periode"]).set_index("Periode")
     y = df[TARGET_COL].astype(float)
     config = json.loads(CONFIG_JSON.read_text(encoding="utf-8"))
 
     # 1. ADF pada seri asli (d = 0), seperti script 05
     adf0 = adf_baris(y.values, "Asli (d=0)")
-    pd.DataFrame([adf0]).to_csv(OUT / "01_hasil_adf.csv", index=False)
+    kk.simpan_csv(pd.DataFrame([adf0]), OUT / "01_hasil_adf.csv", index=False)
 
     fig, ax = plt.subplots(figsize=(10, 4.5))
     ax.plot(y.index, y, color="black", label="Permintaan (kg)")
@@ -148,8 +149,8 @@ def ekspor_adf_diff_acf(indeks):
         "Diff12_Log": np.log(y).diff(M),
     })
     seri.index.name = "Periode"
-    seri.reset_index().assign(Periode=lambda d: d["Periode"].dt.strftime("%Y-%m")).to_csv(
-        OUT / "02_seri_differencing.csv", index=False)
+    kk.simpan_csv(seri.reset_index().assign(Periode=lambda d: d["Periode"].dt.strftime("%Y-%m")),
+                  OUT / "02_seri_differencing.csv", index=False)
     tabel_diff = pd.DataFrame([
         {**adf0, "Seri": "Asli (d=0, D=0)",
          "Dipakai": "Ya – ARIMA/SARIMA D=0/ARIMAX (keputusan script 05: d=0)"},
@@ -160,7 +161,7 @@ def ekspor_adf_diff_acf(indeks):
         {**adf_baris(seri["Diff12_Log"].dropna().values, "Differencing musiman log (D=1, m=12)"),
          "Dipakai": "Ya – model final SARIMA(1,0,0)x(1,1,0,12) log"},
     ])
-    tabel_diff.to_csv(OUT / "02_hasil_differencing.csv", index=False)
+    kk.simpan_csv(tabel_diff, OUT / "02_hasil_differencing.csv", index=False)
 
     fig, axes = plt.subplots(3, 1, figsize=(10, 8), sharex=True)
     for ax, kol, judul in zip(axes, ["Asli_Kg", "Diff1_Kg", "Diff12_Log"],
@@ -197,7 +198,7 @@ def ekspor_adf_diff_acf(indeks):
         "PACF_Signifikan": np.abs(pacf_v) > (pacf_ci[:, 1] - pacf_v),
     })
     tab.loc[0, ["ACF_Signifikan", "PACF_Signifikan"]] = False
-    tab.to_csv(OUT / "03_tabel_acf_pacf.csv", index=False)
+    kk.simpan_csv(tab, OUT / "03_tabel_acf_pacf.csv", index=False)
 
     # ACF dan PACF seri Δ12 log (input model final), gaya sama dengan script 05.
     # PACF hanya dapat dihitung sampai lag < n/2 (n = 24 -> lag 11). Metode "ywm"
@@ -245,7 +246,7 @@ def ekspor_split_skenario(indeks):
          "Periode_Awal": f"{te.index[0]:%Y-%m}", "Periode_Akhir": f"{te.index[-1]:%Y-%m}",
          "Rata2_Kg": te[TARGET_COL].mean(), "Bulan_Iduladha": ", ".join(te.index[te["Koefisien_Musim"] > 1].strftime("%Y-%m"))},
     ])
-    ring.to_csv(OUT / "04_ringkasan_pembagian_dataset.csv", index=False)
+    kk.simpan_csv(ring, OUT / "04_ringkasan_pembagian_dataset.csv", index=False)
 
     fig, ax = plt.subplots(figsize=(10, 4.5))
     ax.plot(tr.index, tr[TARGET_COL], color="black", marker=".", label=f"Training ({len(tr)} bulan, 75%)")
@@ -265,20 +266,21 @@ def ekspor_split_skenario(indeks):
                  "ket": f"Training {tr.index[0]:%b %Y}–{tr.index[-1]:%b %Y} ({len(tr)} bulan), "
                         f"testing {te.index[0]:%b %Y}–{te.index[-1]:%b %Y} ({len(te)} bulan)."}
 
-    est = pd.read_csv(H06 / "06_hasil_estimasi.csv")
+    est = kk.baca_csv(H06 / "06_hasil_estimasi.csv")
     def nama_skenario(r):
         if r["Skenario"] == "ARIMAX":
             return "ARIMAX Harga+Iduladha" if "Koefisien_Musim" in r["Eksogen"] else "ARIMAX Harga"
         return r["Skenario"]
     est["Skenario_Detail"] = est.apply(nama_skenario, axis=1)
-    est[["Skenario", "Skenario_Detail", "Nama_Model", "Order", "Seasonal_Order", "Eksogen",
-         "Kelompok_Differencing", "Status"]].to_csv(OUT / "05_daftar_kandidat_skenario.csv", index=False)
+    kk.simpan_csv(est[["Skenario", "Skenario_Detail", "Nama_Model", "Order", "Seasonal_Order", "Eksogen",
+                       "Kelompok_Differencing", "Status"]],
+                  OUT / "05_daftar_kandidat_skenario.csv", index=False)
     ring5 = est.groupby(["Skenario_Detail", "Kelompok_Differencing"], sort=False).agg(
         Jumlah_Kandidat=("Nama_Model", "count"),
         Eksogen=("Eksogen", "first"),
         Berhasil=("Status", lambda s: int((s == "Berhasil").sum())),
     ).reset_index()
-    ring5.to_csv(OUT / "05_ringkasan_skenario.csv", index=False)
+    kk.simpan_csv(ring5, OUT / "05_ringkasan_skenario.csv", index=False)
 
     fig, ax = plt.subplots(figsize=(9, 4))
     label = ring5["Skenario_Detail"] + "\n(" + ring5["Kelompok_Differencing"] + ")"
@@ -301,7 +303,7 @@ def ekspor_split_skenario(indeks):
 
 def ekspor_training(indeks, tr):
     print("[6] Hasil training: fit ulang model shortlist untuk nilai fitted")
-    short = pd.read_csv(H07 / "07_shortlist.csv")
+    short = kk.baca_csv(H07 / "07_shortlist.csv")
     data = em.skala_data(tr)
     fitted, residual = {}, {}
     for _, s in short.iterrows():
@@ -319,11 +321,11 @@ def ekspor_training(indeks, tr):
     df_fit = pd.DataFrame({"Aktual_Kg": tr[TARGET_COL], **{f"Fitted_{k}_Kg": v for k, v in fitted.items()}})
     df_fit.index = df_fit.index.strftime("%Y-%m")
     df_fit.index.name = "Periode"
-    df_fit.to_csv(OUT / "06_fitted_training.csv")
+    kk.simpan_csv(df_fit, OUT / "06_fitted_training.csv")
     df_res = pd.DataFrame({f"Residual_{k}": v for k, v in residual.items()}, index=tr.index)
     df_res.index = df_res.index.strftime("%Y-%m")
     df_res.index.name = "Periode"
-    df_res.to_csv(OUT / "08_residual_training.csv")
+    kk.simpan_csv(df_res, OUT / "08_residual_training.csv")
 
     fig, ax = plt.subplots(figsize=(11, 5))
     ax.plot(tr.index, tr[TARGET_COL], color="black", linewidth=2, label="Aktual training")
@@ -350,7 +352,7 @@ def ekspor_training(indeks, tr):
 
 def ekspor_aic_bic(indeks):
     print("[7] AIC/BIC per kelompok differencing")
-    aic = pd.read_csv(H06 / "06_perbandingan_aic_bic.csv")
+    aic = kk.baca_csv(H06 / "06_perbandingan_aic_bic.csv")
     aic = aic[aic["Status"] != "Gagal"]
     kelompok = list(aic["Kelompok_Differencing"].unique())
     fig, axes = plt.subplots(1, len(kelompok), figsize=(13, 7),
@@ -383,8 +385,8 @@ def ekspor_aic_bic(indeks):
 
 def ekspor_validasi(indeks, residual):
     print("[8] Validasi diagnostik dan evaluasi")
-    diag = pd.read_csv(H07 / "07_diagnostik_residual.csv")
-    met = pd.read_csv(H07 / "07_metrik_rolling_origin.csv")
+    diag = kk.baca_csv(H07 / "07_diagnostik_residual.csv")
+    met = kk.baca_csv(H07 / "07_metrik_rolling_origin.csv")
 
     # Plot p-value Ljung-Box dan Shapiro-Wilk
     fig, ax = plt.subplots(figsize=(10, 4.5))

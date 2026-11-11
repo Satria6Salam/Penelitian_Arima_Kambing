@@ -1,3 +1,16 @@
+"# ===================================================================================================="
+"# KETERANGAN TABEL : 02_seri_differencing.csv (dibuat oleh 10_ekspor_output_laporan.py)"
+"# Isi tabel        : Data permintaan dalam beberapa bentuk: asli, selisih dengan bulan sebelumnya, selisih dengan 12 bulan sebelumnya, logaritma, dan selisih musiman logaritma (bentuk yang dipakai model final)."
+"# Satu baris data  : satu bulan (Januari 2023 - Desember 2025)."
+"# Keterangan kolom : nomor. NAMA KOLOM = arti | Diperoleh dari: cara menghitung/sumbernya"
+"#   1. Periode = Bulan yang dicatat atau diramal (tahun-bulan). | Diperoleh dari: Kalender; satu baris mewakili satu bulan."
+"#   2. Asli_Kg = Permintaan asli bulan itu (kg). | Diperoleh dari: Total_Kuantitas_Kg."
+"#   3. Diff1_Kg = Perubahan dari bulan sebelumnya (kg). Kosong pada bulan pertama. | Diperoleh dari: Asli bulan ini - Asli bulan lalu."
+"#   4. Diff12_Kg = Perubahan dari bulan yang sama tahun lalu (kg). Kosong pada 12 bulan pertama. | Diperoleh dari: Asli bulan ini - Asli 12 bulan sebelumnya."
+"#   5. Log = Logaritma natural permintaan. | Diperoleh dari: ln(Asli_Kg)."
+"#   6. Diff12_Log = Perubahan logaritma dari bulan yang sama tahun lalu (kira-kira persen perubahan tahunan). Bentuk yang dipakai model final. | Diperoleh dari: ln(Asli bulan ini) - ln(Asli 12 bulan sebelumnya)."
+"# Catatan          : baris berawalan tanda # adalah keterangan, bukan data. Tabel data dimulai tepat di bawah garis ini."
+"# ===================================================================================================="
 Periode,Asli_Kg,Diff1_Kg,Diff12_Kg,Log,Diff12_Log
 2023-01,117654.63,,,11.67550874739731,
 2023-02,106155.92,-11498.710000000006,,11.572664235712905,

@@ -1,3 +1,15 @@
+"# ===================================================================================================="
+"# KETERANGAN TABEL : qry_11_Ramalan_1_Bulan_Historis.csv (dibuat oleh ekspor query MS Access qry_11_Ramalan_1_Bulan_Historis)"
+"# Isi tabel        : Hasil query qry_11_Ramalan_1_Bulan_Historis: ramalan 1 bulan ke depan untuk bulan-bulan yang sudah lewat, dihitung di MS Access (untuk dibandingkan dengan kenyataan)."
+"# Satu baris data  : satu bulan yang diramal."
+"# Keterangan kolom : nomor. NAMA KOLOM = arti | Diperoleh dari: cara menghitung/sumbernya"
+"#   1. Periode_Ramalan = Bulan yang diramal. | Diperoleh dari: Satu bulan setelah Periode_Asal."
+"#   2. Periode_Asal = Bulan data terakhir yang dipakai untuk meramal. | Diperoleh dari: Dari Tbl_Volume_Bulanan di MS Access."
+"#   3. Prediksi_Kg = Ramalan permintaan (kg) hasil hitungan query MS Access. | Diperoleh dari: Rumus SARIMA(1,0,0)x(1,1,0,12) log dalam SQL: exp(ln permintaan 12 bulan lalu + pengaruh selisih musiman bulan-bulan sebelumnya)."
+"#   4. Batas_Bawah_95_Kg = Batas bawah interval 95% (kg). | Diperoleh dari: exp(ramalan log - 1,96 x akar sigma2)."
+"#   5. Batas_Atas_95_Kg = Batas atas interval 95% (kg). | Diperoleh dari: exp(ramalan log + 1,96 x akar sigma2)."
+"# Catatan          : baris berawalan tanda # adalah keterangan, bukan data. Tabel data dimulai tepat di bawah garis ini."
+"# ===================================================================================================="
 Periode_Ramalan,Periode_Asal,Prediksi_Kg,Batas_Bawah_95_Kg,Batas_Atas_95_Kg
 2025-02-01,2025-01-01,79719.35183841265,67789.46199573013,93748.71654737895
 2025-03-01,2025-02-01,87841.84677680876,74696.436892526,103300.64412928489

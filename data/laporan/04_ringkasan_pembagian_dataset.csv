@@ -1,3 +1,17 @@
+"# ===================================================================================================="
+"# KETERANGAN TABEL : 04_ringkasan_pembagian_dataset.csv (dibuat oleh 10_ekspor_output_laporan.py)"
+"# Isi tabel        : Ringkasan pembagian data menjadi data latih (75%) dan data uji (25%) secara urutan waktu."
+"# Satu baris data  : satu bagian data (Training atau Testing)."
+"# Keterangan kolom : nomor. NAMA KOLOM = arti | Diperoleh dari: cara menghitung/sumbernya"
+"#   1. Bagian = Training = data untuk membangun model; Testing = data untuk menguji ramalan. | Diperoleh dari: Pembagian kronologis 75:25."
+"#   2. Jumlah_Bulan = Banyaknya bulan pada bagian itu. | Diperoleh dari: Menghitung baris data."
+"#   3. Proporsi_% = Porsi bagian itu dari seluruh data (persen). | Diperoleh dari: Jumlah_Bulan / 36 x 100."
+"#   4. Periode_Awal = Bulan pertama bagian itu. | Diperoleh dari: Baris pertama."
+"#   5. Periode_Akhir = Bulan terakhir bagian itu. | Diperoleh dari: Baris terakhir."
+"#   6. Rata2_Kg = Rata-rata permintaan bulanan pada bagian itu (kg). | Diperoleh dari: Rata-rata Total_Kuantitas_Kg."
+"#   7. Bulan_Iduladha = Daftar bulan Iduladha yang termasuk bagian itu. | Diperoleh dari: Bulan dengan Koefisien_Musim lebih dari 1."
+"# Catatan          : baris berawalan tanda # adalah keterangan, bukan data. Tabel data dimulai tepat di bawah garis ini."
+"# ===================================================================================================="
 Bagian,Jumlah_Bulan,Proporsi_%,Periode_Awal,Periode_Akhir,Rata2_Kg,Bulan_Iduladha
 Training,27,75.0,2023-01,2025-03,110031.63962962964,"2023-06, 2024-06"
 Testing,9,25.0,2025-04,2025-12,113750.54222222224,2025-06

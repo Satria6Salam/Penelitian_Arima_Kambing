@@ -1,3 +1,19 @@
+"# ===================================================================================================="
+"# KETERANGAN TABEL : Tbl_Peramalan.csv (dibuat oleh ekspor tabel MS Access Tbl_Peramalan)"
+"# Isi tabel        : Isi tabel Tbl_Peramalan di MS Access: ramalan 6 bulan yang disimpan script 11."
+"# Satu baris data  : satu bulan yang diramal."
+"# Keterangan kolom : nomor. NAMA KOLOM = arti | Diperoleh dari: cara menghitung/sumbernya"
+"#   1. ID_Peramalan = Nomor urut baris. | Diperoleh dari: Nomor otomatis MS Access."
+"#   2. Nama_Model = Nama model yang dipakai. | Diperoleh dari: Ditulis script 11."
+"#   3. Periode = Bulan yang dicatat atau diramal (tahun-bulan). | Diperoleh dari: Kalender; satu baris mewakili satu bulan."
+"#   4. Horizon = Jarak bulan yang diramal dari bulan terakhir data latih (1 = satu bulan ke depan). | Diperoleh dari: Dihitung berurutan mulai dari bulan pertama setelah data latih."
+"#   5. Prediksi_Kg = Ramalan permintaan (kg). | Diperoleh dari: Rumus rekursif SARIMA(1,0,0)x(1,1,0,12) log, sama dengan modul VBA."
+"#   6. Batas_Bawah_95_Kg = Batas bawah interval kepercayaan 95% (kg): perkiraan terendah yang masih wajar. | Diperoleh dari: exp(ramalan log - 1,96 x galat baku ramalan)."
+"#   7. Batas_Atas_95_Kg = Batas atas interval kepercayaan 95% (kg): perkiraan tertinggi yang masih wajar. Dipakai sebagai acuan stok/kapasitas maksimum. | Diperoleh dari: exp(ramalan log + 1,96 x galat baku ramalan)."
+"#   8. Sumber = Asal hitungan ramalan. | Diperoleh dari: Ditulis script 11."
+"#   9. Tanggal_Dibuat = Waktu ramalan disimpan. | Diperoleh dari: Waktu script 11 dijalankan."
+"# Catatan          : baris berawalan tanda # adalah keterangan, bukan data. Tabel data dimulai tepat di bawah garis ini."
+"# ===================================================================================================="
 ID_Peramalan,Nama_Model,Periode,Horizon,Prediksi_Kg,Batas_Bawah_95_Kg,Batas_Atas_95_Kg,Sumber,Tanggal_Dibuat
 1,"SARIMA(1,0,0)x(1,1,0,12) log",2026-01-01,1,71327.29209355311,60653.442959752814,83879.53509539367,Python (rumus rekursif = modul VBA),2026-11-03 17:40:27
 2,"SARIMA(1,0,0)x(1,1,0,12) log",2026-02-01,2,71335.11192707371,57068.651797797946,89168.01139228046,Python (rumus rekursif = modul VBA),2026-11-03 17:40:27

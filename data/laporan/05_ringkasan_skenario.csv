@@ -1,3 +1,15 @@
+"# ===================================================================================================="
+"# KETERANGAN TABEL : 05_ringkasan_skenario.csv (dibuat oleh 10_ekspor_output_laporan.py)"
+"# Isi tabel        : Ringkasan jumlah kandidat model per skenario dan kelompok pembedaan."
+"# Satu baris data  : satu skenario dalam satu kelompok pembedaan."
+"# Keterangan kolom : nomor. NAMA KOLOM = arti | Diperoleh dari: cara menghitung/sumbernya"
+"#   1. Skenario_Detail = Nama skenario pemodelan. | Diperoleh dari: Dari Skenario dan variabel eksogennya."
+"#   2. Kelompok_Differencing = Kelompok pembedaan data: d = pembedaan biasa, D = pembedaan musiman (selisih dengan 12 bulan sebelumnya). | Diperoleh dari: Diambil dari Order dan Seasonal_Order. AIC/BIC hanya adil dibandingkan antar model dalam kelompok yang sama."
+"#   3. Jumlah_Kandidat = Banyaknya kandidat model pada skenario itu. | Diperoleh dari: Menghitung baris 05_daftar_kandidat_skenario.csv."
+"#   4. Eksogen = Variabel tambahan dari luar yang dipakai model selain data permintaan itu sendiri. Tanda - berarti tidak ada. | Diperoleh dari: Ditetapkan per skenario (ARIMAX memakai harga dan/atau penanda Iduladha)."
+"#   5. Berhasil = Banyaknya kandidat yang berhasil diestimasi. | Diperoleh dari: Menghitung Status = Berhasil."
+"# Catatan          : baris berawalan tanda # adalah keterangan, bukan data. Tabel data dimulai tepat di bawah garis ini."
+"# ===================================================================================================="
 Skenario_Detail,Kelompok_Differencing,Jumlah_Kandidat,Eksogen,Berhasil
 ARIMA,"d=0, D=0",8,-,8
 SARIMA,"d=0, D=0",2,-,2

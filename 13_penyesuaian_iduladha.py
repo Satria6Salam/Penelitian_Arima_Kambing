@@ -51,6 +51,8 @@ matplotlib.use("Agg")
 import matplotlib.pyplot as plt
 import matplotlib.ticker as mticker
 
+import keterangan_csv as kk  # keterangan kolom pada setiap CSV hasil
+
 
 # =============================================================================
 # PENGATURAN
@@ -126,7 +128,7 @@ def bobot_jendela(tahun):
 # =============================================================================
 
 def bulan_iduladha_historis():
-    v = pd.read_csv(VOLUME_CSV, parse_dates=["Periode"])
+    v = kk.baca_csv(VOLUME_CSV, parse_dates=["Periode"])
     bulan = v.loc[v["Koefisien_Musim"] > 1, "Periode"].dt.month
     return sorted(bulan.unique().tolist())
 
@@ -189,7 +191,7 @@ def sesuaikan(f, bulan_hist):
 # =============================================================================
 
 def grafik(f, info_tahun):
-    d = pd.read_csv(DATASET_CSV, parse_dates=["Periode"]).set_index("Periode")
+    d = kk.baca_csv(DATASET_CSV, parse_dates=["Periode"]).set_index("Periode")
     hist = d["Total_Kuantitas_Kg"].iloc[-12:]
     # Titik bulanan digambar di pertengahan bulan agar posisi tanggal Iduladha terbaca benar
     tengah = pd.Timedelta(days=14)
@@ -291,7 +293,7 @@ def main():
     print("=" * 75)
     print("PENYESUAIAN KALENDER IDULADHA (POST-PROCESSING RAMALAN SCRIPT 09)")
     print("=" * 75)
-    f = pd.read_csv(RAMALAN_CSV)
+    f = kk.baca_csv(RAMALAN_CSV)
     bulan_hist = bulan_iduladha_historis()
     print(f"Bulan Iduladha pada data historis: {bulan_hist}")
 
@@ -304,8 +306,8 @@ def main():
     kolom = ["h", "Periode", "Yhat_Kg", "Bobot_Iduladha", "Pengali_R", "Dasar_Kg",
              "Yhat_Disesuaikan_Kg", "Batas_Bawah_95_Disesuaikan_Kg", "Batas_Atas_95_Disesuaikan_Kg",
              "Selisih_vs_Model_Kg", "Indeks_vs_Bulan_Normal_Disesuaikan", "Faktor_Batas_Atas"]
-    f[kolom].to_csv(HASIL_CSV, index=False)
-    df_bobot.to_csv(BOBOT_CSV, index=False)
+    kk.simpan_csv(f[kolom], HASIL_CSV, index=False)
+    kk.simpan_csv(df_bobot, BOBOT_CSV, index=False)
     print()
     print(f[["Periode", "Yhat_Kg", "Bobot_Iduladha", "Yhat_Disesuaikan_Kg",
              "Batas_Bawah_95_Disesuaikan_Kg", "Batas_Atas_95_Disesuaikan_Kg"]].to_string(
