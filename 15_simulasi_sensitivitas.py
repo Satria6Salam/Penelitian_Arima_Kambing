@@ -23,13 +23,20 @@ Agar tidak tumpang tindih:
 Pemeriksaan: skenario dasar dengan seed 42 harus mereproduksi
 Volume_Akhir_Kg pada data/hasil_generate/volume_bulanan.csv.
 
-Output : data/hasil_15/*.csv, 15_ringkasan_simulasi.md
+Output : data/hasil_15/*.csv, data/hasil_15/grafik/15_boxplot_mape_simulasi.png,
+         15_ringkasan_simulasi.md
+Opsi   : --grafik-saja  -> hanya menggambar ulang grafik dari 15_hasil_per_seed.csv
+                           (tanpa menjalankan ulang simulasi)
 =============================================================================
 """
 
+import sys
 import time
 from pathlib import Path
 
+import matplotlib
+matplotlib.use("Agg")
+import matplotlib.pyplot as plt
 import numpy as np
 import pandas as pd
 
@@ -39,6 +46,9 @@ import pembanding as pb
 BASE_DIR = Path(__file__).resolve().parent
 OUT = BASE_DIR / "data" / "hasil_15"
 OUT.mkdir(parents=True, exist_ok=True)
+GRAFIK = OUT / "grafik"
+GRAFIK.mkdir(parents=True, exist_ok=True)
+GRAFIK_PNG = GRAFIK / "15_boxplot_mape_simulasi.png"
 RINGKASAN_MD = BASE_DIR / "15_ringkasan_simulasi.md"
 VOLUME_CSV = BASE_DIR / "data" / "hasil_generate" / "volume_bulanan.csv"
 
@@ -141,6 +151,43 @@ def rangkum(df):
     return pd.DataFrame(baris)
 
 
+def grafik(df, seed42):
+    """(a) sebaran MAPE skenario dasar per model; (b) sebaran MAPE SARIMA final per skenario."""
+    target, ket_s = 15, "MAPE_%s_%%"
+    dasar = df[df["Skenario"].str.startswith("Dasar")]
+    model = [(ket_s % pb.LABEL_SARIMA, "SARIMA\nfinal"), (ket_s % pb.LABEL_HW, "Holt-\nWinters"),
+             (ket_s % pb.LABEL_NAIVE, "Seasonal\nnaive"), ("MAPE_Orakel_%", "Orakel")]
+    skenario = list(dict.fromkeys(df["Skenario"]))
+    label_sk = ["Dasar" if s.startswith("Dasar") else s.replace("k = ", "Variasi ±").replace("Noise = ", "Noise ")
+                .replace("S x ", "S × ") for s in skenario]
+    gaya = dict(showfliers=True, widths=0.55, patch_artist=True, medianprops=dict(color="black", lw=1.5),
+                flierprops=dict(marker="o", ms=3, mfc="none", mec="gray"))
+
+    fig, (a, b) = plt.subplots(1, 2, figsize=(11, 4.6), gridspec_kw={"width_ratios": [4, 7]}, sharey=True)
+    bx = a.boxplot([dasar[k].dropna() for k, _ in model], tick_labels=[l for _, l in model], **gaya)
+    for kotak, warna in zip(bx["boxes"], ["tab:blue", "tab:orange", "tab:gray", "tab:green"]):
+        kotak.set(facecolor=warna, alpha=0.35)
+    a.plot(1, seed42, marker="*", color="tab:red", ms=11, ls="none", label=f"Seed 42 (data penelitian)")
+    a.set_title(f"(a) Skenario dasar, {len(dasar)} replikasi", fontsize=10)
+    a.set_ylabel("MAPE multilangkah 9 bulan (%)")
+    a.legend(fontsize=8, loc="upper right")
+
+    bx = b.boxplot([df.loc[df["Skenario"] == s, ket_s % pb.LABEL_SARIMA].dropna() for s in skenario],
+                   tick_labels=label_sk, **gaya)
+    for kotak in bx["boxes"]:
+        kotak.set(facecolor="tab:blue", alpha=0.35)
+    b.set_title("(b) SARIMA final per skenario sensitivitas", fontsize=10)
+    b.tick_params(axis="x", labelsize=8)
+
+    for ax in (a, b):
+        ax.axhline(target, color="tab:red", ls="--", lw=1)
+        ax.grid(axis="y", alpha=0.3)
+    b.text(len(skenario) + 0.45, target, "Target 15%", color="tab:red", fontsize=8, va="bottom", ha="right")
+    fig.tight_layout()
+    fig.savefig(GRAFIK_PNG, dpi=150)
+    plt.close(fig)
+
+
 def tulis_ringkasan(rk, selisih_cek, seed42):
     rp = lambda v, d=2: f"{v:,.{d}f}".replace(",", "X").replace(".", ",").replace("X", ".")
     L = ["# Ringkasan Script 15: Simulasi Banyak Seed dan Analisis Sensitivitas\n",
@@ -171,7 +218,18 @@ def tulis_ringkasan(rk, selisih_cek, seed42):
     RINGKASAN_MD.write_text("\n".join(L) + "\n", encoding="utf-8")
 
 
+def mape_seed42(df):
+    """MAPE SARIMA seed 42 skenario dasar (sama dengan hasil utama naskah, Tabel 5)."""
+    dasar = df[df["Skenario"].str.startswith("Dasar") & (df["Seed"] == S03.SEED)]
+    return float(dasar[f"MAPE_{pb.LABEL_SARIMA}_%"].iloc[0])
+
+
 def main():
+    if "--grafik-saja" in sys.argv:
+        df = kk.baca_csv(OUT / "15_hasil_per_seed.csv")
+        grafik(df, mape_seed42(df))
+        print(f"Grafik: {GRAFIK_PNG}")
+        return
     print("=" * 75); print("SCRIPT 15: SIMULASI BANYAK SEED DAN SENSITIVITAS"); print("=" * 75)
     selisih = cek_reproduksi()
     print(f"Reproduksi seed {S03.SEED}: selisih maks {selisih:.2f} kg terhadap volume_bulanan.csv")
@@ -183,8 +241,10 @@ def main():
     kk.simpan_csv(df, OUT / "15_hasil_per_seed.csv", index=False)
     kk.simpan_csv(rk, OUT / "15_ringkasan_skenario.csv", index=False)
     tulis_ringkasan(rk, selisih, seed42)
+    grafik(df, seed42)
     print(rk.round(2).to_string(index=False))
     print(f"MAPE SARIMA seed 42 (volume akhir): {seed42:.3f}%")
+    print(f"Grafik   : {GRAFIK_PNG}")
     print(f"Ringkasan: {RINGKASAN_MD}")
 
 

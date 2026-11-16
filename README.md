@@ -25,7 +25,7 @@ Tools: **Python** (pandas, statsmodels, matplotlib, scipy) untuk analisis dan pe
 | **Ramalan Jan–Jun 2026** | Bulan biasa ±66.000–71.000 kg; **Juni 177.280 kg** (batas atas 95%: 251.233 kg) |
 | **Penyesuaian Iduladha** | Iduladha 2026 jatuh ±27 Mei (bukan Juni seperti 2023–2025); script 13 menggeser puncak ramalan ke **Mei 177.280 kg** tanpa mengubah model |
 | **Sistem** | Ramalan 6 bulan dihitung langsung oleh query MS Access (`qry_12_Ramalan_6_Bulan`), hasilnya identik dengan Python (selisih < 0,0000003%), tanpa Python di sisi pengguna. Versi yang sudah disesuaikan kalender Iduladha (puncak di Mei) tersedia di `qry_16_Ramalan_Disesuaikan` (script 16), identik dengan script 13 |
-| **Pembanding tambahan** | Script 14: Holt-Winters, Theta, SARIMA airline. Multilangkah 9 bulan: model final tetap terbaik (6,98% vs Holt-Winters 8,89%, airline 10,37%, Theta 20,61%); rolling origin: airline 6,20% vs model final 6,59% (RMSE airline lebih besar). Uji Diebold-Mariano: tidak ada beda signifikan (n = 9) |
+| **Pembanding tambahan** | Script 14: Holt-Winters, Theta, SARIMA airline. Multilangkah 9 bulan: model final tetap terbaik (6,98% vs Holt-Winters 8,88%, airline 10,37%, Theta 20,61%); rolling origin: airline 6,20% vs model final 6,59% (RMSE airline lebih besar). Uji Diebold-Mariano: tidak ada beda signifikan (n = 9) |
 | **Simulasi & sensitivitas** | Script 15: 100 seed (asumsi dasar) — MAPE multilangkah model final **median 10,77%** (persentil 5–95: 5,65–26,38%; seed 42 = 6,98% termasuk realisasi yang menguntungkan), orakel (batas bawah galat) median 6,35%; model final lebih baik dari seasonal naive pada 81% seed, dari Holt-Winters pada 58% seed, dan memenuhi target < 15% pada 80% seed. Akurasi turun bila variasi acak/noise diperbesar. Lihat `15_ringkasan_simulasi.md` |
 
 ---
@@ -42,7 +42,7 @@ Tools: **Python** (pandas, statsmodels, matplotlib, scipy) untuk analisis dan pe
 | Peramalan Jan–Jun 2026 + fan chart | `09_ringkasan_peramalan.md`, `data\hasil_09\grafik\09_fan_chart.png` |
 | Penyesuaian kalender Iduladha (puncak digeser ke Mei) | `13_ringkasan_penyesuaian_iduladha.md`, `data\hasil_13\grafik\13_ramalan_disesuaikan.png` |
 | Pembanding tambahan (Holt-Winters, Theta, airline) + uji Diebold-Mariano | `14_ringkasan_pembanding.md`, `data\hasil_14\` |
-| Simulasi banyak seed + sensitivitas asumsi data | `15_ringkasan_simulasi.md`, `data\hasil_15\` |
+| Simulasi banyak seed + sensitivitas asumsi data | `15_ringkasan_simulasi.md`, `data\hasil_15\`, boxplot `data\hasil_15\grafik\15_boxplot_mape_simulasi.png` |
 | Penyesuaian Iduladha di MS Access + verifikasi | `data\hasil_16\`, `sql\16_query_penyesuaian_iduladha.sql` |
 | Rekomendasi bisnis (kabupaten + indeks UMKM) | `11_rekomendasi_manajerial.md` |
 | Alasan perubahan metode (log, multi-optimizer) | `perbandingan_versi_estimasi.md` |
@@ -112,7 +112,7 @@ mencetak contoh perhitungan rumus (tanda **COCOK ✔**) ke terminal, direkam di 
 | 11 | `python 12_ramalan_6_bulan_access.py` | Pasang query ramalan murni SQL (`qry_12_*`), verifikasi Access vs Python | < 1 menit |
 | 12 | `python 13_penyesuaian_iduladha.py` | Post-processing: geser puncak ramalan ke tanggal Iduladha sebenarnya | detik |
 | 13 | `python 14_pembanding_tambahan.py` | Pembanding Holt-Winters, Theta, SARIMA airline (skema sama dengan 07 & 08) + uji Diebold-Mariano | < 1 menit |
-| 14 | `python 15_simulasi_sensitivitas.py` | Bangkitkan ulang data (100 seed + 6 skenario asumsi × 50 seed), MAPE model final vs naive, Holt-Winters, orakel | ±15 menit |
+| 14 | `python 15_simulasi_sensitivitas.py` | Bangkitkan ulang data (100 seed + 6 skenario asumsi × 50 seed), MAPE model final vs naive, Holt-Winters, orakel + boxplot sebaran MAPE (opsi `--grafik-saja`: gambar ulang dari CSV) | ±15 menit |
 | 15 | `python 16_penyesuaian_iduladha_access.py` | Pasang tabel & query `qry_16_*` (penyesuaian Iduladha di Access), verifikasi vs script 13 | < 1 menit |
 
 Seluruh langkah di atas dapat dijalankan sekaligus dengan `python jalankan_pipeline.py`
@@ -182,7 +182,7 @@ Penelitian ARIMA Kambing v2/
     ├── hasil_06 … hasil_12/          hasil tiap tahap pemodelan & implementasi Access
     ├── hasil_13/                     ramalan yang sudah disesuaikan kalender Iduladha (13)
     ├── hasil_14/                     pembanding tambahan + uji Diebold-Mariano (14)
-    ├── hasil_15/                     simulasi banyak seed + sensitivitas asumsi (15)
+    ├── hasil_15/                     simulasi banyak seed + sensitivitas asumsi, boxplot MAPE (15)
     ├── hasil_16/                     verifikasi penyesuaian Iduladha di MS Access (16)
     └── laporan/                      plot & CSV pelengkap laporan (10)
 ```
