@@ -944,6 +944,110 @@ TABEL = {
             "Ln_Permintaan": ("Logaritma natural permintaan.", "Log(Permintaan_Kg) di MS Access."),
         },
     },
+    # ---------------------------------------------------------------- script 14
+    "14_prediksi_pembanding_baru.csv": {
+        "oleh": "14_pembanding_tambahan.py",
+        "isi": "Ramalan model pembanding baru (Holt-Winters, Theta, SARIMA airline) pada data uji Apr-Des 2025, dengan skema yang sama seperti script 07 (rolling origin) dan 08 (multilangkah).",
+        "baris": "satu bulan data uji untuk satu model dan satu skema.",
+        "kolom": {
+            "Skema": ("Cara meramal: Rolling origin = ramal 1 bulan lalu latih ulang; Multilangkah = ramal 9 bulan sekaligus.",
+                      "Sama dengan script 07 (rolling origin) dan script 08 (multilangkah)."),
+            "Spesifikasi": ("Bentuk model pembanding yang dipakai.", "Ditetapkan di pembanding.py sebelum melihat data uji."),
+        },
+    },
+    "14_metrik_pembanding.csv": {
+        "oleh": "14_pembanding_tambahan.py",
+        "isi": "Akurasi model final SARIMA, seasonal naive, dan tiga pembanding baru pada data uji Apr-Des 2025 untuk dua skema peramalan.",
+        "baris": "satu model untuk satu skema.",
+        "kolom": {
+            "Skema": ("Cara meramal: Rolling origin atau Multilangkah.", "Sama dengan script 07 dan 08."),
+            "MAPE_6_Bulan_Pertama_%": ("MAPE pada 6 bulan pertama data uji (Apr-Sep 2025) = horizon peramalan operasional.",
+                                       "Hanya untuk skema multilangkah."),
+            "Peringkat_MAPE": ("Urutan model menurut MAPE dalam skema yang sama (1 = paling akurat).", "Diurutkan dari MAPE_%."),
+        },
+    },
+    "14_uji_diebold_mariano.csv": {
+        "oleh": "14_pembanding_tambahan.py",
+        "isi": "Uji Diebold-Mariano: apakah akurasi model final SARIMA berbeda nyata dengan setiap pembanding (galat rolling origin 1 bulan).",
+        "baris": "satu pasangan model untuk satu jenis loss.",
+        "kolom": {
+            "Model_A": ("Model yang diuji (model final).", "SARIMA D=1."),
+            "Model_B": ("Model pembanding.", "Seasonal naive dan tiga pembanding baru."),
+            "Loss": ("Ukuran kesalahan yang dibandingkan: kuadrat (seperti RMSE) atau absolut (seperti MAE).", "Ditetapkan di script 14."),
+            "n": ("Banyaknya bulan yang dibandingkan.", "9 bulan data uji."),
+            "Rata2_Selisih_Loss": ("Rata-rata loss model A dikurangi loss model B. Negatif = model A lebih akurat.", "Rata-rata d_t."),
+            "Statistik_DM_HLN": ("Statistik uji Diebold-Mariano setelah koreksi sampel kecil Harvey, Leybourne & Newbold (1997).",
+                                 "DM x faktor koreksi; dibandingkan dengan distribusi t (n-1)."),
+            "P_value": ("Peluang perbedaan sebesar ini muncul karena kebetulan. Di bawah 0,05 = berbeda nyata.", "Uji t dua sisi."),
+            "Kesimpulan_5%": ("Kesimpulan uji pada taraf 5%.", "Berdasarkan P_value dan tanda Rata2_Selisih_Loss."),
+        },
+    },
+    # ---------------------------------------------------------------- script 15
+    "15_hasil_per_seed.csv": {
+        "oleh": "15_simulasi_sensitivitas.py",
+        "isi": "MAPE peramalan multilangkah 9 bulan untuk setiap data sintetis yang dibangkitkan ulang (beda seed dan asumsi).",
+        "baris": "satu seed pada satu skenario asumsi.",
+        "kolom": {
+            "Skenario": ("Asumsi pembangkitan data yang diuji.", "Dasar = asumsi penelitian; lainnya = satu asumsi diubah."),
+            "k": ("Toleransi variasi bulanan acak (0,10 = +-10%).", "Parameter K_TOLERANSI script 03."),
+            "Sigma_Noise": ("Besar galat acak normal sebagai porsi volume (0,05 = 5%).", "Parameter SIGMA_NOISE script 03."),
+            "Koefisien_S": ("Pengali lonjakan bulan Iduladha.", "2,717 x pengali skenario."),
+            "Seed": ("Nomor pengacak; seed berbeda = data sintetis berbeda.", "1 sampai jumlah seed skenario."),
+            "MAPE_Orakel_%": ("MAPE ramalan terbaik yang mungkin (nilai harapan proses pembangkit). Batas bawah galat.",
+                              "mu x faktor tren x faktor musim dibanding volume akhir."),
+        },
+    },
+    "15_ringkasan_skenario.csv": {
+        "oleh": "15_simulasi_sensitivitas.py",
+        "isi": "Ringkasan MAPE per skenario asumsi: median dan persentil 5-95 tiap model, serta porsi seed tempat SARIMA unggul.",
+        "baris": "satu skenario asumsi.",
+        "kolom": {
+            "Skenario": ("Asumsi pembangkitan data yang diuji.", "Lihat 15_hasil_per_seed.csv."),
+            "Jumlah_Seed": ("Banyaknya data sintetis yang dibangkitkan pada skenario ini.", "100 untuk dasar, 50 untuk lainnya."),
+            "Persen_SARIMA_Lebih_Baik_dari_Naive": ("Porsi seed tempat MAPE SARIMA lebih kecil dari seasonal naive (%).", "Dihitung per seed."),
+            "Persen_SARIMA_Lebih_Baik_dari_HoltWinters": ("Porsi seed tempat MAPE SARIMA lebih kecil dari Holt-Winters (%).", "Dihitung per seed."),
+            "Persen_SARIMA_Di_Bawah_Target_15%": ("Porsi seed tempat MAPE SARIMA memenuhi target < 15% (%).", "Dihitung per seed."),
+            "Median_Selisih_SARIMA_minus_Orakel_poin": ("Median selisih MAPE SARIMA dengan MAPE orakel (poin persen).",
+                                                        "Makin kecil = model makin dekat dengan batas bawah galat."),
+            "Seed_SARIMA_Gagal": ("Banyaknya seed tempat estimasi SARIMA gagal.", "Dihitung per seed."),
+        },
+    },
+    # ---------------------------------------------------------------- script 16
+    "16_hasil_qry_16_Ramalan_Disesuaikan_access.csv": {
+        "oleh": "16_penyesuaian_iduladha_access.py",
+        "isi": "Hasil query qry_16_Ramalan_Disesuaikan di MS Access asli: ramalan 6 bulan dengan puncak digeser ke bulan Iduladha sebenarnya.",
+        "baris": "satu bulan yang diramal.",
+        "kolom": {
+            "Bobot_Iduladha": ("Porsi masa ramai Iduladha (H-7 sampai H+3) yang jatuh di bulan itu (0 sampai 1).",
+                               "qry_16_Bobot_Iduladha (sama dengan script 13)."),
+            "Ramalan_Disesuaikan_Kg": ("RAMALAN SETELAH DISESUAIKAN (kg).", "Ramalan qry_12 x pengali Iduladha."),
+            "Batas_Bawah_95_Disesuaikan_Kg": ("Batas bawah interval 95% setelah disesuaikan (kg).", "Batas bawah qry_12 x pengali."),
+            "Batas_Atas_95_Disesuaikan_Kg": ("Batas atas interval 95% setelah disesuaikan (kg).", "Batas atas qry_12 x pengali."),
+        },
+    },
+    "16_uji_dinamis_feb_jul_2026.csv": {
+        "oleh": "16_penyesuaian_iduladha_access.py",
+        "isi": "Uji dinamis di salinan database: setelah data Januari 2026 (dummy) ditambahkan, query otomatis meramal Feb-Jul 2026 dengan puncak tetap di bulan Iduladha.",
+        "baris": "satu bulan yang diramal.",
+        "kolom": {
+            "Bobot_Iduladha": ("Porsi masa ramai Iduladha yang jatuh di bulan itu.", "qry_16_Bobot_Iduladha."),
+            "Ramalan_Disesuaikan_Kg": ("Ramalan setelah disesuaikan (kg).", "qry_16_Ramalan_Disesuaikan."),
+            "Batas_Bawah_95_Disesuaikan_Kg": ("Batas bawah interval 95% setelah disesuaikan (kg).", "qry_16_Ramalan_Disesuaikan."),
+            "Batas_Atas_95_Disesuaikan_Kg": ("Batas atas interval 95% setelah disesuaikan (kg).", "qry_16_Ramalan_Disesuaikan."),
+        },
+    },
+    "16_verifikasi_penyesuaian_iduladha.csv": {
+        "oleh": "16_penyesuaian_iduladha_access.py",
+        "isi": "Pembandingan hasil query penyesuaian Iduladha di MS Access dengan perhitungan Python script 13.",
+        "baris": "satu besaran pada satu bulan untuk satu uji.",
+        "kolom": {
+            "Uji": ("Jenis pembandingan.", "DAO vs script 13, ODBC vs script 13, dan uji dinamis."),
+            "Besaran": ("Angka yang dibandingkan.", "Bobot, ramalan, batas bawah, atau batas atas yang disesuaikan."),
+            "Access": ("Nilai dari query MS Access.", "qry_16_Ramalan_Disesuaikan."),
+            "Python": ("Nilai pembanding dari Python.", "Output atau fungsi sesuaikan() script 13."),
+            "Selisih_Relatif_%": ("Selisih Access terhadap Python (%). Mendekati 0 = identik.", "(Access - Python) / Python x 100."),
+        },
+    },
 }
 
 

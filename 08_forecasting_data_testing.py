@@ -378,15 +378,15 @@ def visualisasi(train, test, df):
         isi = df[df["Label"] == label]
         fig, ax = plt.subplots(figsize=(10, 5))
         ax.plot(train.index, train[TARGET_COL], color="black", linewidth=1.5,
-                label="Aktual historis (training)")
+                label="Aktual data latih")
         ax.plot(idx_test, test[TARGET_COL], color="black", marker="o", linewidth=1.5,
-                linestyle=":", label="Aktual testing")
+                linestyle=":", label="Aktual data uji")
         ax.plot(idx_test, isi["Prediksi_Kg"], color="tab:blue", linestyle="--", marker=".",
-                linewidth=1.8, label="Peramalan")
+                linewidth=1.8, label="Ramalan")
         ax.fill_between(idx_test, isi["Batas_Bawah_95_Kg"], isi["Batas_Atas_95_Kg"],
                         color="tab:blue", alpha=0.18, label="Interval kepercayaan 95%")
         ax.axvline(idx_test[0], color="grey", linewidth=0.8)
-        ax.set_title(f"Peramalan Testing Apr–Des 2025: {isi['Nama_Model'].iloc[0]}")
+        ax.set_title(f"Peramalan Data Uji Apr–Des 2025: {isi['Nama_Model'].iloc[0]}")
         ax.set_xlabel("Periode")
         ax.set_ylabel("Permintaan daging kambing (kg)")
         ax.yaxis.set_major_formatter(matplotlib.ticker.FuncFormatter(
@@ -405,7 +405,7 @@ def visualisasi(train, test, df):
         isi = df[df["Label"] == label]
         gaya = ":" if label == LABEL_NAIVE else "--"
         ax.plot(idx_test, isi["Prediksi_Kg"], linestyle=gaya, marker=".", label=label)
-    ax.set_title("Perbandingan Peramalan Model Valid pada Testing Apr–Des 2025")
+    ax.set_title("Perbandingan Peramalan Model Valid pada Data Uji Apr–Des 2025")
     ax.set_xlabel("Periode")
     ax.set_ylabel("Permintaan daging kambing (kg)")
     ax.yaxis.set_major_formatter(matplotlib.ticker.FuncFormatter(

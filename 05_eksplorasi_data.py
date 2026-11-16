@@ -29,6 +29,7 @@ import numpy as np
 import pandas as pd
 import matplotlib.pyplot as plt
 import matplotlib.dates as mdates
+import matplotlib.ticker as mticker
 
 from statsmodels.tsa.seasonal import seasonal_decompose
 from statsmodels.tsa.stattools import adfuller, acf, pacf
@@ -224,33 +225,33 @@ def visualisasi_time_series_dari_tabel(
     max_date = df[TARGET_COLUMN].idxmax()
 
     plt.annotate(
-        f"Nilai maksimum\n{max_val:,.0f} kg",
+        f"Nilai maksimum\n{max_val:,.0f} kg".replace(",", "."),
         xy=(max_date, max_val),
-        xytext=(max_date, max_val * 1.08),
+        xytext=(max_date + pd.Timedelta(days=75), max_val * 0.93),
         arrowprops=dict(
             facecolor="red",
             shrink=0.05
         ),
         fontsize=9,
         color="red",
-        ha="center"
+        ha="left",
+        va="center"
     )
 
-    plt.title(
-        "Time Series Plot: Total Permintaan Daging Kambing",
-        fontsize=13,
-        fontweight="bold"
-    )
+    plt.title("Permintaan Daging Kambing Bulanan Kabupaten Malang, Jan 2023–Des 2025")
 
     plt.xlabel("Periode")
-    plt.ylabel("Total Kuantitas (Kg)")
+    plt.ylabel("Permintaan (kg)")
+    plt.gca().yaxis.set_major_formatter(
+        mticker.FuncFormatter(lambda v, _: f"{v:,.0f}".replace(",", "."))
+    )
 
     plt.gca().xaxis.set_major_formatter(
-        mdates.DateFormatter("%b %Y")
+        mdates.DateFormatter("%Y-%m")
     )
 
     plt.gca().xaxis.set_major_locator(
-        mdates.MonthLocator(interval=2)
+        mdates.MonthLocator(bymonth=[1, 4, 7, 10])
     )
 
     plt.xticks(rotation=30, ha="right")

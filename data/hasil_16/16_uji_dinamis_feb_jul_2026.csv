@@ -1,0 +1,19 @@
+"# ===================================================================================================="
+"# KETERANGAN TABEL : 16_uji_dinamis_feb_jul_2026.csv (dibuat oleh 16_penyesuaian_iduladha_access.py)"
+"# Isi tabel        : Uji dinamis di salinan database: setelah data Januari 2026 (dummy) ditambahkan, query otomatis meramal Feb-Jul 2026 dengan puncak tetap di bulan Iduladha."
+"# Satu baris data  : satu bulan yang diramal."
+"# Keterangan kolom : nomor. NAMA KOLOM = arti | Diperoleh dari: cara menghitung/sumbernya"
+"#   1. Periode = Bulan yang dicatat atau diramal (tahun-bulan). | Diperoleh dari: Kalender; satu baris mewakili satu bulan."
+"#   2. Bobot_Iduladha = Porsi masa ramai Iduladha yang jatuh di bulan itu. | Diperoleh dari: qry_16_Bobot_Iduladha."
+"#   3. Ramalan_Disesuaikan_Kg = Ramalan setelah disesuaikan (kg). | Diperoleh dari: qry_16_Ramalan_Disesuaikan."
+"#   4. Batas_Bawah_95_Disesuaikan_Kg = Batas bawah interval 95% setelah disesuaikan (kg). | Diperoleh dari: qry_16_Ramalan_Disesuaikan."
+"#   5. Batas_Atas_95_Disesuaikan_Kg = Batas atas interval 95% setelah disesuaikan (kg). | Diperoleh dari: qry_16_Ramalan_Disesuaikan."
+"# Catatan          : baris berawalan tanda # adalah keterangan, bukan data. Tabel data dimulai tepat di bawah garis ini."
+"# ===================================================================================================="
+Periode,Bobot_Iduladha,Ramalan_Disesuaikan_Kg,Batas_Bawah_95_Disesuaikan_Kg,Batas_Atas_95_Disesuaikan_Kg
+2026-02,0.0,74704.45156546087,63525.22378001278,87851.01022268554
+2026-03,0.0,72459.53387733655,57968.198220588325,90573.52498246402
+2026-04,0.0,70039.02906468822,53673.663568412514,91394.27544519537
+2026-05,1.0,183952.03581357741,136355.1480786268,248163.35838268008
+2026-06,0.0,68387.59999911393,49346.42167236452,94776.14941749646
+2026-07,0.0,75442.85495287373,53235.460487641474,106914.15667873573

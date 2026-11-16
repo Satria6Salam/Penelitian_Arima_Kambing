@@ -1,0 +1,86 @@
+"# ===================================================================================================="
+"# KETERANGAN TABEL : 16_verifikasi_penyesuaian_iduladha.csv (dibuat oleh 16_penyesuaian_iduladha_access.py)"
+"# Isi tabel        : Pembandingan hasil query penyesuaian Iduladha di MS Access dengan perhitungan Python script 13."
+"# Satu baris data  : satu besaran pada satu bulan untuk satu uji."
+"# Keterangan kolom : nomor. NAMA KOLOM = arti | Diperoleh dari: cara menghitung/sumbernya"
+"#   1. Uji = Jenis pembandingan. | Diperoleh dari: DAO vs script 13, ODBC vs script 13, dan uji dinamis."
+"#   2. Periode = Bulan yang dicatat atau diramal (tahun-bulan). | Diperoleh dari: Kalender; satu baris mewakili satu bulan."
+"#   3. Besaran = Angka yang dibandingkan. | Diperoleh dari: Bobot, ramalan, batas bawah, atau batas atas yang disesuaikan."
+"#   4. Access = Nilai dari query MS Access. | Diperoleh dari: qry_16_Ramalan_Disesuaikan."
+"#   5. Python = Nilai pembanding dari Python. | Diperoleh dari: Output atau fungsi sesuaikan() script 13."
+"#   6. Selisih_Relatif_% = Selisih Access terhadap Python (%). Mendekati 0 = identik. | Diperoleh dari: (Access - Python) / Python x 100."
+"# Catatan          : baris berawalan tanda # adalah keterangan, bukan data. Tabel data dimulai tepat di bawah garis ini."
+"# ===================================================================================================="
+Uji,Periode,Besaran,Access,Python,Selisih_Relatif_%
+MS Access asli (DAO) vs output script 13,2026-01,Bobot_Iduladha,0.0,0.0,0.0
+MS Access asli (DAO) vs output script 13,2026-01,Ramalan_Disesuaikan_Kg,71327.29209355311,71327.29222602233,-1.8572023253851884e-07
+MS Access asli (DAO) vs output script 13,2026-01,Batas_Bawah_95_Disesuaikan_Kg,60653.442959752814,60653.44309831203,-2.2844411056419581e-07
+MS Access asli (DAO) vs output script 13,2026-01,Batas_Atas_95_Disesuaikan_Kg,83879.53509539367,83879.53521533836,-1.4299636357168169e-07
+MS Access asli (DAO) vs output script 13,2026-02,Bobot_Iduladha,0.0,0.0,0.0
+MS Access asli (DAO) vs output script 13,2026-02,Ramalan_Disesuaikan_Kg,71335.11192707371,71335.11205239112,-1.7567423489866373e-07
+MS Access asli (DAO) vs output script 13,2026-02,Batas_Bawah_95_Disesuaikan_Kg,57068.651797797946,57068.65191341735,-2.0259704925031906e-07
+MS Access asli (DAO) vs output script 13,2026-02,Batas_Atas_95_Disesuaikan_Kg,89168.01139228046,89168.01152491913,-1.487514050948241e-07
+MS Access asli (DAO) vs output script 13,2026-03,Bobot_Iduladha,0.0,0.0,0.0
+MS Access asli (DAO) vs output script 13,2026-03,Ramalan_Disesuaikan_Kg,69364.38950310415,69364.3896183682,-1.6617178884987957e-07
+MS Access asli (DAO) vs output script 13,2026-03,Batas_Bawah_95_Disesuaikan_Kg,53156.66072953877,53156.66081117492,-1.5357652004079044e-07
+MS Access asli (DAO) vs output script 13,2026-03,Batas_Atas_95_Disesuaikan_Kg,90513.93494446266,90513.93510627175,-1.7876704826640421e-07
+MS Access asli (DAO) vs output script 13,2026-04,Bobot_Iduladha,0.0,0.0,0.0
+MS Access asli (DAO) vs output script 13,2026-04,Ramalan_Disesuaikan_Kg,67205.78711348843,67205.78721912479,-1.5718341945013596e-07
+MS Access asli (DAO) vs output script 13,2026-04,Batas_Bawah_95_Disesuaikan_Kg,49816.545998367284,49816.546103189554,-2.1041657350691617e-07
+MS Access asli (DAO) vs output script 13,2026-04,Batas_Atas_95_Disesuaikan_Kg,90665.01362201144,90665.01371625796,-1.0395027017738616e-07
+MS Access asli (DAO) vs output script 13,2026-05,Bobot_Iduladha,1.0,1.0,0.0
+MS Access asli (DAO) vs output script 13,2026-05,Ramalan_Disesuaikan_Kg,177279.60798153456,177279.60823085814,-1.4063861215341346e-07
+MS Access asli (DAO) vs output script 13,2026-05,Batas_Bawah_95_Disesuaikan_Kg,127919.59784349256,127919.59797431868,-1.0227214176179776e-07
+MS Access asli (DAO) vs output script 13,2026-05,Batas_Atas_95_Disesuaikan_Kg,245686.03979304465,245686.04023283508,-1.7900505308998218e-07
+MS Access asli (DAO) vs output script 13,2026-06,Bobot_Iduladha,0.0,0.0,0.0
+MS Access asli (DAO) vs output script 13,2026-06,Ramalan_Disesuaikan_Kg,65767.89899516614,65767.89909295044,-1.486808950595244e-07
+MS Access asli (DAO) vs output script 13,2026-06,Batas_Bawah_95_Disesuaikan_Kg,46408.42914149282,46408.42921690606,-1.6249900195194842e-07
+MS Access asli (DAO) vs output script 13,2026-06,Batas_Atas_95_Disesuaikan_Kg,93203.25247490672,93203.25260060323,-1.3486278724026333e-07
+Driver ODBC vs output script 13,2026-01,Bobot_Iduladha,0.0,0.0,0.0
+Driver ODBC vs output script 13,2026-01,Ramalan_Disesuaikan_Kg,71327.29209355311,71327.29222602233,-1.8572023253851884e-07
+Driver ODBC vs output script 13,2026-01,Batas_Bawah_95_Disesuaikan_Kg,60653.442959752814,60653.44309831203,-2.2844411056419581e-07
+Driver ODBC vs output script 13,2026-01,Batas_Atas_95_Disesuaikan_Kg,83879.53509539367,83879.53521533836,-1.4299636357168169e-07
+Driver ODBC vs output script 13,2026-02,Bobot_Iduladha,0.0,0.0,0.0
+Driver ODBC vs output script 13,2026-02,Ramalan_Disesuaikan_Kg,71335.11192707371,71335.11205239112,-1.7567423489866373e-07
+Driver ODBC vs output script 13,2026-02,Batas_Bawah_95_Disesuaikan_Kg,57068.651797797946,57068.65191341735,-2.0259704925031906e-07
+Driver ODBC vs output script 13,2026-02,Batas_Atas_95_Disesuaikan_Kg,89168.01139228046,89168.01152491913,-1.487514050948241e-07
+Driver ODBC vs output script 13,2026-03,Bobot_Iduladha,0.0,0.0,0.0
+Driver ODBC vs output script 13,2026-03,Ramalan_Disesuaikan_Kg,69364.38950310415,69364.3896183682,-1.6617178884987957e-07
+Driver ODBC vs output script 13,2026-03,Batas_Bawah_95_Disesuaikan_Kg,53156.66072953877,53156.66081117492,-1.5357652004079044e-07
+Driver ODBC vs output script 13,2026-03,Batas_Atas_95_Disesuaikan_Kg,90513.93494446266,90513.93510627175,-1.7876704826640421e-07
+Driver ODBC vs output script 13,2026-04,Bobot_Iduladha,0.0,0.0,0.0
+Driver ODBC vs output script 13,2026-04,Ramalan_Disesuaikan_Kg,67205.78711348843,67205.78721912479,-1.5718341945013596e-07
+Driver ODBC vs output script 13,2026-04,Batas_Bawah_95_Disesuaikan_Kg,49816.545998367284,49816.546103189554,-2.1041657350691617e-07
+Driver ODBC vs output script 13,2026-04,Batas_Atas_95_Disesuaikan_Kg,90665.01362201144,90665.01371625796,-1.0395027017738616e-07
+Driver ODBC vs output script 13,2026-05,Bobot_Iduladha,1.0,1.0,0.0
+Driver ODBC vs output script 13,2026-05,Ramalan_Disesuaikan_Kg,177279.60798153456,177279.60823085814,-1.4063861215341346e-07
+Driver ODBC vs output script 13,2026-05,Batas_Bawah_95_Disesuaikan_Kg,127919.59784349256,127919.59797431868,-1.0227214176179776e-07
+Driver ODBC vs output script 13,2026-05,Batas_Atas_95_Disesuaikan_Kg,245686.03979304465,245686.04023283508,-1.7900505308998218e-07
+Driver ODBC vs output script 13,2026-06,Bobot_Iduladha,0.0,0.0,0.0
+Driver ODBC vs output script 13,2026-06,Ramalan_Disesuaikan_Kg,65767.89899516614,65767.89909295044,-1.486808950595244e-07
+Driver ODBC vs output script 13,2026-06,Batas_Bawah_95_Disesuaikan_Kg,46408.42914149282,46408.42921690606,-1.6249900195194842e-07
+Driver ODBC vs output script 13,2026-06,Batas_Atas_95_Disesuaikan_Kg,93203.25247490672,93203.25260060323,-1.3486278724026333e-07
+Uji dinamis (+data Jan 2026 dummy): DAO vs sesuaikan() script 13,2026-02,Bobot_Iduladha,0.0,0.0,0.0
+Uji dinamis (+data Jan 2026 dummy): DAO vs sesuaikan() script 13,2026-02,Ramalan_Disesuaikan_Kg,74704.45156546087,74704.45156546087,0.0
+Uji dinamis (+data Jan 2026 dummy): DAO vs sesuaikan() script 13,2026-02,Batas_Bawah_95_Disesuaikan_Kg,63525.22378001278,63525.22378001278,0.0
+Uji dinamis (+data Jan 2026 dummy): DAO vs sesuaikan() script 13,2026-02,Batas_Atas_95_Disesuaikan_Kg,87851.01022268554,87851.01022268554,0.0
+Uji dinamis (+data Jan 2026 dummy): DAO vs sesuaikan() script 13,2026-03,Bobot_Iduladha,0.0,0.0,0.0
+Uji dinamis (+data Jan 2026 dummy): DAO vs sesuaikan() script 13,2026-03,Ramalan_Disesuaikan_Kg,72459.53387733655,72459.53387733655,0.0
+Uji dinamis (+data Jan 2026 dummy): DAO vs sesuaikan() script 13,2026-03,Batas_Bawah_95_Disesuaikan_Kg,57968.198220588325,57968.198220588325,0.0
+Uji dinamis (+data Jan 2026 dummy): DAO vs sesuaikan() script 13,2026-03,Batas_Atas_95_Disesuaikan_Kg,90573.52498246402,90573.52498246402,0.0
+Uji dinamis (+data Jan 2026 dummy): DAO vs sesuaikan() script 13,2026-04,Bobot_Iduladha,0.0,0.0,0.0
+Uji dinamis (+data Jan 2026 dummy): DAO vs sesuaikan() script 13,2026-04,Ramalan_Disesuaikan_Kg,70039.02906468822,70039.02906468822,0.0
+Uji dinamis (+data Jan 2026 dummy): DAO vs sesuaikan() script 13,2026-04,Batas_Bawah_95_Disesuaikan_Kg,53673.663568412514,53673.663568412514,0.0
+Uji dinamis (+data Jan 2026 dummy): DAO vs sesuaikan() script 13,2026-04,Batas_Atas_95_Disesuaikan_Kg,91394.27544519537,91394.27544519537,0.0
+Uji dinamis (+data Jan 2026 dummy): DAO vs sesuaikan() script 13,2026-05,Bobot_Iduladha,1.0,1.0,0.0
+Uji dinamis (+data Jan 2026 dummy): DAO vs sesuaikan() script 13,2026-05,Ramalan_Disesuaikan_Kg,183952.03581357741,183952.03581357741,0.0
+Uji dinamis (+data Jan 2026 dummy): DAO vs sesuaikan() script 13,2026-05,Batas_Bawah_95_Disesuaikan_Kg,136355.1480786268,136355.1480786268,0.0
+Uji dinamis (+data Jan 2026 dummy): DAO vs sesuaikan() script 13,2026-05,Batas_Atas_95_Disesuaikan_Kg,248163.35838268008,248163.35838268008,0.0
+Uji dinamis (+data Jan 2026 dummy): DAO vs sesuaikan() script 13,2026-06,Bobot_Iduladha,0.0,0.0,0.0
+Uji dinamis (+data Jan 2026 dummy): DAO vs sesuaikan() script 13,2026-06,Ramalan_Disesuaikan_Kg,68387.59999911393,68387.59999911393,0.0
+Uji dinamis (+data Jan 2026 dummy): DAO vs sesuaikan() script 13,2026-06,Batas_Bawah_95_Disesuaikan_Kg,49346.42167236452,49346.42167236452,0.0
+Uji dinamis (+data Jan 2026 dummy): DAO vs sesuaikan() script 13,2026-06,Batas_Atas_95_Disesuaikan_Kg,94776.14941749646,94776.14941749646,0.0
+Uji dinamis (+data Jan 2026 dummy): DAO vs sesuaikan() script 13,2026-07,Bobot_Iduladha,0.0,0.0,0.0
+Uji dinamis (+data Jan 2026 dummy): DAO vs sesuaikan() script 13,2026-07,Ramalan_Disesuaikan_Kg,75442.85495287373,75442.85495287373,0.0
+Uji dinamis (+data Jan 2026 dummy): DAO vs sesuaikan() script 13,2026-07,Batas_Bawah_95_Disesuaikan_Kg,53235.460487641474,53235.460487641474,0.0
+Uji dinamis (+data Jan 2026 dummy): DAO vs sesuaikan() script 13,2026-07,Batas_Atas_95_Disesuaikan_Kg,106914.15667873573,106914.15667873573,0.0

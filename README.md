@@ -24,7 +24,9 @@ Tools: **Python** (pandas, statsmodels, matplotlib, scipy) untuk analisis dan pe
 | **Target akurasi** | MAPE < 15%, RMSE/MAE/MSE **relatif terhadap rata-rata permintaan** (RMSE < 10%×ȳ, MAE < 8%×ȳ), R² > 0,70 — model final lulus semua target |
 | **Ramalan Jan–Jun 2026** | Bulan biasa ±66.000–71.000 kg; **Juni 177.280 kg** (batas atas 95%: 251.233 kg) |
 | **Penyesuaian Iduladha** | Iduladha 2026 jatuh ±27 Mei (bukan Juni seperti 2023–2025); script 13 menggeser puncak ramalan ke **Mei 177.280 kg** tanpa mengubah model |
-| **Sistem** | Ramalan 6 bulan dihitung langsung oleh query MS Access (`qry_12_Ramalan_6_Bulan`), hasilnya identik dengan Python (selisih < 0,0000003%), tanpa Python di sisi pengguna |
+| **Sistem** | Ramalan 6 bulan dihitung langsung oleh query MS Access (`qry_12_Ramalan_6_Bulan`), hasilnya identik dengan Python (selisih < 0,0000003%), tanpa Python di sisi pengguna. Versi yang sudah disesuaikan kalender Iduladha (puncak di Mei) tersedia di `qry_16_Ramalan_Disesuaikan` (script 16), identik dengan script 13 |
+| **Pembanding tambahan** | Script 14: Holt-Winters, Theta, SARIMA airline. Multilangkah 9 bulan: model final tetap terbaik (6,98% vs Holt-Winters 8,89%, airline 10,37%, Theta 20,61%); rolling origin: airline 6,20% vs model final 6,59% (RMSE airline lebih besar). Uji Diebold-Mariano: tidak ada beda signifikan (n = 9) |
+| **Simulasi & sensitivitas** | Script 15: 100 seed (asumsi dasar) — MAPE multilangkah model final **median 10,77%** (persentil 5–95: 5,65–26,38%; seed 42 = 6,98% termasuk realisasi yang menguntungkan), orakel (batas bawah galat) median 6,35%; model final lebih baik dari seasonal naive pada 81% seed, dari Holt-Winters pada 58% seed, dan memenuhi target < 15% pada 80% seed. Akurasi turun bila variasi acak/noise diperbesar. Lihat `15_ringkasan_simulasi.md` |
 
 ---
 
@@ -39,6 +41,9 @@ Tools: **Python** (pandas, statsmodels, matplotlib, scipy) untuk analisis dan pe
 | Peramalan data testing | `08_ringkasan_forecasting.md` |
 | Peramalan Jan–Jun 2026 + fan chart | `09_ringkasan_peramalan.md`, `data\hasil_09\grafik\09_fan_chart.png` |
 | Penyesuaian kalender Iduladha (puncak digeser ke Mei) | `13_ringkasan_penyesuaian_iduladha.md`, `data\hasil_13\grafik\13_ramalan_disesuaikan.png` |
+| Pembanding tambahan (Holt-Winters, Theta, airline) + uji Diebold-Mariano | `14_ringkasan_pembanding.md`, `data\hasil_14\` |
+| Simulasi banyak seed + sensitivitas asumsi data | `15_ringkasan_simulasi.md`, `data\hasil_15\` |
+| Penyesuaian Iduladha di MS Access + verifikasi | `data\hasil_16\`, `sql\16_query_penyesuaian_iduladha.sql` |
 | Rekomendasi bisnis (kabupaten + indeks UMKM) | `11_rekomendasi_manajerial.md` |
 | Alasan perubahan metode (log, multi-optimizer) | `perbandingan_versi_estimasi.md` |
 | Struktur folder data | `data\README.md` |
@@ -106,9 +111,20 @@ mencetak contoh perhitungan rumus (tanda **COCOK ✔**) ke terminal, direkam di 
 | 10 | `python 11_rekomendasi_manajerial.py` | Rekomendasi manajerial: stok kabupaten + indeks UMKM | detik |
 | 11 | `python 12_ramalan_6_bulan_access.py` | Pasang query ramalan murni SQL (`qry_12_*`), verifikasi Access vs Python | < 1 menit |
 | 12 | `python 13_penyesuaian_iduladha.py` | Post-processing: geser puncak ramalan ke tanggal Iduladha sebenarnya | detik |
+| 13 | `python 14_pembanding_tambahan.py` | Pembanding Holt-Winters, Theta, SARIMA airline (skema sama dengan 07 & 08) + uji Diebold-Mariano | < 1 menit |
+| 14 | `python 15_simulasi_sensitivitas.py` | Bangkitkan ulang data (100 seed + 6 skenario asumsi × 50 seed), MAPE model final vs naive, Holt-Winters, orakel | ±15 menit |
+| 15 | `python 16_penyesuaian_iduladha_access.py` | Pasang tabel & query `qry_16_*` (penyesuaian Iduladha di Access), verifikasi vs script 13 | < 1 menit |
+
+Seluruh langkah di atas dapat dijalankan sekaligus dengan `python jalankan_pipeline.py`
+(opsi `--mulai N --sampai N` untuk menjalankan sebagian, misalnya `--mulai 13` untuk script 14–16 saja).
+
+Script 14–16 hanya **membaca** hasil script 07–13 dan tidak mengubahnya. Fungsi bersama (model
+pembanding, skema evaluasi, uji Diebold-Mariano) ada di modul `pembanding.py`; fungsi lain dipakai
+ulang dari script 03, 07, 12, dan 13 tanpa disalin.
 
 Script yang mengakses database Access (butuh driver Access, lihat Langkah 3):
-`02_buat_database.py`, `11_implementasi_access.py`, `12_ramalan_6_bulan_access.py`.
+`02_buat_database.py`, `11_implementasi_access.py`, `12_ramalan_6_bulan_access.py`,
+`16_penyesuaian_iduladha_access.py`.
 Database yang disertakan **sudah berisi** semua tabel dan query, jadi script ini tidak wajib dijalankan ulang.
 
 ---
@@ -121,8 +137,10 @@ dengan bit yang sama dengan Python.
 
 1. Buka `data\db_penjualan_kambing.accdb` → klik **Enable Content** bila muncul pita kuning.
 2. Tekan **F11** bila panel kiri (*Navigation Pane*) tidak terlihat.
-3. Klik ganda query **`qry_12_Ramalan_6_Bulan`** → ramalan 6 bulan + batas bawah/atas 95%,
-   agregat seluruh Kabupaten Malang.
+3. Klik ganda query **`qry_16_Ramalan_Disesuaikan`** → ramalan 6 bulan + batas bawah/atas 95%,
+   agregat seluruh Kabupaten Malang, dengan puncak sudah digeser ke bulan Iduladha sebenarnya
+   (tanggal Iduladha diisi di tabel `Tbl_16_Tanggal_Iduladha`). Ramalan model sebelum
+   disesuaikan tetap tersedia di **`qry_12_Ramalan_6_Bulan`**.
 4. Data bulan baru diisi di tabel **`Tbl_Volume_Bulanan`** (Periode = tanggal 1 bulan itu,
    Permintaan_Kg = total kg kabupaten); ramalan otomatis bergeser.
 5. UMKM tidak perlu membuka database — cukup memakai indeks dari `PANDUAN_PRODUSEN_ACCESS.md`
@@ -143,8 +161,10 @@ Untuk mencoba-coba (termasuk simulasi input data), pakai salinan database
 
 ```
 Penelitian ARIMA Kambing v2/
-├── 01…13_*.py               script penelitian (jalankan berurutan, lihat bagian 4)
+├── 01…16_*.py               script penelitian (jalankan berurutan, lihat bagian 4)
+├── jalankan_pipeline.py     menjalankan script 03–16 berurutan
 ├── estimasi_model.py        modul bersama: transformasi log, multi-optimizer, target akurasi relatif
+├── pembanding.py            modul bersama script 14–15: model pembanding, skema evaluasi, uji Diebold-Mariano
 ├── penjelasan.py            modul contoh perhitungan rumus di terminal
 ├── koneksi.py               koneksi Python <-> MS Access
 ├── *_ringkasan_*.md         ringkasan hasil tiap tahap
@@ -161,6 +181,9 @@ Penelitian ARIMA Kambing v2/
     ├── eksplorasi/                   ADF, ACF/PACF, model_config (05)
     ├── hasil_06 … hasil_12/          hasil tiap tahap pemodelan & implementasi Access
     ├── hasil_13/                     ramalan yang sudah disesuaikan kalender Iduladha (13)
+    ├── hasil_14/                     pembanding tambahan + uji Diebold-Mariano (14)
+    ├── hasil_15/                     simulasi banyak seed + sensitivitas asumsi (15)
+    ├── hasil_16/                     verifikasi penyesuaian Iduladha di MS Access (16)
     └── laporan/                      plot & CSV pelengkap laporan (10)
 ```
 
@@ -191,6 +214,7 @@ Penelitian ARIMA Kambing v2/
 - Ramalan 2026 adalah **proyeksi**; akurasi model dibuktikan pada data testing 2025.
 - **Iduladha 2026 jatuh ±27 Mei**, sedangkan model dasar menaruh puncak di Juni (meniru pola
   2023–2025 yang seluruhnya jatuh di Juni). Script 13 menyesuaikan ini sebagai *post-processing*
-  tanpa mengubah model atau parameter.
+  tanpa mengubah model atau parameter; script 16 memasang aturan yang sama sebagai query MS Access
+  (`qry_16_Ramalan_Disesuaikan`).
 - Level ramalan 2026 ±22,8% di bawah 2025 merupakan artefak koefisien musiman (Φ = −0,80) dari
   data yang hanya 3 tahun, bukan tren pasti.

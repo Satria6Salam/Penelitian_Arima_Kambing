@@ -1,0 +1,19 @@
+"# ===================================================================================================="
+"# KETERANGAN TABEL : 16_hasil_qry_16_Ramalan_Disesuaikan_access.csv (dibuat oleh 16_penyesuaian_iduladha_access.py)"
+"# Isi tabel        : Hasil query qry_16_Ramalan_Disesuaikan di MS Access asli: ramalan 6 bulan dengan puncak digeser ke bulan Iduladha sebenarnya."
+"# Satu baris data  : satu bulan yang diramal."
+"# Keterangan kolom : nomor. NAMA KOLOM = arti | Diperoleh dari: cara menghitung/sumbernya"
+"#   1. Periode = Bulan yang dicatat atau diramal (tahun-bulan). | Diperoleh dari: Kalender; satu baris mewakili satu bulan."
+"#   2. Bobot_Iduladha = Porsi masa ramai Iduladha (H-7 sampai H+3) yang jatuh di bulan itu (0 sampai 1). | Diperoleh dari: qry_16_Bobot_Iduladha (sama dengan script 13)."
+"#   3. Ramalan_Disesuaikan_Kg = RAMALAN SETELAH DISESUAIKAN (kg). | Diperoleh dari: Ramalan qry_12 x pengali Iduladha."
+"#   4. Batas_Bawah_95_Disesuaikan_Kg = Batas bawah interval 95% setelah disesuaikan (kg). | Diperoleh dari: Batas bawah qry_12 x pengali."
+"#   5. Batas_Atas_95_Disesuaikan_Kg = Batas atas interval 95% setelah disesuaikan (kg). | Diperoleh dari: Batas atas qry_12 x pengali."
+"# Catatan          : baris berawalan tanda # adalah keterangan, bukan data. Tabel data dimulai tepat di bawah garis ini."
+"# ===================================================================================================="
+Periode,Bobot_Iduladha,Ramalan_Disesuaikan_Kg,Batas_Bawah_95_Disesuaikan_Kg,Batas_Atas_95_Disesuaikan_Kg
+2026-01,0.0,71327.29209355311,60653.442959752814,83879.53509539367
+2026-02,0.0,71335.11192707371,57068.651797797946,89168.01139228046
+2026-03,0.0,69364.38950310415,53156.66072953877,90513.93494446266
+2026-04,0.0,67205.78711348843,49816.545998367284,90665.01362201144
+2026-05,1.0,177279.60798153456,127919.59784349256,245686.03979304465
+2026-06,0.0,65767.89899516614,46408.42914149282,93203.25247490672

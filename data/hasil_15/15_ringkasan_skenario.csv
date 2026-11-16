@@ -1,0 +1,34 @@
+"# ===================================================================================================="
+"# KETERANGAN TABEL : 15_ringkasan_skenario.csv (dibuat oleh 15_simulasi_sensitivitas.py)"
+"# Isi tabel        : Ringkasan MAPE per skenario asumsi: median dan persentil 5-95 tiap model, serta porsi seed tempat SARIMA unggul."
+"# Satu baris data  : satu skenario asumsi."
+"# Keterangan kolom : nomor. NAMA KOLOM = arti | Diperoleh dari: cara menghitung/sumbernya"
+"#   1. Skenario = Asumsi pembangkitan data yang diuji. | Diperoleh dari: Lihat 15_hasil_per_seed.csv."
+"#   2. Jumlah_Seed = Banyaknya data sintetis yang dibangkitkan pada skenario ini. | Diperoleh dari: 100 untuk dasar, 50 untuk lainnya."
+"#   3. SARIMA_Median_% = (keterangan belum tersedia) | Diperoleh dari: -"
+"#   4. SARIMA_P5_% = (keterangan belum tersedia) | Diperoleh dari: -"
+"#   5. SARIMA_P95_% = (keterangan belum tersedia) | Diperoleh dari: -"
+"#   6. HoltWinters_Median_% = (keterangan belum tersedia) | Diperoleh dari: -"
+"#   7. HoltWinters_P5_% = (keterangan belum tersedia) | Diperoleh dari: -"
+"#   8. HoltWinters_P95_% = (keterangan belum tersedia) | Diperoleh dari: -"
+"#   9. Naive_Median_% = (keterangan belum tersedia) | Diperoleh dari: -"
+"#   10. Naive_P5_% = (keterangan belum tersedia) | Diperoleh dari: -"
+"#   11. Naive_P95_% = (keterangan belum tersedia) | Diperoleh dari: -"
+"#   12. Orakel_Median_% = (keterangan belum tersedia) | Diperoleh dari: -"
+"#   13. Orakel_P5_% = (keterangan belum tersedia) | Diperoleh dari: -"
+"#   14. Orakel_P95_% = (keterangan belum tersedia) | Diperoleh dari: -"
+"#   15. Persen_SARIMA_Lebih_Baik_dari_Naive = Porsi seed tempat MAPE SARIMA lebih kecil dari seasonal naive (%). | Diperoleh dari: Dihitung per seed."
+"#   16. Persen_SARIMA_Lebih_Baik_dari_HoltWinters = Porsi seed tempat MAPE SARIMA lebih kecil dari Holt-Winters (%). | Diperoleh dari: Dihitung per seed."
+"#   17. Persen_SARIMA_Di_Bawah_Target_15% = Porsi seed tempat MAPE SARIMA memenuhi target < 15% (%). | Diperoleh dari: Dihitung per seed."
+"#   18. Median_Selisih_SARIMA_minus_Orakel_poin = Median selisih MAPE SARIMA dengan MAPE orakel (poin persen). | Diperoleh dari: Makin kecil = model makin dekat dengan batas bawah galat."
+"#   19. Seed_SARIMA_Gagal = Banyaknya seed tempat estimasi SARIMA gagal. | Diperoleh dari: Dihitung per seed."
+"# Catatan          : baris berawalan tanda # adalah keterangan, bukan data. Tabel data dimulai tepat di bawah garis ini."
+"# ===================================================================================================="
+Skenario,Jumlah_Seed,SARIMA_Median_%,SARIMA_P5_%,SARIMA_P95_%,HoltWinters_Median_%,HoltWinters_P5_%,HoltWinters_P95_%,Naive_Median_%,Naive_P5_%,Naive_P95_%,Orakel_Median_%,Orakel_P5_%,Orakel_P95_%,Persen_SARIMA_Lebih_Baik_dari_Naive,Persen_SARIMA_Lebih_Baik_dari_HoltWinters,Persen_SARIMA_Di_Bawah_Target_15%,Median_Selisih_SARIMA_minus_Orakel_poin,Seed_SARIMA_Gagal
+"Dasar (k 10%, noise 5%, S 2,717)",100,10.768319805655128,5.653945963837386,26.376617013344703,12.11198932961412,6.433424183989702,26.917734420698068,17.47549077364951,13.144659483318991,22.318714947292197,6.354006212438321,4.2884942188726995,8.691007752787435,81.0,57.99999999999999,80.0,4.296773043707132,0
+k = 5%,50,8.049549690382765,4.412953629067931,17.684641336862605,10.666304154005182,4.528490377531772,24.35345980086844,16.502549429210525,12.48426041077806,20.92844735545191,4.550216027089952,3.1488069012371698,6.225355611108342,88.0,68.0,92.0,3.5245850906995395,0
+k = 15%,50,13.899236313724934,6.746248476885917,26.765270013716947,16.30772529705267,10.099617924912431,29.27797286418921,17.25548339852127,12.045368000780902,23.054038935128705,8.663372589932386,6.422646042483533,11.207948433162588,70.0,62.0,60.0,4.774075159677396,0
+Noise = 3%,50,9.492502402241808,5.580294857756508,17.144543512739883,10.046141736544907,6.115359279332354,24.82691510486946,16.845841320876712,12.86979404223441,21.049749645062843,5.606693973022277,4.224863305945799,7.202975542213039,90.0,56.00000000000001,92.0,3.7173045643253992,0
+Noise = 10%,50,15.543502209815237,9.609733708347937,31.603904133527017,18.819355556896472,11.489299303831052,36.25842824803786,18.285773359473804,13.041565387646182,24.559877932182783,9.03044216147702,6.2392596568661265,13.367957124547651,64.0,62.0,44.0,5.822996900800169,0
+"S x 0,8",50,10.317719839844017,5.661283098433425,20.026812451942742,12.221347318678514,7.509027939689042,29.394075902161607,16.881792448967026,12.501718057874202,21.76279549982966,6.392390351705289,4.470127986638312,8.57612401961713,82.0,66.0,84.0,4.1458622189720495,0
+"S x 1,2",50,10.317719425703558,5.661297546249549,20.02763107474777,12.222151658411413,7.509226239016234,29.39612762482147,16.881792991577548,12.501718085602196,21.762795594842842,6.392390624387639,4.470127986638312,8.576123920175025,82.0,66.0,84.0,4.145839479065822,0

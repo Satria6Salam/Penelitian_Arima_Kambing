@@ -1,0 +1,24 @@
+"# ===================================================================================================="
+"# KETERANGAN TABEL : 14_uji_diebold_mariano.csv (dibuat oleh 14_pembanding_tambahan.py)"
+"# Isi tabel        : Uji Diebold-Mariano: apakah akurasi model final SARIMA berbeda nyata dengan setiap pembanding (galat rolling origin 1 bulan)."
+"# Satu baris data  : satu pasangan model untuk satu jenis loss."
+"# Keterangan kolom : nomor. NAMA KOLOM = arti | Diperoleh dari: cara menghitung/sumbernya"
+"#   1. Model_A = Model yang diuji (model final). | Diperoleh dari: SARIMA D=1."
+"#   2. Model_B = Model pembanding. | Diperoleh dari: Seasonal naive dan tiga pembanding baru."
+"#   3. Loss = Ukuran kesalahan yang dibandingkan: kuadrat (seperti RMSE) atau absolut (seperti MAE). | Diperoleh dari: Ditetapkan di script 14."
+"#   4. n = Banyaknya bulan yang dibandingkan. | Diperoleh dari: 9 bulan data uji."
+"#   5. Rata2_Selisih_Loss = Rata-rata loss model A dikurangi loss model B. Negatif = model A lebih akurat. | Diperoleh dari: Rata-rata d_t."
+"#   6. Statistik_DM_HLN = Statistik uji Diebold-Mariano setelah koreksi sampel kecil Harvey, Leybourne & Newbold (1997). | Diperoleh dari: DM x faktor koreksi; dibandingkan dengan distribusi t (n-1)."
+"#   7. P_value = Peluang perbedaan sebesar ini muncul karena kebetulan. Di bawah 0,05 = berbeda nyata. | Diperoleh dari: Uji t dua sisi."
+"#   8. Kesimpulan_5% = Kesimpulan uji pada taraf 5%. | Diperoleh dari: Berdasarkan P_value dan tanda Rata2_Selisih_Loss."
+"# Catatan          : baris berawalan tanda # adalah keterangan, bukan data. Tabel data dimulai tepat di bawah garis ini."
+"# ===================================================================================================="
+Model_A,Model_B,Loss,n,Rata2_Selisih_Loss,Statistik_DM_HLN,P_value,Kesimpulan_5%
+SARIMA D=1,Holt-Winters,kuadrat,9,-16310214.835705135,-0.591398323262972,0.5705822917339032,Tidak berbeda signifikan
+SARIMA D=1,Holt-Winters,absolut,9,-1128.9039802369225,-0.5983671506152409,0.5661465231243495,Tidak berbeda signifikan
+SARIMA D=1,SARIMA airline,kuadrat,9,-63362312.660439454,-0.7437934271456828,0.4782753796222337,Tidak berbeda signifikan
+SARIMA D=1,SARIMA airline,absolut,9,-1621.3430665591472,-0.5108936650924065,0.6232223134473928,Tidak berbeda signifikan
+SARIMA D=1,Seasonal naive,kuadrat,9,-759485724.1594777,-1.2048214272454112,0.2627014280436311,Tidak berbeda signifikan
+SARIMA D=1,Seasonal naive,absolut,9,-13494.118315119425,-1.6394835929039933,0.13974394355347133,Tidak berbeda signifikan
+SARIMA D=1,Theta,kuadrat,9,-4050547844.366357,-0.9983366033839806,0.34735134028659315,Tidak berbeda signifikan
+SARIMA D=1,Theta,absolut,9,-20365.272863193266,-0.959736329800297,0.3652921333309145,Tidak berbeda signifikan

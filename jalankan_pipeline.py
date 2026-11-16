@@ -1,5 +1,6 @@
 """
-Runner untuk menjalankan seluruh pipeline script 03-13 secara berurutan.
+Runner untuk menjalankan seluruh pipeline script 03-16 secara berurutan.
+Script 14-16 (pembanding, simulasi, Access Iduladha) bergantung pada hasil 07-13.
 Pakai: python jalankan_pipeline.py [--mulai N] [--sampai N]
 """
 import subprocess
@@ -22,6 +23,9 @@ PIPELINE = [
     "11_rekomendasi_manajerial.py",
     "12_ramalan_6_bulan_access.py",
     "13_penyesuaian_iduladha.py",
+    "14_pembanding_tambahan.py",
+    "15_simulasi_sensitivitas.py",
+    "16_penyesuaian_iduladha_access.py",
 ]
 
 
