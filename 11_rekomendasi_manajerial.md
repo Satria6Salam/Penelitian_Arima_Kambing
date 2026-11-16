@@ -64,7 +64,7 @@ Data penelitian adalah permintaan daging kambing **agregat Kabupaten Malang** (p
 - Harga rata-rata bulan Iduladha Rp133.197/kg, **10,4%** di atas bulan biasa (Rp120.655/kg), sementara volumenya ±2,8 kali bulan biasa.
 - Januari–April 2026 (permintaan rendah, ramalan ±69.000 kg/bulan): pertahankan margin tipis untuk mempercepat perputaran stok dan menghindari pembusukan.
 - Menjelang Iduladha: kenaikan margin wajar berada di kisaran historis ±10%, diterapkan bertahap mulai pertengahan Mei 2026.
-- Catatan: koefisien harga pada model ARIMAX tidak dapat dibaca sebagai elastisitas sebab-akibat. Harga dan volume sama-sama naik di bulan Iduladha (korelasi 0,988), sehingga data tidak dapat memisahkan efek harga dari efek musim.
+- Catatan: koefisien harga pada model ARIMAX tidak dapat dibaca sebagai elastisitas sebab-akibat. Harga dan volume sama-sama naik di bulan Iduladha (korelasi Pearson 0,921 selama 36 bulan), sehingga data tidak dapat memisahkan efek harga dari efek musim.
 
 ## 5. Panduan indeks untuk UMKM (tidak bergantung skala usaha)
 

@@ -215,6 +215,9 @@ def analisis_harga():
 # =============================================================================
 
 def tulis(stok, kurang, per_bulan, pakan, normal, kap, harga, biasa, idul, selisih_pct, umkm):
+    # korelasi Pearson harga rata-rata vs volume bulanan, dihitung dari data (bukan angka tetap)
+    data_bulanan = kk.baca_csv(DATASET_CSV)
+    korelasi = data_bulanan["Harga_Rata2_Per_Kg"].corr(data_bulanan["Total_Kuantitas_Kg"])
     ev = kk.baca_csv(EVAL_TEST_CSV).set_index("Label")
     met7 = kk.baca_csv(METRIK_07_CSV).set_index("Label")
     val = kk.baca_csv(VALIDASI_09_CSV)
@@ -319,7 +322,8 @@ def tulis(stok, kurang, per_bulan, pakan, normal, kap, harga, biasa, idul, selis
           f"- Menjelang Iduladha: kenaikan margin wajar berada di kisaran historis ±{rp(selisih_pct, 0)}%, "
           "diterapkan bertahap mulai pertengahan Mei 2026.",
           "- Catatan: koefisien harga pada model ARIMAX tidak dapat dibaca sebagai elastisitas "
-          "sebab-akibat. Harga dan volume sama-sama naik di bulan Iduladha (korelasi 0,988), "
+          "sebab-akibat. Harga dan volume sama-sama naik di bulan Iduladha (korelasi Pearson "
+          f"{rp(korelasi, 3)} selama {len(data_bulanan)} bulan), "
           "sehingga data tidak dapat memisahkan efek harga dari efek musim.\n"]
 
     u = umkm
