@@ -14,5 +14,5 @@
 "# Catatan          : baris berawalan tanda # adalah keterangan, bukan data. Tabel data dimulai tepat di bawah garis ini."
 "# ===================================================================================================="
 Metode_Rencana_Stok,Total_Aktual_Kg,Total_Rencana_Kg,Kelebihan_Stok_Kg,Kekurangan_Stok_Kg,Bulan_Kelebihan,Bulan_Kekurangan,Total_Selisih_Absolut_Kg
-SARIMA D=1,1023754.8800000001,1000443.8040914462,19560.519348259157,42871.595256812914,2,7,62432.11460507207
-Seasonal naive,1023754.8800000001,847385.4099999999,0.0,176369.46999999997,0,9,176369.46999999997
+SARIMA D=1,1311282.73,1221617.8613610326,18938.161204590928,108603.02984355847,2,7,127541.1910481494
+Seasonal naive,1311282.73,1241050.62,36263.03999999999,106495.15,3,6,142758.19

@@ -14,11 +14,11 @@
 "# Catatan          : baris berawalan tanda # adalah keterangan, bukan data. Tabel data dimulai tepat di bawah garis ini."
 "# ===================================================================================================="
 Model_A,Model_B,Loss,n,Rata2_Selisih_Loss,Statistik_DM_HLN,P_value,Kesimpulan_5%
-SARIMA D=1,Holt-Winters,kuadrat,9,-16310214.835705135,-0.591398323262972,0.5705822917339032,Tidak berbeda signifikan
-SARIMA D=1,Holt-Winters,absolut,9,-1128.9039802369225,-0.5983671506152409,0.5661465231243495,Tidak berbeda signifikan
-SARIMA D=1,SARIMA airline,kuadrat,9,-63362312.660439454,-0.7437934271456828,0.4782753796222337,Tidak berbeda signifikan
-SARIMA D=1,SARIMA airline,absolut,9,-1621.3430665591472,-0.5108936650924065,0.6232223134473928,Tidak berbeda signifikan
-SARIMA D=1,Seasonal naive,kuadrat,9,-759485724.1594777,-1.2048214272454112,0.2627014280436311,Tidak berbeda signifikan
-SARIMA D=1,Seasonal naive,absolut,9,-13494.118315119425,-1.6394835929039933,0.13974394355347133,Tidak berbeda signifikan
-SARIMA D=1,Theta,kuadrat,9,-4050547844.366357,-0.9983366033839806,0.34735134028659315,Tidak berbeda signifikan
-SARIMA D=1,Theta,absolut,9,-20365.272863193266,-0.959736329800297,0.3652921333309145,Tidak berbeda signifikan
+SARIMA D=1,Holt-Winters,kuadrat,9,49205847.675700635,0.4444723008325967,0.6684795306237119,Tidak berbeda signifikan
+SARIMA D=1,Holt-Winters,absolut,9,815.3146252455853,0.3201636336349166,0.7570464680091095,Tidak berbeda signifikan
+SARIMA D=1,SARIMA airline,kuadrat,9,68934087.08913578,0.4442661538818895,0.6686223960332046,Tidak berbeda signifikan
+SARIMA D=1,SARIMA airline,absolut,9,1208.08331837357,0.36982156112045145,0.7211138476281106,Tidak berbeda signifikan
+SARIMA D=1,Seasonal naive,kuadrat,9,-429043196.65390414,-1.0963097366471488,0.3048450062621137,Tidak berbeda signifikan
+SARIMA D=1,Seasonal naive,absolut,9,-3729.780481510849,-0.9954030211634389,0.3486909330191614,Tidak berbeda signifikan
+SARIMA D=1,Theta,kuadrat,9,-337906119.14851826,-1.184266158007769,0.27029714465769683,Tidak berbeda signifikan
+SARIMA D=1,Theta,absolut,9,-3418.7993389518037,-0.9960958905013682,0.3483741871243185,Tidak berbeda signifikan

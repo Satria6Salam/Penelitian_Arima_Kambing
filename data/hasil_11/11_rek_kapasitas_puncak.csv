@@ -14,4 +14,4 @@
 "# Catatan          : baris berawalan tanda # adalah keterangan, bukan data. Tabel data dimulai tepat di bawah garis ini."
 "# ===================================================================================================="
 Periode_Puncak,Ramalan_Puncak_Kg,Batas_Atas_95_Kg,Stok_Pengaman_Kg,Validasi_Juni_2025_Ramalan_Kg,Validasi_Juni_2025_Batas_Atas_Kg,Validasi_Juni_2025_Aktual_Kg,Validasi_Juni_2025_Dalam_Interval
-2026-06,177279.60823085814,251232.5364616631,73952.92823080497,269021.50450414047,316802.13042660593,274672.06,Ya
+2026-05,301477.6286404183,363623.6859485917,62146.05730817339,312294.3797808166,368860.8681249396,356163.29,Ya

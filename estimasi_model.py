@@ -24,6 +24,7 @@ Isi:
 
 import warnings
 import numpy as np
+import pandas as pd
 
 from statsmodels.tsa.statespace.sarimax import SARIMAX
 
@@ -209,10 +210,59 @@ def _variasi_nilai_awal(model):
     return variasi
 
 
-def fit_terbaik(y, exog, order, seasonal_order):
+def _nilai_awal_bersarang(model, daftar_params):
+    """
+    Nilai awal dari solusi model bersarang yang lebih sederhana (warm start).
+    Parameter yang ada di model sederhana disalin menurut namanya; parameter
+    tambahan (koefisien AR/MA atau eksogen) diisi 0, sehingga titik awal ini
+    menghasilkan log-likelihood yang sama dengan model sederhana. Optimizer
+    hanya bisa menaikkannya, jadi model kompleks tidak akan berakhir di bawah
+    model sederhananya.
+    """
+    hasil = []
+    for params in daftar_params or []:
+        params = pd.Series(params)
+        if not set(params.index) <= set(model.param_names):
+            continue
+        sp = np.asarray(model.start_params, dtype=float).copy()
+        for i, nama in enumerate(model.param_names):
+            sp[i] = float(params[nama]) if nama in params.index else 0.0
+        hasil.append(sp)
+    return hasil
+
+
+def params_bersarang(order, seasonal_order, exog, riwayat):
+    """
+    Params model-model di riwayat yang bersarang dalam model ini (aturan sama
+    dengan pengecekan model bersarang di script 06): d, D, dan periode musiman
+    sama, orde p, q, P, Q tidak lebih besar, dan eksogennya himpunan bagian.
+    riwayat: list dict berisi order, seasonal_order, exog (list), params.
+    """
+    eks = set(exog or [])
+    hasil = []
+    for r in riwayat:
+        o, so = r["order"], r["seasonal_order"]
+        if (o, so, set(r["exog"] or [])) == (tuple(order), tuple(seasonal_order), eks):
+            continue
+        if o[1] != order[1] or so[1] != seasonal_order[1]:
+            continue
+        if any(so[:3]) and so[3] != seasonal_order[3]:
+            continue
+        if (o[0] <= order[0] and o[2] <= order[2] and so[0] <= seasonal_order[0]
+                and so[2] <= seasonal_order[2] and set(r["exog"] or []) <= eks):
+            hasil.append(r["params"])
+    return hasil
+
+
+def fit_terbaik(y, exog, order, seasonal_order, params_bersarang=None):
     """
     Fit satu model dengan beberapa optimizer dan beberapa nilai awal, lalu
     pilih hasil terbaik yang valid.
+
+    params_bersarang: daftar params (pd.Series bernama) dari model bersarang
+    yang lebih sederhana; masing-masing dipakai sebagai nilai awal tambahan
+    (lihat _nilai_awal_bersarang). LogL terbaik dari percobaan ini dicatat
+    sebagai LogL_warm.
 
     Aturan pemilihan (berurutan dari LogL tertinggi):
     1. Hasil di-polish dengan lbfgs dari titik tersebut; hasil polish dipakai
@@ -237,9 +287,11 @@ def fit_terbaik(y, exog, order, seasonal_order):
 
     percobaan = [(m, mi, None) for m, mi in OPTIMIZER]
     percobaan += [(nama, 10000, sp) for nama, sp in _variasi_nilai_awal(model)]
+    percobaan += [("warm", MAXITER_POLISH, sp) for sp in _nilai_awal_bersarang(model, params_bersarang)]
+    info["LogL_warm"] = np.nan
 
     for nama, maxiter, start in percobaan:
-        metode = "nm" if nama.startswith("nm_awal") else nama
+        metode = "nm" if nama.startswith("nm_awal") else "lbfgs" if nama == "warm" else nama
         with warnings.catch_warnings(record=True) as w:
             warnings.simplefilter("always")
             try:
@@ -251,7 +303,10 @@ def fit_terbaik(y, exog, order, seasonal_order):
                 llf = float(res.llf)
             except Exception:
                 res, llf = None, np.nan
-        info[f"LogL_{nama}"] = llf
+        if nama == "warm":  # beberapa titik awal bersarang: catat yang terbaik
+            info["LogL_warm"] = np.nanmax([info.get("LogL_warm", np.nan), llf])
+        else:
+            info[f"LogL_{nama}"] = llf
         if res is not None and np.isfinite(llf):
             kandidat.append((llf, nama, res, _pesan(w)))
 

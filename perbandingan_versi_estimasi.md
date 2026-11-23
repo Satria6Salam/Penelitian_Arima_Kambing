@@ -5,6 +5,13 @@ penelitian, supaya alasan perubahan metode tetap terdokumentasi walaupun file
 hasil versi lama sudah dihapus. Data: training Jan 2023–Mar 2025 (27 bulan),
 testing Apr–Des 2025 (9 bulan), target `Total_Kuantitas_Kg`.
 
+> **Catatan:** angka di dokumen ini berasal dari **data versi lama** (sebelum pembacaan karkas BPS
+> dibetulkan dan sebelum tren lokal Malang), jadi tidak sama dengan hasil sekarang. Dokumen ini hanya
+> mencatat alasan perubahan metode (log, `enforce_*=True`, multi-optimizer). Pada data sekarang, model
+> final SARIMA(1,0,0)×(1,1,0)₁₂ log menghasilkan MAPE rolling origin 7,51% dan multilangkah 9,07%
+> (lihat `07_ringkasan_validasi.md` dan `08_ringkasan_forecasting.md`). Versi sekarang juga memakai
+> nilai awal dari model bersarang yang lebih sederhana (*warm start*, kolom `LogL_warm`).
+
 | Versi | Pengaturan | Masalah utama |
 |---|---|---|
 | V0 | Skala kg, `enforce_stationarity/invertibility=False`, optimizer lbfgs | Log-likelihood SARIMA D=1 hanya dihitung dari 1–2 observasi → AIC/BIC tidak valid |

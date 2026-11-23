@@ -519,6 +519,7 @@ def latih_semua_kandidat(train_df, daftar_kandidat):
 
     fitted_models = {}
     hasil_estimasi = []
+    riwayat = []  # solusi model sebelumnya, untuk warm start model bersarang
 
     for nomor, kandidat in enumerate(daftar_kandidat, start=1):
 
@@ -546,10 +547,14 @@ def latih_semua_kandidat(train_df, daftar_kandidat):
         )
 
         try:
-            result, info_fit = em.fit_terbaik(y_train, x_train, order, seasonal_order)
+            result, info_fit = em.fit_terbaik(
+                y_train, x_train, order, seasonal_order,
+                params_bersarang=em.params_bersarang(order, seasonal_order, kandidat["exog"], riwayat))
 
             if not np.isfinite(result.llf):
                 raise ValueError("Log-likelihood tidak terhingga (non-finite).")
+            riwayat.append({"order": tuple(order), "seasonal_order": tuple(seasonal_order),
+                            "exog": kandidat["exog"], "params": result.params})
 
             converged = periksa_konvergensi(result)
 

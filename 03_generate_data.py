@@ -19,7 +19,7 @@ APA YANG DILAKUKAN PROGRAM INI?
               Langkah 5 : undian jenis produk sesuai rasio (multinomial)
               Langkah 6 : undian volume bulanan  mu +- 10%  (random uniform)
               Langkah 7 : pecah volume bulanan menjadi struk transaksi 5-35 kg
-    Tahap 3 : Tren linier        -> volume naik/turun mengikuti tren nasional
+    Tahap 3 : Tren lokal         -> level bulanan bergeser halus mengikuti baseline BPS Malang
     Tahap 4 : Faktor musiman     -> volume bulan Iduladha x 2,717
     Tahap 5 : Variabel eksogen   -> harga jual per kg & jumlah pesanan (untuk ARIMAX)
     Tahap 6 : White noise        -> galat acak kecil berdistribusi normal
@@ -86,14 +86,10 @@ PEMOTONGAN_JULI_2024 = 8_011        # ekor kambing dipotong bulan Juli 2024 (BPS
 BERAT_PESANAN_MIN = 5.0             # ?? kg, berat terkecil satu struk (Langkah 7)
 BERAT_PESANAN_MAKS = 35.0           # ?? kg, berat terbesar satu struk (Langkah 7)
 
-# --- Tahap 3: tren linier ----------------------------------------------------
-# Produksi daging kambing nasional (ribu ton), sumber: BPS via GoodStats
-# https://goodstats.id/article/produksi-daging-kambing-di-indonesia-kembali-meningkat-2025-jawa-timur-jadi-sentra-produksi-tertinggi-PplRu  
-PRODUKSI_NASIONAL = {
-    2016: 67.85, 2017: 70.35, 2018: 70.16, 2019: 72.85, 2020: 61.71,
-    2021: 59.73, 2022: 60.77, 2023: 61.32, 2024: 52.99, 2025: 60.99,
-}
-TAHUN_STABIL = 2023                 # tahun pertama = fase stabil (tanpa tren)
+# --- Tahap 3: tren lokal -----------------------------------------------------
+# Tren mengikuti baseline tahunan BPS Kabupaten Malang sendiri (lihat Bagian G):
+# level bulanan ditarik garis lurus antar-titik tengah tahun, sehingga rata-rata
+# tahunan level tren sama dengan baseline BPS (selisih di bawah 1%). Tidak memakai data nasional.
 
 # --- Tahap 4: faktor musiman Iduladha ----------------------------------------
 # https://data.goodstats.id/statistic/hewan-kurban-terbanyak-sapi-kambing-atau-domba-Co1Yj
@@ -126,6 +122,10 @@ KOLOM_BPS = {
     "Total Meatyield": "Produksi Daging Kambing - Jumlah Produksi Daging (Meatyield) (Kg)",
 }
 PRODUK = ["Daging Murni", "Karkas", "Jeroan", "Daging Variasi"]
+
+# Tahun yang label kolom komponen "Daging Murni/Skeletal" dan "Karkas"-nya tertukar
+# di tabel BPS (tampil tertukar juga di situs BPS Jatim). Lihat baca_bps_wilayah().
+TAHUN_LABEL_KOMPONEN_TERTUKAR = [2024, 2025]
 
 # Generator angka acak tunggal yang dipakai seluruh program
 rng = np.random.default_rng(SEED)
@@ -253,7 +253,7 @@ def ke_angka(nilai):
 def baca_bps_wilayah(tahun, wilayah):
     """
     Langkah 1 - membaca satu file CSV BPS dan mengambil baris satu kabupaten.
-    Menangani penyesuaian header terbalik pada dataset BPS 2024 & 2025.
+    Menangani label kolom komponen yang tertukar pada dataset BPS 2024 & 2025.
     """
     df = pd.read_csv(cari_file_bps(tahun), encoding="utf-8-sig", dtype=str)
     baris = df[df["Kabupaten/Kota"].str.strip() == wilayah]
@@ -264,10 +264,16 @@ def baca_bps_wilayah(tahun, wilayah):
     # Salin pemetaan kolom dasar
     pemetaan_kolom = KOLOM_BPS.copy()
 
-    # Penyesuaian khusus untuk CSV 2024 & 2025 yang nama kolom totalnya terbalik
-    if tahun in [2024, 2025]:
-        pemetaan_kolom["Total Meatyield"] = KOLOM_BPS["Total Karkas"]
-        pemetaan_kolom["Total Karkas"] = KOLOM_BPS["Total Meatyield"]
+    # Catatan kaki tabel BPS: Jumlah Produksi Daging (Karkas) = karkas + jeroan + daging
+    # variasi, dan Jumlah Produksi Daging (Meatyield) = daging murni + jeroan + daging variasi.
+    # Pada tabel 2024 & 2025 hubungan itu hanya cocok bila nilai di kolom berlabel "Daging
+    # Murni/Skeletal" dibaca sebagai karkas dan sebaliknya (karkas berisi tulang, sehingga
+    # selalu lebih besar dari daging murni). Label kolom total benar di semua tahun, dan
+    # tabel 2023 (baris Jawa Timur) tidak tertukar. Kecocokannya diperiksa di
+    # lengkapi_komponen_kosong().
+    if tahun in TAHUN_LABEL_KOMPONEN_TERTUKAR:
+        pemetaan_kolom["Daging Murni"] = KOLOM_BPS["Karkas"]
+        pemetaan_kolom["Karkas"] = KOLOM_BPS["Daging Murni"]
 
     return {nama: ke_angka(baris[kolom]) for nama, kolom in pemetaan_kolom.items()}
 
@@ -284,23 +290,22 @@ def lengkapi_komponen_kosong(data_tahunan):
        - Rincian 4 komponen produk (Daging Murni, Karkas, Jeroan, Daging Variasi) bernilai "..." (NaN).
        - Dataset 2024 & 2025 memiliki rincian produk yang lengkap.
        
-    2. PEMETAAN KOLOM & RUMUS DASAR (HUBUNGAN ALJABAR BPS):
+    2. RUMUS DASAR (CATATAN KAKI TABEL BPS), berlaku untuk semua tahun:
        Definisi Edible Portion (E) = Jeroan + Daging Variasi
-       
-       A. Dataset 2024 & 2025 (Header Kolom Terbalik pada CSV BPS):
-          - Total Meatyield (dari kolom 'Karkas' CSV)    = Karkas + E
-          - Total Karkas    (dari kolom 'Meatyield' CSV) = Daging Murni + E
-          
-       B. Dataset 2023 (Header Kolom Normal / Tidak Terbalik):
-          - Total Karkas    (dari kolom 'Karkas' CSV)    = Karkas + E
-          - Total Meatyield (dari kolom 'Meatyield' CSV) = Daging Murni + E
-          
+          - Total Karkas    = Karkas + E
+          - Total Meatyield = Daging Murni + E
+       Label kolom komponen 2024 & 2025 sudah dibetulkan di baca_bps_wilayah(), sehingga
+       rumus ini dipakai apa adanya dan diperiksa untuk tahun yang lengkap.
+
     3. RUMUS PEMBALIKAN UNTUK ESTIMASI RINCIAN PRODUK 2023:
-          - E_2023          = s * Total_Meatyield_2023
+          - s               = rata-rata E / Total Karkas pada tahun lengkap (2024-2025)
+          - p               = rata-rata Jeroan / E pada tahun lengkap
+          - E_2023          = s * Total_Karkas_2023
           - Jeroan_2023     = p * E_2023
           - Variasi_2023    = (1 - p) * E_2023
           - Karkas_2023     = Total_Karkas_2023 - E_2023
           - Daging_Murni_23 = Total_Meatyield_2023 - E_2023
+       Kedua total resmi BPS 2023 tetap utuh.
     ========================================================================================
     """
     
@@ -322,13 +327,19 @@ def lengkapi_komponen_kosong(data_tahunan):
         # Ambil angka-angka dari buku catatan tahun tersebut biar variabelnya lebih ringkas dibaca
         jeroan = d["Jeroan"]
         variasi = d["Daging Variasi"]
-        total_meatyield = d["Total Meatyield"]
-        
+        total_karkas = d["Total Karkas"]
+
         # Hitung Edible Portion (E)
         e = jeroan + variasi
-        
+
+        # Periksa rumus BPS: kedua total harus tepat sama dengan komponennya, dan karkas
+        # (berisi tulang) harus lebih besar dari daging murni
+        assert abs(total_karkas - (d["Karkas"] + e)) < 1, "Total Karkas != Karkas + E"
+        assert abs(d["Total Meatyield"] - (d["Daging Murni"] + e)) < 1, "Total Meatyield != Daging Murni + E"
+        assert d["Karkas"] > d["Daging Murni"], "Karkas harus lebih besar dari daging murni"
+
         # Hitung rasio untuk tahun ini
-        s_tahun = e / total_meatyield
+        s_tahun = e / total_karkas
         p_tahun = jeroan / e
         
         # Simpan hasil hitungan tahun ini ke wadah masing-masing
@@ -348,8 +359,8 @@ def lengkapi_komponen_kosong(data_tahunan):
         
         if d["Diestimasi"]:
             # 1. Estimasi Total Edible Portion 2023 (E = Jeroan + Daging Variasi)
-            #    Rumus: E_2023 = s * Total Meatyield 2023
-            e = s * d["Total Meatyield"]
+            #    Rumus: E_2023 = s * Total Karkas 2023
+            e = s * d["Total Karkas"]
             
             # 2. Break-down Nilai E_2023 menjadi Komponen Jeroan & Daging Variasi
             #    Rumus: Jeroan = p * E
@@ -357,7 +368,7 @@ def lengkapi_komponen_kosong(data_tahunan):
             #    Rumus: Daging Variasi = (1 - p) * E
             d["Daging Variasi"] = (1 - p) * e
             
-            # 3. Hitung Produk Utama 2023 (Header Normal 2023)
+            # 3. Hitung Produk Utama 2023
             #    Rumus Karkas: Total Karkas - E  (Karkas = Total Karkas - E)
             d["Karkas"] = d["Total Karkas"] - e
             
@@ -377,15 +388,15 @@ def hitung_baseline(data_tahunan):
 
     Langkah 2 - dari tahunan ke bulanan (tingkat kabupaten):
         Karkas Bulanan Kabupaten = Karkas Tahunan Kabupaten / 12
-        contoh 2024: 1.048.096,31 / 12 = 87.341,36 kg per bulan
+        contoh 2024: 1.393.468,17 / 12 = 116.122,35 kg per bulan
 
     Langkah 3 - menetapkan baseline bulanan wilayah:
         mu = Karkas Bulanan Kabupaten
-        contoh 2024: mu = 87.341,36 kg per bulan
+        contoh 2024: mu = 116.122,35 kg per bulan
 
     Langkah 4 - rasio komposisi produk:
         Rasio produk i = Produksi produk i / (Murni + Karkas + Jeroan + Variasi)
-        contoh 2024: Karkas = 1.048.096,31 / 2.809.949,68 = 37,30%
+        contoh 2024: Karkas = 1.393.468,17 / 2.809.949,68 = 49,59%
 
     Baseline bersifat time-varying: bulan-bulan di 2023 memakai data BPS 2023,
     2024 memakai data 2024, 2025 memakai data 2025.
@@ -407,27 +418,6 @@ def hitung_baseline(data_tahunan):
         hasil.append(baris)
     return pd.DataFrame(hasil)
 
-    """
-    hasil = [
-        {
-            "Tahun": 2023,
-            "Karkas_Tahunan_Kab": 515642.23,
-            "Karkas_Bulanan_Kab": 42970.18,
-            "Mu_Lokal": 572.93,
-            "Diestimasi": True,
-            # ... (rasio produk)
-        },
-        {
-            "Tahun": 2024,
-            "Karkas_Tahunan_Kab": 430336.95,
-            "Karkas_Bulanan_Kab": 35861.41,
-            "Mu_Lokal": 478.15,
-            "Diestimasi": False, 
-            # ... (rasio produk)
-        }
-    ]
-    """
-
 
 # #############################################################################
 #        BAGIAN F - TAHAP 2 / LANGKAH 6: VOLUME BULANAN ACAK (+-10%)
@@ -448,9 +438,9 @@ def buat_volume_bulanan(horizon, baseline):
 
         Volume ~ Uniform( mu - k.mu , mu + k.mu )
 
-        contoh 2024 (mu = 87.341,36 ; k = 0,10):
-            batas bawah = 87.341,36 - 8.734,14 = 78.607,22 kg
-            batas atas  = 87.341,36 + 8.734,14 = 96.075,50 kg
+        contoh 2024 (mu = 116.122,35 ; k = 0,10):
+            batas bawah = 116.122,35 - 11.612,23 = 104.510,11 kg
+            batas atas  = 116.122,35 + 11.612,23 = 127.734,58 kg
 
     k = 10% adalah asumsi variasi bulanan sintetis yang lebih lebar daripada
     variasi data BPS Mei-Juli 2024 (2,68%).
@@ -468,93 +458,56 @@ def buat_volume_bulanan(horizon, baseline):
 
 
 # #############################################################################
-#                    BAGIAN G - TAHAP 3: INJEKSI TREN LINIER
+#                    BAGIAN G - TAHAP 3: TREN LOKAL KABUPATEN MALANG
 # #############################################################################
 
-def hitung_growth_rate(produksi, tahun):
+def hitung_gradien_per_tahun(baseline):
     """
-    Laju pertumbuhan produksi nasional dari tahun sebelumnya:
+    Titik jangkar tren lokal: baseline tahunan (mu) BPS Kabupaten Malang ditempatkan di
+    tengah tahunnya (t = 6,5; 18,5; 30,5), lalu level bulanan ditarik garis lurus antar-titik.
 
-        Growth = (Produksi tahun ini - Produksi tahun lalu) / Produksi tahun lalu
+        m_Segmen = (mu tahun berikutnya - mu tahun ini) / 12      (kg per bulan)
+        contoh 2023 -> 2024: (116.122,35 - 105.975,26) / 12 = 845,59 kg per bulan
 
-        2023 -> 2024: (52,99 - 61,32) / 61,32 = -13,58%   (kontraksi)
-        2024 -> 2025: (60,99 - 52,99) / 52,99 = +15,10%   (pemulihan)
+    Pertumbuhan diambil dari data Kabupaten Malang sendiri, sehingga rata-rata tahunan level
+    tren sama dengan baseline BPS (2023 dan 2025 tepat sama; 2024 selisih 0,5% karena
+    kemiringan berubah di tengah tahun) dan tidak ada lompatan level di awal tahun.
+    Untuk tahun terakhir, m_Segmen sama dengan segmen sebelumnya (garis diperpanjang).
     """
-    return (produksi[tahun] - produksi[tahun - 1]) / produksi[tahun - 1]
+    jangkar = baseline[["Tahun", "Mu_Lokal"]].sort_values("Tahun").reset_index(drop=True)
+    jangkar["t_Tengah"] = [6.5 + 12 * i for i in range(len(jangkar))]
+    mu = jangkar["Mu_Lokal"].values
+    segmen = [(mu[i + 1] - mu[i]) / 12 for i in range(len(mu) - 1)]
+    jangkar["m_Segmen_Kg"] = segmen + segmen[-1:]
+    return jangkar
 
 
-def hitung_gradien_per_tahun(tahun_list):
+def level_tren(t, gradien):
     """
-    Menentukan gradien bulanan (m) untuk setiap fase tahunan:
-
-        2023 (t = 1-12)  : fase stabil     -> m = 0
-        2024 (t = 13-24) : fase kontraksi  -> m = -13,58% / 12 = -1,1317% per bulan
-        2025 (t = 25-36) : fase pemulihan  -> m = +15,10% / 12 = +1,2581% per bulan
-
-    Rumus: m = Growth tahunan / 12   (pertumbuhan setahun dibagi rata ke 12 bulan)
-    t_awal_fase = nomor bulan tepat sebelum fase dimulai (0, 12, 24).
+    Level tren lokal pada bulan t (interpolasi linier antar-titik jangkar):
+        Mu_Tren_t = mu_i + m_Segmen_i x (t - t_Tengah_i)
+    dengan i = titik jangkar terakhir yang t_Tengah-nya <= t (titik pertama bila t lebih kecil).
     """
-    hasil = []
-    for i, tahun in enumerate(tahun_list):
-        growth = 0.0 if tahun == TAHUN_STABIL else hitung_growth_rate(PRODUKSI_NASIONAL, tahun)
-        hasil.append({"Tahun": tahun,
-                      "t_awal_fase": i * 12,
-                      "Growth_Tahunan": growth,
-                      "m_Bulanan": growth / 12})
-    return pd.DataFrame(hasil)
+    i = max(0, int(np.searchsorted(gradien["t_Tengah"].values, t, side="right")) - 1)
+    i = min(i, len(gradien) - 2)  # di luar titik terakhir: perpanjang segmen terakhir
+    g = gradien.iloc[i]
+    return g["Mu_Lokal"] + g["m_Segmen_Kg"] * (t - g["t_Tengah"])
 
 
 def injeksi_tren(volume_bulanan, gradien):
     """
-    Menerapkan persamaan garis linier ke setiap bulan:
-
-        Faktor Tren_t = 1 + m x (t - t_awal_fase)
-        Volume Tren_t = Volume Tahap 2_t x Faktor Tren_t
-
-    Volume Tren dihitung dari baseline wilayah:
-        Volume Tren_Kg = Target_Kg x Faktor Tren
+    Menerapkan tren lokal ke setiap bulan:
+        Mu_Tren_t      = level tren lokal bulan t (lihat level_tren)
+        Faktor Tren_t  = Mu_Tren_t / Mu_Lokal tahun bulan itu
+        Volume Tren_t  = Target_Kg_t x Faktor Tren_t
+    Volume dasar (undian mu +- 10%) digeser mengikuti level tren, jadi naik-turunnya level
+    berjalan halus antar-tahun.
     """
-
-    data_hasil = []
-    
-    # Proses membaca tabel volume bulanan satu baris demi baris
-    for index, baris_bulan in volume_bulanan.iterrows():
-        # Ambil tahun dari baris bulan saat ini (misal: 2024 atau 2025)
-        tahun_ini = baris_bulan["Tahun"]
-        
-        # 3. Cari informasi gradien (m_Bulanan dan t_awal_fase) yang cocok dengan tahun tersebut
-        # Kita saring tabel gradien berdasarkan tahunnya
-        baris_gradien = gradien[gradien["Tahun"] == tahun_ini].iloc[0]
-        
-        # Ambil nilai m_Bulanan dan t_awal_fase dari baris yang cocok
-        m_bulanan = baris_gradien["m_Bulanan"]
-        t_awal_fase = baris_gradien["t_awal_fase"]
-        
-        # Ambil nomor bulan berjalan (t) dan target kg dasar (Target_Kg) dari baris bulan
-        t_berjalan = baris_bulan["t"]
-        target_kg_dasar = baris_bulan["Target_Kg"]
-        
-        # 4. Hitung selisih waktu (sudah berapa bulan berjalan sejak awal fase)
-        selisih_waktu = t_berjalan - t_awal_fase
-        
-        # 5. Hitung Faktor Tren menggunakan rumus matematika: 1 + (m * selisih_waktu)
-        faktor_tren = 1 + (m_bulanan * selisih_waktu)
-        
-        # 6. Hitung volume akhir setelah dikalikan tren, lalu bulatkan 2 angka di belakang koma
-        volume_tren_kg = round(target_kg_dasar * faktor_tren, 2)
-        
-        # 7. Salin data asli dari baris bulan, lalu tambahkan kolom-kolom baru hasil perhitungan tren
-        baris_baru = baris_bulan.to_dict()  # Ubah baris data asli jadi kamus data
-        baris_baru["t_awal_fase"] = t_awal_fase
-        baris_baru["m_Bulanan"] = m_bulanan
-        baris_baru["Faktor_Tren"] = faktor_tren
-        baris_baru["Volume_Tren_Kg"] = volume_tren_kg
-        
-        # 8. Masukkan baris lengkap ini ke laci penampung
-        data_hasil.append(baris_baru)
-        
-    # 9. Setelah semua baris selesai dihitung, ubah tumpukan laci menjadi tabel DataFrame yang rapi
-    return pd.DataFrame(data_hasil)
+    hasil = volume_bulanan.copy()
+    hasil["Mu_Tren_Kg"] = [level_tren(t, gradien) for t in hasil["t"]]
+    hasil["Faktor_Tren"] = hasil["Mu_Tren_Kg"] / hasil["Mu_Lokal"]
+    hasil["Volume_Tren_Kg"] = (hasil["Target_Kg"] * hasil["Faktor_Tren"]).round(2)
+    return hasil
 
 
 # #############################################################################
@@ -886,21 +839,16 @@ def main():
     volume = buat_volume_bulanan(horizon, baseline)                        # Langkah 6
 
     # =========================================================================
-    # TAHAP 3 - INJEKSI TREN LINIER
+    # TAHAP 3 - TREN LOKAL KABUPATEN MALANG
     # =========================================================================
-    gradien = hitung_gradien_per_tahun(TAHUN_DATA)
-    judul_tahap("TAHAP 3  -  INJEKSI TREN LINIER  (Faktor Tren = 1 + m x (t - t_awal_fase))")
-    nama_fase = {0: "Stabil", 1: "Kontraksi", 2: "Pemulihan"}
+    gradien = hitung_gradien_per_tahun(baseline)
+    judul_tahap("TAHAP 3  -  TREN LOKAL  (Mu_Tren_t = mu_i + m_Segmen_i x (t - t_Tengah_i))")
     cetak_tabel(
-        ["Tahun", "Fase", "Rentang t", "Growth Nasional", "m per Bulan", "Faktor Awal", "Faktor Akhir"],
-        [[g.Tahun, nama_fase[i], f"{g.t_awal_fase + 1}-{g.t_awal_fase + 12}",
-          persen(g.Growth_Tahunan, tanda=True), persen(g.m_Bulanan, 4, tanda=True),
-          angka(1 + g.m_Bulanan * 1, 4), angka(1 + g.m_Bulanan * 12, 4)]
+        ["Tahun", "mu BPS (kg)", "t Tengah", "m Segmen (kg/bulan)", "Mu Tren t awal", "Mu Tren t akhir"],
+        [[g.Tahun, angka(g.Mu_Lokal), angka(g.t_Tengah, 1), angka(g.m_Segmen_Kg),
+          angka(level_tren(12 * i + 1, gradien)), angka(level_tren(12 * i + 12, gradien))]
          for i, g in enumerate(gradien.itertuples())],
-        rata="rlrrrrr")
-    m3 = gradien["m_Bulanan"].iloc[-1]
-    # print(f"  Cek dokumen: 872,18 x (1 + {angka(m3, 6)} x 1)  = {angka(872.18 * (1 + m3))} kg (t = 25)")
-    # print(f"               872,18 x (1 + {angka(m3, 6)} x 12) = {angka(872.18 * (1 + m3 * 12))} kg (t = 36)")
+        rata="rrrrrr")
     volume = injeksi_tren(volume, gradien)
 
     # =========================================================================

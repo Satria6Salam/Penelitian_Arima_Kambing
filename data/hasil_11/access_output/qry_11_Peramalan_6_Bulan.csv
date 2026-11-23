@@ -14,9 +14,9 @@
 "# Catatan          : baris berawalan tanda # adalah keterangan, bukan data. Tabel data dimulai tepat di bawah garis ini."
 "# ===================================================================================================="
 Nama_Model,Bulan,Horizon,Ramalan_Kg,Batas_Bawah_95,Batas_Atas_95,Sumber,Tanggal_Dibuat
-"SARIMA(1,0,0)x(1,1,0,12) log",January 2026,1,71327.0,60653.0,83880.0,Python (rumus rekursif = modul VBA),2026-11-03 17:40:27
-"SARIMA(1,0,0)x(1,1,0,12) log",February 2026,2,71335.0,57069.0,89168.0,Python (rumus rekursif = modul VBA),2026-11-03 17:40:27
-"SARIMA(1,0,0)x(1,1,0,12) log",March 2026,3,69364.0,53157.0,90514.0,Python (rumus rekursif = modul VBA),2026-11-03 17:40:27
-"SARIMA(1,0,0)x(1,1,0,12) log",April 2026,4,67206.0,49817.0,90665.0,Python (rumus rekursif = modul VBA),2026-11-03 17:40:27
-"SARIMA(1,0,0)x(1,1,0,12) log",May 2026,5,65768.0,47456.0,91146.0,Python (rumus rekursif = modul VBA),2026-11-03 17:40:27
-"SARIMA(1,0,0)x(1,1,0,12) log",June 2026,6,177280.0,125095.0,251233.0,Python (rumus rekursif = modul VBA),2026-11-03 17:40:27
+"SARIMA(1,0,0)x(1,1,0,12) log",January 2026,1,108757.0,93632.0,126325.0,Python (rumus rekursif = modul VBA),2026-11-21 19:14:25
+"SARIMA(1,0,0)x(1,1,0,12) log",February 2026,2,111595.0,93679.0,132937.0,Python (rumus rekursif = modul VBA),2026-11-21 19:14:25
+"SARIMA(1,0,0)x(1,1,0,12) log",March 2026,3,112341.0,93519.0,134952.0,Python (rumus rekursif = modul VBA),2026-11-21 19:14:25
+"SARIMA(1,0,0)x(1,1,0,12) log",April 2026,4,109806.0,91137.0,132299.0,Python (rumus rekursif = modul VBA),2026-11-21 19:14:25
+"SARIMA(1,0,0)x(1,1,0,12) log",May 2026,5,109254.0,90582.0,131776.0,Python (rumus rekursif = modul VBA),2026-11-21 19:14:25
+"SARIMA(1,0,0)x(1,1,0,12) log",June 2026,6,301478.0,249855.0,363766.0,Python (rumus rekursif = modul VBA),2026-11-21 19:14:25

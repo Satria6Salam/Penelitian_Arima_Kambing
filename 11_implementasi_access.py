@@ -512,6 +512,31 @@ def verifikasi(df, par, hasil):
 
 
 # =============================================================================
+# TAHAP 6: EKSPOR ISI TABEL & QUERY ACCESS KE CSV
+# =============================================================================
+
+EKSPOR_DIR = OUTPUT_DIR / "access_output"
+EKSPOR_OBJEK = ["Tbl_Parameter_SARIMA", "Tbl_Peramalan", "qry_11_Volume_Bulanan",
+                "qry_11_Ramalan_1_Bulan_Historis", "qry_11_Ramalan_Bulan_Depan",
+                "qry_11_Peramalan_6_Bulan", "qry_11_Faktor_Musiman"]
+
+
+def ekspor_access():
+    """Ekspor isi tabel/query Access ke data/hasil_11/access_output, supaya salinan CSV selalu sesuai database."""
+    print("\n" + "=" * 75)
+    print("TAHAP 6: EKSPOR TABEL & QUERY ACCESS KE CSV")
+    print("=" * 75)
+    EKSPOR_DIR.mkdir(parents=True, exist_ok=True)
+    with get_conn() as conn:
+        for nama in EKSPOR_OBJEK:
+            with warnings.catch_warnings():
+                warnings.simplefilter("ignore")
+                isi = pd.read_sql(f"SELECT * FROM {nama}", conn)
+            kk.simpan_csv(isi, EKSPOR_DIR / f"{nama}.csv", index=False)
+            print(f"- {nama:<34} {len(isi):>3} baris")
+
+
+# =============================================================================
 # FUNGSI UTAMA
 # =============================================================================
 
@@ -525,6 +550,7 @@ def main():
     buat_query()
     hasil = isi_peramalan(df, par)
     verifikasi(df, par, hasil)
+    ekspor_access()
 
     objek = pd.DataFrame(
         [{"Jenis": "Tabel", "Nama": t} for t in TABEL_BARU]

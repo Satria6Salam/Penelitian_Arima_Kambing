@@ -17,6 +17,6 @@
 "# Catatan          : baris berawalan tanda # adalah keterangan, bukan data. Tabel data dimulai tepat di bawah garis ini."
 "# ===================================================================================================="
 Label,Nama_Model,Kelompok,Order,Seasonal_Order,Eksogen,AIC_06,BIC_06,Ljung_Box,Shapiro_Wilk,MAPE_rolling_07_%
-SARIMA D=1,"SARIMA(1, 0, 0)x(1, 1, 0, 12)","d=0, D=1","(1, 0, 0)","(1, 1, 0, 12)",-,-12.547538386056239,-10.423387782749609,Lulus,Lulus,6.586261795396102
-ARIMAX Harga,"ARIMAX(2, 0, 0) + Harga","d=0, D=0","(2, 0, 0)","(0, 0, 0, 0)",Harga_Rata2_Per_Kg,-43.61569716576019,-37.13651283573854,Lulus,Lulus,4.003017831878643
-ARIMAX Harga+Iduladha,"ARIMAX(2, 0, 0) + Harga + Iduladha","d=0, D=0","(2, 0, 0)","(0, 0, 0, 0)","Harga_Rata2_Per_Kg, Koefisien_Musim",-44.70839440058765,-36.933373204561676,Lulus,Lulus,4.586235408001363
+SARIMA D=1,"SARIMA(1, 0, 0)x(1, 1, 0, 12)","d=0, D=1","(1, 0, 0)","(1, 1, 0, 12)",-,-20.499850447937366,-18.375699844630738,Lulus,Lulus,7.5104938715846785
+ARIMAX Harga,"ARIMAX(0, 0, 2) + Harga","d=0, D=0","(0, 0, 2)","(0, 0, 0, 0)",Harga_Rata2_Per_Kg,-54.40523892035566,-47.92605459033401,Lulus,Lulus,9.391914384097353
+ARIMAX Harga+Iduladha,"ARIMAX(1, 0, 0) + Harga + Iduladha","d=0, D=0","(1, 0, 0)","(0, 0, 0, 0)","Harga_Rata2_Per_Kg, Koefisien_Musim",-58.29458658364682,-51.81540225362517,Lulus,Lulus,4.382342170016735

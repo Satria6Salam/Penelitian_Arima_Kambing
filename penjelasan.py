@@ -157,19 +157,21 @@ def jelaskan_03(g, baseline, volume, transaksi, gradien, koef_s):
     isi("Hasil undian (seed 42)", f"{fmt(v1['Target_Kg'])} kg (berada di dalam rentang)")
     cek("batas bawah", v1["Mu_Lokal"] * (1 - k), v1["Batas_Bawah"], 2)
 
-    gr = gradien[gradien["Tahun"] == 2024].iloc[0]
-    prod = g["PRODUKSI_NASIONAL"]
+    g0 = gradien.iloc[0]
+    g1 = gradien.iloc[1]
     v13 = volume[volume["t"] == 13].iloc[0]
-    sub("1d. Injeksi tren linier (Tahap 3) — bulan pertama yang memiliki tren: t = 13 (Jan 2024)")
-    rumus("Growth = (Produksi_2024 − Produksi_2023) / Produksi_2023 ;  m = Growth / 12")
-    lanjut("Faktor Tren_t = 1 + m × (t − t_awal_fase) ;  Volume Tren = Volume dasar × Faktor Tren")
-    growth = (prod[2024] - prod[2023]) / prod[2023]
-    isi("Growth 2024", f"({fmt(prod[2024])} − {fmt(prod[2023])}) / {fmt(prod[2023])} = {fmt(growth * 100, 4)}%")
-    isi("m per bulan", f"{fmt(growth * 100, 4)}% / 12 = {fmt(growth / 12 * 100, 4)}%")
-    faktor = 1 + gr["m_Bulanan"] * (13 - gr["t_awal_fase"])
-    isi("Faktor tren t = 13", f"1 + ({fmt(gr['m_Bulanan'], 6)}) × (13 − {int(gr['t_awal_fase'])}) = {fmt(faktor, 6)}")
+    sub("1d. Tren lokal Kabupaten Malang (Tahap 3) — contoh t = 13 (Jan 2024)")
+    rumus("m_Segmen = (mu_2024 − mu_2023) / 12 ;  Mu_Tren_t = mu_2023 + m_Segmen × (t − 6,5)")
+    lanjut("Faktor Tren_t = Mu_Tren_t / mu tahun itu ;  Volume Tren = Volume dasar × Faktor Tren")
+    m = (g1["Mu_Lokal"] - g0["Mu_Lokal"]) / 12
+    isi("m Segmen 2023–2024", f"({fmt(g1['Mu_Lokal'])} − {fmt(g0['Mu_Lokal'])}) / 12 = {fmt(m)} kg/bulan")
+    mu_tren = g0["Mu_Lokal"] + m * (13 - g0["t_Tengah"])
+    isi("Mu Tren t = 13", f"{fmt(g0['Mu_Lokal'])} + {fmt(m)} × (13 − {fmt(g0['t_Tengah'], 1)}) = {fmt(mu_tren)} kg")
+    faktor = mu_tren / v13["Mu_Lokal"]
+    isi("Faktor tren t = 13", f"{fmt(mu_tren)} / {fmt(v13['Mu_Lokal'])} = {fmt(faktor, 6)}")
     isi("Volume tren", f"{fmt(v13['Target_Kg'])} × {fmt(faktor, 6)} = {fmt(v13['Target_Kg'] * faktor)} kg")
-    baris("Catatan: tahun 2023 fase stabil (m = 0), sehingga faktor tren t = 1–12 = 1.")
+    baris("Catatan: titik mu tiap tahun ditempatkan di tengah tahun (t = 6,5; 18,5; 30,5), sehingga rata-rata "
+          "tahunan level tren sama dengan baseline BPS (selisih di bawah 1%).")
     cek("volume tren t=13", round(v13["Target_Kg"] * faktor, 2), v13["Volume_Tren_Kg"], 2, tol_abs=0.006)
 
     v6 = volume[volume["t"] == 6].iloc[0]
@@ -235,13 +237,15 @@ def jelaskan_04(df_mentah, df_tahap1):
     bulan1 = df_mentah[df_mentah["Tanggal_Transaksi"].dt.to_period("M") == p1.to_period("M")]
     sub(f"2a. Agregasi bulanan (GROUP BY MONTH) — bulan pertama {p1:%b %Y}")
     rumus("Total_Kuantitas = Σ Kuantitas_Kg semua transaksi di bulan itu")
-    lanjut("Harga_Rata2 = rata-rata Harga_Final ;  Jumlah_Transaksi = banyak transaksi")
+    lanjut("Harga_Rata2 = Σ Total_Pendapatan / Σ Kuantitas_Kg (tertimbang kg) ;  Jumlah_Transaksi = banyak transaksi")
     contoh = " + ".join(fmt(v) for v in bulan1["Kuantitas_Kg"].head(3)) + " + …"
     isi("Kuantitas", f"{contoh} ({len(bulan1)} transaksi)")
     isi("Total", f"{fmt(bulan1['Kuantitas_Kg'].sum())} kg")
     cek("total kg", round(bulan1["Kuantitas_Kg"].sum(), 2), df_tahap1["Total_Kuantitas_Kg"].iloc[0], 2, tol_abs=0.006)
-    isi("Harga rata-rata", f"Σ Harga_Final / {len(bulan1)} = Rp{fmt(bulan1['Harga_Final'].mean(), 2)}")
-    cek("harga rata-rata", round(bulan1["Harga_Final"].mean(), 0), df_tahap1["Harga_Rata2_Per_Kg"].iloc[0], 0, tol_abs=0.5)
+    harga_w = bulan1["Total_Pendapatan"].sum() / bulan1["Kuantitas_Kg"].sum()
+    isi("Harga rata-rata", f"Rp{fmt(bulan1['Total_Pendapatan'].sum())} / {fmt(bulan1['Kuantitas_Kg'].sum())} kg "
+        f"= Rp{fmt(harga_w, 2)}")
+    cek("harga rata-rata", round(harga_w, 0), df_tahap1["Harga_Rata2_Per_Kg"].iloc[0], 0, tol_abs=0.5)
 
     y = df_tahap1["Total_Kuantitas_Kg"].values
     sub("2b. Interpolasi linier (mengisi bulan yang kosong)")

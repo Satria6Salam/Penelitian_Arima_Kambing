@@ -12,7 +12,7 @@
 "# Catatan          : baris berawalan tanda # adalah keterangan, bukan data. Tabel data dimulai tepat di bawah garis ini."
 "# ===================================================================================================="
 Jumlah_Residual,Uji,Statistik,df,P_value,Keputusan
-24,Ljung-Box lag 6,9.058898841904787,4.0,0.05964403278416402,Lulus (white noise)
-24,Ljung-Box lag 9,10.846421436746041,7.0,0.14545975241759967,Lulus (white noise)
-24,Ljung-Box lag 12,11.55331565966916,10.0,0.3160626346304714,Lulus (white noise)
-24,Shapiro-Wilk,0.9711679995053369,,0.6958763685867948,Lulus (normal)
+24,Ljung-Box lag 6,7.39150669287004,4.0,0.1165896481977755,Lulus (white noise)
+24,Ljung-Box lag 9,9.639450449996781,7.0,0.20994258082148942,Lulus (white noise)
+24,Ljung-Box lag 12,11.956106315615427,10.0,0.28800488777508004,Lulus (white noise)
+24,Shapiro-Wilk,0.9758632572780908,,0.809214344338945,Lulus (normal)

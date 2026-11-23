@@ -16,7 +16,7 @@ Pada data 2023–2025 Iduladha selalu jatuh di bulan Juni, sehingga SARIMA musim
 
 ## Perhitungan
 
-- Iduladha 2026: **27 Mei 2026**. Lonjakan model di 2026-06, acuan bulan normal 2026-05: R = 177.280 ÷ 65.768 = **2,696**.
+- Iduladha 2026: **27 Mei 2026**. Lonjakan model di 2026-06, acuan bulan normal 2026-05: R = 301.478 ÷ 109.254 = **2,759**.
 
 | Tahun | Tanggal_Iduladha | Periode | Bobot | Dalam_Horizon |
 |---|---|---|---|---|
@@ -26,12 +26,12 @@ Pada data 2023–2025 Iduladha selalu jatuh di bulan Juni, sehingga SARIMA musim
 
 | Periode | Yhat_Kg | Bobot_Iduladha | Yhat_Disesuaikan_Kg | Batas_Bawah_95_Disesuaikan_Kg | Batas_Atas_95_Disesuaikan_Kg |
 |---|---|---|---|---|---|
-| 2026-01 | 71.327 | 0,00 | 71.327 | 60.653 | 83.880 |
-| 2026-02 | 71.335 | 0,00 | 71.335 | 57.069 | 89.168 |
-| 2026-03 | 69.364 | 0,00 | 69.364 | 53.157 | 90.514 |
-| 2026-04 | 67.206 | 0,00 | 67.206 | 49.817 | 90.665 |
-| 2026-05 | 65.768 | 1,00 | 177.280 | 127.920 | 245.686 |
-| 2026-06 | 177.280 | 0,00 | 65.768 | 46.408 | 93.203 |
+| 2026-01 | 108.757 | 0,00 | 108.757 | 93.632 | 126.325 |
+| 2026-02 | 111.595 | 0,00 | 111.595 | 93.679 | 132.937 |
+| 2026-03 | 112.341 | 0,00 | 112.341 | 93.519 | 134.952 |
+| 2026-04 | 109.806 | 0,00 | 109.806 | 91.137 | 132.299 |
+| 2026-05 | 109.254 | 1,00 | 301.478 | 249.953 | 363.624 |
+| 2026-06 | 301.478 | 0,00 | 109.254 | 90.546 | 131.827 |
 
 Grafik: `data/hasil_13/grafik/13_ramalan_disesuaikan.png`.
 
@@ -39,18 +39,18 @@ Grafik: `data/hasil_13/grafik/13_ramalan_disesuaikan.png`.
 
 | Periode | Indeks_vs_Bulan_Normal_Disesuaikan | Faktor_Batas_Atas |
 |---|---|---|
-| 2026-01 | 1,03 | 1,18 |
-| 2026-02 | 1,03 | 1,25 |
-| 2026-03 | 1,01 | 1,30 |
-| 2026-04 | 0,97 | 1,35 |
-| 2026-05 | 2,57 | 1,39 |
-| 2026-06 | 0,95 | 1,42 |
+| 2026-01 | 0,99 | 1,16 |
+| 2026-02 | 1,01 | 1,19 |
+| 2026-03 | 1,02 | 1,20 |
+| 2026-04 | 1,00 | 1,20 |
+| 2026-05 | 2,73 | 1,21 |
+| 2026-06 | 0,99 | 1,21 |
 
-Rata-rata bulan normal (disesuaikan): 69.000 kg.
+Rata-rata bulan normal (disesuaikan): 110.351 kg.
 
 ## Implikasi
 
-- Puncak permintaan 2026 berada di **2026-05**: Ŷ 177.280 kg, batas atas 95% 245.686 kg (acuan kapasitas wilayah).
+- Puncak permintaan 2026 berada di **2026-05**: Ŷ 301.478 kg, batas atas 95% 363.624 kg (acuan kapasitas wilayah).
 - Bulan yang semula diramal sebagai puncak kembali ke level bulan normal.
 - Gunakan tabel ini untuk perencanaan; ramalan asli script 09 tetap dilaporkan sebagai hasil model.
 

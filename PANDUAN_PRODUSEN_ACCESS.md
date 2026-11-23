@@ -39,7 +39,7 @@ Isi data bulan yang **baru saja selesai**, satu baris per bulan.
 | **Periode** | Tanggal **1** dari bulan tersebut | `01/01/2026` |
 | **Tahun** | Tahun | `2026` |
 | **Bulan** | Nomor bulan (1–12) | `1` |
-| **Permintaan_Kg** | Total daging kambing **seluruh Kabupaten Malang** bulan itu (kg) | `74894` |
+| **Permintaan_Kg** | Total daging kambing **seluruh Kabupaten Malang** bulan itu (kg) | `114195` |
 | **Harga_Rata2_Per_Kg** | Harga rata-rata per kg (boleh dikosongkan) | `121000` |
 | **Sumber** | Keterangan bebas | `Rekap RPH/Dinas Januari 2026` |
 
@@ -61,8 +61,12 @@ Hal yang perlu diperhatikan:
 
 ### Ramalan 6 bulan ke depan (utama)
 
-1. Di panel kiri bagian **Queries**, klik ganda **qry_12_Ramalan_6_Bulan**.
-2. Muncul 6 baris, yaitu 6 bulan setelah data terakhir yang diisi.
+1. Di panel kiri bagian **Queries**, klik ganda **qry_16_Ramalan_Disesuaikan**.
+2. Muncul 6 baris, yaitu 6 bulan setelah data terakhir yang diisi, dengan puncak Iduladha sudah
+   ditempatkan di bulan yang benar sesuai tanggal di tabel **Tbl_16_Tanggal_Iduladha**.
+3. Ramalan model sebelum disesuaikan tetap bisa dilihat di **qry_12_Ramalan_6_Bulan** (puncaknya
+   selalu di Juni karena meniru pola 2023–2025). Kolom kedua query sama artinya; di qry_16 nama kolom
+   diberi akhiran *Disesuaikan* dan ada kolom **Bobot_Iduladha** (porsi hari ramai Iduladha di bulan itu).
 
 | Kolom | Arti |
 |---|---|
@@ -75,6 +79,12 @@ Hal yang perlu diperhatikan:
 Ramalan berubah otomatis setiap kali data bulan baru ditambahkan di Tbl_Volume_Bulanan
 (langkah B). Tidak ada tombol yang perlu ditekan; cukup buka ulang query ini.
 
+### Memperbarui tanggal Iduladha (setahun sekali)
+
+Buka tabel **Tbl_16_Tanggal_Iduladha** dan pastikan ada baris untuk tahun yang diramal
+(misalnya `2026` → `27/05/2026`; tahun berikutnya diisi sesuai keputusan pemerintah). Jika ramalan
+melewati tahun yang belum ada tanggalnya, tambahkan barisnya.
+
 ### Ramalan bulan depan saja
 
 - Klik ganda **qry_11_Ramalan_Bulan_Depan**. Hasilnya satu baris: ramalan bulan berikutnya
@@ -85,7 +95,7 @@ Ramalan berubah otomatis setiap kali data bulan baru ditambahkan di Tbl_Volume_B
 | Query | Isi |
 |---|---|
 | qry_11_Volume_Bulanan | Daftar data permintaan bulanan yang sudah diisi |
-| qry_11_Faktor_Musiman | Rata-rata permintaan per bulan (Juni ±2,5 kali bulan biasa) |
+| qry_11_Faktor_Musiman | Rata-rata permintaan per bulan (Juni ±2,4 kali rata-rata seluruh bulan) |
 | qry_11_Ramalan_1_Bulan_Historis | Ramalan 1 bulan ke depan untuk bulan-bulan lalu, untuk mengecek ketepatan model |
 
 ---
@@ -95,12 +105,13 @@ Ramalan berubah otomatis setiap kali data bulan baru ditambahkan di Tbl_Volume_B
 ### D1. Tingkat kabupaten (angka kg)
 
 - **Bulan biasa:** rencanakan pasokan ternak dan jadwal pemotongan wilayah sesuai **Ramalan_Kg**.
-- **Menjelang Iduladha:** siapkan kapasitas wilayah sampai **Batas_Atas_95_Kg**. Contoh Juni 2026:
-  ramalan 177.280 kg, batas atas 251.233 kg untuk **seluruh Kabupaten Malang**, bukan untuk satu
-  usaha. Batas atas tidak menjamin 100%; masih ada peluang kecil (±2,5%) permintaan lebih tinggi.
-- **Perhatikan tanggal Iduladha.** Model meniru pola Iduladha di bulan Juni (2023–2025). Iduladha 2026
-  jatuh sekitar **27 Mei 2026**, jadi lonjakan nyata kemungkinan terjadi akhir Mei. Siapkan kapasitas
-  puncak sejak pertengahan Mei.
+- **Menjelang Iduladha:** siapkan kapasitas wilayah sampai **Batas_Atas_95_Kg**. Contoh Mei 2026
+  (Iduladha 27 Mei): ramalan disesuaikan 301.478 kg, batas atas 363.624 kg untuk **seluruh Kabupaten
+  Malang**, bukan untuk satu usaha. Batas atas tidak menjamin 100%; masih ada peluang kecil (±2,5%)
+  permintaan lebih tinggi.
+- **Perhatikan tanggal Iduladha.** Model meniru pola Iduladha di bulan Juni (2023–2025), lalu
+  qry_16 memindahkan puncaknya ke bulan Iduladha sebenarnya. Untuk 2026 puncak ada di Mei, jadi
+  siapkan kapasitas puncak sejak **pertengahan Mei**. Juni 2026 kembali ke level bulan biasa (±109.254 kg).
 - Ramalan bulan yang lebih jauh lebih tidak pasti (batas bawah–atas lebih lebar). Perbarui rencana
   setiap bulan setelah data aktual diisi.
 
@@ -108,7 +119,7 @@ Ramalan berubah otomatis setiap kali data bulan baru ditambahkan di Tbl_Volume_B
 
 UMKM tidak perlu mengisi database. Cukup ubah ramalan kabupaten menjadi **indeks**:
 
-- **Indeks bulan** = Ramalan_Kg bulan tersebut ÷ rata-rata Ramalan_Kg bulan normal (bulan tanpa Iduladha).
+- **Indeks bulan** = ramalan disesuaikan bulan tersebut ÷ rata-rata ramalan bulan normal (bulan tanpa Iduladha; 2026: 110.351 kg).
 - **Faktor batas atas** = Batas_Atas_95_Kg ÷ Ramalan_Kg.
 
 Lalu:
@@ -120,15 +131,15 @@ UMKM yang biasanya menjual **500 kg per bulan**:
 
 | Periode | Indeks | Faktor batas atas | Rencana UMKM 500 kg | Maksimum disiapkan |
 |---|---|---|---|---|
-| Jan 2026 | 1,03 | 1,18 | 517 kg | 608 kg |
-| Feb 2026 | 1,03 | 1,25 | 517 kg | 646 kg |
-| Mar 2026 | 1,01 | 1,30 | 503 kg | 656 kg |
-| Apr 2026 | 0,97 | 1,35 | 487 kg | 657 kg |
-| Mei 2026 | 0,95 | 1,39 | 477 kg | 660 kg |
-| Jun 2026 (Iduladha) | 2,57 | 1,42 | 1.285 kg | 1.821 kg |
+| Jan 2026 | 0,99 | 1,16 | 493 kg | 572 kg |
+| Feb 2026 | 1,01 | 1,19 | 506 kg | 602 kg |
+| Mar 2026 | 1,02 | 1,20 | 509 kg | 611 kg |
+| Apr 2026 | 0,99 | 1,20 | 498 kg | 599 kg |
+| Mei 2026 (Iduladha 27 Mei) | 2,73 | 1,21 | 1.366 kg | 1.648 kg |
+| Jun 2026 | 0,99 | 1,21 | 495 kg | 597 kg |
 
 Catatan untuk UMKM:
-- Karena Iduladha 2026 jatuh ±27 Mei, terapkan indeks puncak (±2,57×) mulai **pertengahan Mei**.
+- Indeks puncak (±2,73×) sudah ditempatkan di Mei karena Iduladha 2026 jatuh 27 Mei; siapkan stok sejak **pertengahan Mei**.
 - Indeks berlaku bila pola musiman usaha mirip pola kabupaten. Usaha yang pelanggannya didominasi
   aqiqah/katering bisa memiliki pola berbeda, jadi sesuaikan dengan pengalaman sendiri.
 - Indeks diperbarui setiap kali pengelola data kabupaten menambah data bulan baru.
@@ -138,7 +149,8 @@ Catatan untuk UMKM:
 ## E. Yang TIDAK boleh diubah
 
 - **Tbl_Parameter_SARIMA**: berisi angka hasil pelatihan model. Jangan diubah.
-- Query yang namanya diawali **qry_11_** dan **qry_12_**: jangan diedit atau dihapus.
+- Query yang namanya diawali **qry_11_**, **qry_12_**, dan **qry_16_**: jangan diedit atau dihapus.
+- Tabel **Tbl_16_Jendela_Iduladha** dan **Tbl_16_Bulan_Lonjakan_Model**: jangan diubah (yang boleh diperbarui hanya Tbl_16_Tanggal_Iduladha).
 - Tabel lama (Transaksi_Penjualan, Pelanggan, Hasil_Prediksi, Evaluasi_Model) tidak dipakai
   untuk ramalan ini.
 

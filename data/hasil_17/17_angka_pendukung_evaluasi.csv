@@ -1,0 +1,18 @@
+"# ===================================================================================================="
+"# KETERANGAN TABEL : 17_angka_pendukung_evaluasi.csv (dibuat oleh 17_validasi_data_latih.py)"
+"# Isi tabel        : Angka pendukung evaluasi yang dikutip di artikel, diturunkan dari output script 06, 08, dan 15 (tidak ada model baru)."
+"# Satu baris data  : satu besaran."
+"# Keterangan kolom : nomor. NAMA KOLOM = arti | Diperoleh dari: cara menghitung/sumbernya"
+"#   1. Besaran = Nama besaran yang dihitung. | Diperoleh dari: Ditetapkan di script 17."
+"#   2. Nilai = Nilai besaran tersebut. | Diperoleh dari: Lihat kolom Cara_Hitung."
+"#   3. Cara_Hitung = Rumus atau langkah menghitung besaran. | Diperoleh dari: Script 17."
+"# Catatan          : baris berawalan tanda # adalah keterangan, bukan data. Tabel data dimulai tepat di bawah garis ini."
+"# ===================================================================================================="
+Besaran,Nilai,Cara_Hitung
+MAPE multilangkah data uji (%),9.071416729620598,Rata-rata APE_% SARIMA D=1 di 08_peramalan_testing.csv
+Bootstrap 95% MAPE uji - batas bawah (%),5.814632769133297,"Persentil 2,5 dari 10000 rata-rata 9 APE yang diambil ulang (seed 42)"
+Bootstrap 95% MAPE uji - batas atas (%),11.911467249052947,"Persentil 97,5 dari 10000 rata-rata 9 APE yang diambil ulang (seed 42)"
+Porsi Juni 2025 terhadap variasi total data uji (%),88.27601244937753,(y Juni - rata-rata uji)^2 / jumlah (y - rata-rata uji)^2
+Rata-rata pertumbuhan tahunan aktual Apr-Des 2024 (%),6.43012133870161,"Rata-rata ln y_t - ln y_(t-12), Apr-Des 2024"
+Bulan uji yang diramal tumbuh negatif dibanding tahun lalu,7.0,Jumlah bulan Apr-Des 2025 dengan ln ramalan - ln aktual 12 bulan sebelumnya < 0
+"Selisih maksimum MAPE SARIMA skenario S x 0,8 vs S x 1,2 per seed (poin)",0.0011998634047962753,"Maks |MAPE S x 0,8 - MAPE S x 1,2| per seed di 15_hasil_per_seed.csv"

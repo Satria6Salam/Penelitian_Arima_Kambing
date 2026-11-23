@@ -40,6 +40,7 @@ PERAMALAN_TEST_CSV = DATA_DIR / "hasil_08" / "08_peramalan_testing.csv"
 EVAL_TEST_CSV = DATA_DIR / "hasil_08" / "08_evaluasi_peramalan.csv"
 VALIDASI_09_CSV = DATA_DIR / "hasil_09" / "validasi_apr_sep_2025" / "09_peramalan_validasi_apr_sep_2025.csv"
 PERAMALAN_2026_CSV = DATA_DIR / "hasil_09" / "09_peramalan_jan_jun_2026.csv"
+DISESUAIKAN_2026_CSV = DATA_DIR / "hasil_13" / "13_peramalan_disesuaikan_iduladha.csv"
 METRIK_07_CSV = DATA_DIR / "hasil_07" / "07_metrik_rolling_origin.csv"
 DATASET_CSV = DATA_DIR / "olah" / "dataset_pra_proses_final.csv"
 VOLUME_CSV = DATA_DIR / "hasil_generate" / "volume_bulanan.csv"
@@ -106,12 +107,28 @@ def analisis_stok():
     return hasil, pengurangan, per_bulan
 
 
+def muat_ramalan_2026():
+    """
+    Ramalan Jan-Jun 2026 yang sudah disesuaikan dengan kalender Iduladha (script 13),
+    dengan nama kolom yang sama seperti output script 09. Rekomendasi stok memakai
+    ramalan ini supaya puncaknya berada di bulan Iduladha 2026 (Mei), bukan Juni.
+    """
+    f = kk.baca_csv(DISESUAIKAN_2026_CSV)
+    return pd.DataFrame({
+        "Periode": f["Periode"],
+        "Yhat_Model_Kg": f["Yhat_Kg"],
+        "Yhat_Kg": f["Yhat_Disesuaikan_Kg"],
+        "Batas_Bawah_95_Kg": f["Batas_Bawah_95_Disesuaikan_Kg"],
+        "Batas_Atas_95_Kg": f["Batas_Atas_95_Disesuaikan_Kg"],
+    })
+
+
 # =============================================================================
 # 2. INDEKS KEBUTUHAN (PAKAN) JAN-JUN 2026
 # =============================================================================
 
 def analisis_pakan():
-    f = kk.baca_csv(PERAMALAN_2026_CSV)
+    f = muat_ramalan_2026()
     rata = f["Yhat_Kg"].mean()
     normal = f[f["Yhat_Kg"] < f["Yhat_Kg"].max()]["Yhat_Kg"].mean()
     tab = pd.DataFrame({
@@ -130,7 +147,7 @@ def analisis_pakan():
 # =============================================================================
 
 def analisis_kapasitas():
-    f = kk.baca_csv(PERAMALAN_2026_CSV)
+    f = muat_ramalan_2026()
     puncak = f.loc[f["Yhat_Kg"].idxmax()]
     val = kk.baca_csv(VALIDASI_09_CSV)
     juni = val[val["Periode"] == "2025-06"].iloc[0]
@@ -164,7 +181,7 @@ CONTOH_UMKM_KG = 500        # contoh penjualan bulan normal satu UMKM (ilustrasi
 
 
 def analisis_umkm():
-    f = kk.baca_csv(PERAMALAN_2026_CSV)
+    f = muat_ramalan_2026()
     d = kk.baca_csv(DATASET_CSV, parse_dates=["Periode"])
     lalu = d.set_index(d["Periode"].dt.strftime("%Y-%m"))["Total_Kuantitas_Kg"]
     periode_lalu = pd.to_datetime(f["Periode"]) - pd.DateOffset(years=1)
@@ -215,6 +232,13 @@ def analisis_harga():
 # =============================================================================
 
 def tulis(stok, kurang, per_bulan, pakan, normal, kap, harga, biasa, idul, selisih_pct, umkm):
+    # Perubahan level ramalan model (sebelum penyesuaian kalender) terhadap bulan yang sama 2025
+    f09 = kk.baca_csv(PERAMALAN_2026_CSV)
+    d09 = kk.baca_csv(DATASET_CSV, parse_dates=["Periode"])
+    lalu09 = d09.set_index(d09["Periode"].dt.strftime("%Y-%m"))["Total_Kuantitas_Kg"]
+    aktual09 = lalu09.reindex((pd.to_datetime(f09["Periode"]) - pd.DateOffset(years=1))
+                              .dt.strftime("%Y-%m")).values
+    ubah_2025 = float(((f09["Yhat_Kg"].values / aktual09) - 1).mean() * 100)
     # korelasi Pearson harga rata-rata vs volume bulanan, dihitung dari data (bukan angka tetap)
     data_bulanan = kk.baca_csv(DATASET_CSV)
     korelasi = data_bulanan["Harga_Rata2_Per_Kg"].corr(data_bulanan["Total_Kuantitas_Kg"])
@@ -246,8 +270,8 @@ def tulis(stok, kurang, per_bulan, pakan, normal, kap, harga, biasa, idul, selis
          f"- Peramalan 9 bulan data testing: MAPE **{rp(ev.loc[MODEL, 'MAPE_%'], 2)}%**, "
          f"RMSE {rp(ev.loc[MODEL, 'RMSE'])} kg; pembanding seasonal naive MAPE "
          f"{rp(ev.loc[PEMBANDING, 'MAPE_%'], 2)}%.",
-         "- Seluruh MAPE berada di bawah target penelitian 15% (kategori akurat menurut "
-         "Lewis, 1982: MAPE 10–20% baik, < 10% sangat akurat).\n"]
+         "- Seluruh MAPE berada di bawah target penelitian 15% (target ditetapkan penulis sebagai "
+         "kriteria kelayakan praktis).\n"]
 
     L += ["## 1. Penurunan risiko kelebihan dan kekurangan pasokan wilayah\n",
           "**Asumsi:** rencana pasokan/pemotongan bulanan wilayah ditetapkan sama dengan ramalan. Metode lama "
@@ -276,6 +300,8 @@ def tulis(stok, kurang, per_bulan, pakan, normal, kap, harga, biasa, idul, selis
           "(Tbl_Peramalan di Access) agar galat tidak menumpuk.\n"]
 
     pk = pakan
+    i_puncak = pk["Indeks_vs_Bulan_Normal"].idxmax()
+    non_puncak = pk.drop(index=i_puncak)
     L += ["## 2. Perencanaan pasokan ternak dan pakan wilayah\n",
           "**Asumsi:** kebutuhan ternak (dan pakan peternak) sebanding dengan volume permintaan. Angka "
           "\"pakan ±70% biaya operasional\" dari dokumen alur belum memiliki sumber di penelitian "
@@ -284,12 +310,13 @@ def tulis(stok, kurang, per_bulan, pakan, normal, kap, harga, biasa, idul, selis
                                           "Indeks_vs_Rata2_6_Bulan": lambda x: rp(x, 2),
                                           "Indeks_vs_Bulan_Normal": lambda x: rp(x, 2)}),
           "",
-          f"- Januari–Mei 2026 relatif datar (indeks {rp(pk['Indeks_vs_Bulan_Normal'].iloc[:-1].min(), 2)}–"
-          f"{rp(pk['Indeks_vs_Bulan_Normal'].iloc[:-1].max(), 2)} terhadap rata-rata bulan normal "
+          f"- Bulan selain puncak relatif datar (indeks {rp(non_puncak['Indeks_vs_Bulan_Normal'].min(), 2)}–"
+          f"{rp(non_puncak['Indeks_vs_Bulan_Normal'].max(), 2)} terhadap rata-rata bulan normal "
           f"{rp(normal)} kg untuk seluruh kabupaten): pasokan ternak dan pakan rutin peternak "
           "dapat direncanakan/dikontrak di awal tahun.",
-          f"- Puncak Iduladha membutuhkan ±{rp(pk['Indeks_vs_Bulan_Normal'].iloc[-1], 2)} kali bulan "
-          "normal. Karena Iduladha 2026 jatuh ±27 Mei, program penggemukan ternak dan penambahan "
+          f"- Puncak Iduladha ({pk['Periode'].loc[i_puncak]}) membutuhkan "
+          f"±{rp(pk['Indeks_vs_Bulan_Normal'].loc[i_puncak], 2)} kali bulan normal. Karena Iduladha "
+          "2026 jatuh ±27 Mei, program penggemukan ternak dan penambahan "
           "pakan (konsentrat dan hijauan) di tingkat peternak sebaiknya dimulai Maret–April 2026.\n"]
 
     L += ["## 3. Pencegahan kekurangan pasokan saat puncak (tingkat kabupaten)\n",
@@ -306,8 +333,9 @@ def tulis(stok, kurang, per_bulan, pakan, normal, kap, harga, biasa, idul, selis
           f"atas {rp(kap['Validasi_Juni_2025_Batas_Atas_Kg'])} kg, aktual "
           f"{rp(kap['Validasi_Juni_2025_Aktual_Kg'])} kg (di dalam interval: "
           f"{kap['Validasi_Juni_2025_Dalam_Interval']}).",
-          "- **Iduladha 2026 jatuh ±27 Mei**, sedangkan model menaruh puncak di Juni (meniru pola "
-          "2023–2025). Kapasitas puncak harus siap **pertengahan Mei 2026**.\n"]
+          "- Ramalan sudah disesuaikan dengan kalender Iduladha 2026 (±27 Mei, script 13), sehingga "
+          f"puncaknya berada di {kap['Periode_Puncak']}. Kapasitas puncak harus siap "
+          "**pertengahan Mei 2026**.\n"]
 
     L += ["## 4. Batas margin harga jual\n",
           tabel_md(harga, list(harga.columns),
@@ -334,7 +362,7 @@ def tulis(stok, kurang, per_bulan, pakan, normal, kap, harga, biasa, idul, selis
           "Ramalan kabupaten diubah menjadi angka relatif agar dapat dipakai UMKM dengan skala "
           "berapa pun. File: `data/hasil_11/11_rek_panduan_umkm_2026.csv`.\n",
           "- **Indeks_vs_Bulan_Normal** = ramalan bulan tersebut ÷ rata-rata ramalan bulan normal "
-          "(Jan–Mei 2026).",
+          "(bulan selain puncak Iduladha). Ramalan yang dipakai sudah disesuaikan kalender Iduladha.",
           "- **Perubahan_vs_Tahun_Lalu_%** = ramalan ÷ aktual bulan yang sama tahun 2025 − 1.",
           "- **Faktor_Batas_Atas** = batas atas 95% ÷ ramalan; **Stok_Pengaman_%** = faktor batas "
           "atas − 1.\n",
@@ -351,20 +379,23 @@ def tulis(stok, kurang, per_bulan, pakan, normal, kap, harga, biasa, idul, selis
           f"**Contoh** UMKM dengan penjualan bulan normal {rp(CONTOH_UMKM_KG)} kg:\n",
           tabel_md(u, ["Periode", kol_rencana, kol_maks], {kol_rencana: f0, kol_maks: f0}),
           "",
-          f"- Bulan puncak {u['Periode'].iloc[-1]}: siapkan ±{rp(u['Indeks_vs_Bulan_Normal'].iloc[-1], 2)}× "
-          f"penjualan bulan normal, dengan cadangan sampai "
-          f"+{rp(u['Stok_Pengaman_%'].iloc[-1], 0)}% di atas rencana.",
+          f"- Bulan puncak {u['Periode'].loc[u['Indeks_vs_Bulan_Normal'].idxmax()]}: siapkan "
+          f"±{rp(u['Indeks_vs_Bulan_Normal'].max(), 2)}× penjualan bulan normal, dengan cadangan sampai "
+          f"+{rp(u['Stok_Pengaman_%'].loc[u['Indeks_vs_Bulan_Normal'].idxmax()], 0)}% di atas rencana.",
           "- Karena Iduladha 2026 jatuh ±27 Mei, indeks puncak sebaiknya diterapkan mulai "
-          "pertengahan Mei 2026, bukan menunggu Juni.",
+          "pertengahan Mei 2026.",
           "- Indeks berlaku bila pola musiman UMKM mirip pola kabupaten; UMKM yang pelanggannya "
           "didominasi aqiqah/katering dapat memiliki pola berbeda.\n"]
 
     L += ["## Keterbatasan\n",
           "- Data penelitian adalah data sintetis yang dikalibrasi dari BPS (agregat Kabupaten "
           "Malang), bukan transaksi riil satu usaha; produksi daging dipakai sebagai proksi permintaan.",
-          "- Level ramalan 2026 rata-rata ±22,8% di bawah 2025; ini artefak koefisien musiman yang "
-          "mengulang penurunan 2023→2024, bukan tren pasti.",
-          "- Puncak ramalan di Juni, sedangkan Iduladha 2026 jatuh di akhir Mei.",
+          f"- Ramalan model Jan–Jun 2026 rata-rata {rp(abs(ubah_2025), 1)}% "
+          f"{'di bawah' if ubah_2025 < 0 else 'di atas'} bulan yang sama tahun 2025 (dibandingkan "
+          "sebelum penyesuaian kalender, Juni dengan Juni). Dengan data tiga tahun, koefisien musiman "
+          "belum stabil, sehingga arah ini belum pasti.",
+          "- Penyesuaian kalender Iduladha belum dapat divalidasi secara empiris karena seluruh "
+          "Iduladha historis (2023–2025) jatuh di bulan Juni.",
           "- Analisis biaya pakan dan margin bersifat relatif (indeks), karena data biaya pakan "
           "tidak tersedia."]
 

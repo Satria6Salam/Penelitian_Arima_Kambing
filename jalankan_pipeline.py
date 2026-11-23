@@ -1,6 +1,6 @@
 """
-Runner untuk menjalankan seluruh pipeline script 03-16 secara berurutan.
-Script 14-16 (pembanding, simulasi, Access Iduladha) bergantung pada hasil 07-13.
+Runner untuk menjalankan seluruh pipeline script 03-17 secara berurutan.
+Script 14-17 (pembanding, simulasi, Access Iduladha, validasi data latih) bergantung pada hasil 06-13.
 Pakai: python jalankan_pipeline.py [--mulai N] [--sampai N]
 """
 import subprocess
@@ -20,12 +20,13 @@ PIPELINE = [
     "09_peramalan_visualisasi.py",
     "10_ekspor_output_laporan.py",
     "11_implementasi_access.py",
-    "11_rekomendasi_manajerial.py",
     "12_ramalan_6_bulan_access.py",
     "13_penyesuaian_iduladha.py",
+    "11_rekomendasi_manajerial.py",   # setelah 13: memakai ramalan yang disesuaikan kalender Iduladha
     "14_pembanding_tambahan.py",
     "15_simulasi_sensitivitas.py",
     "16_penyesuaian_iduladha_access.py",
+    "17_validasi_data_latih.py",       # pemilihan model final tanpa data uji
 ]
 
 

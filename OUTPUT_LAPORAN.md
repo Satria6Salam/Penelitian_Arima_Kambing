@@ -4,7 +4,7 @@ Daftar lokasi output (CSV dan plot) untuk setiap hasil penelitian. Semua path re
 
 ## 1. Hasil ADF
 
-ADF seri asli: statistik -5.7452, p 0.000001, kritis 5% -2.9485 → stasioner (d = 0).
+ADF seri asli: statistik -6.3385, p 0.000000, kritis 5% -2.9485 → stasioner (d = 0).
 
 **File CSV/data:**
 
@@ -31,7 +31,7 @@ ADF untuk seri asli, Δ1, Δ12, dan Δ12 log; seri asli sudah stasioner (d=0). D
 
 ## 3. Hasil ACF & PACF
 
-Lag 12 signifikan: ACF 0.3876, PACF 0.6007 pada seri asli → pola musiman m = 12; kandidat model di model_config.json. Plot asli script 05 (seri asli, d=0): acf_pacf_plot.png. Plot tambahan 03_plot_acf_pacf_diff12_log.png memakai seri BERBEDA, yaitu Δ12 log (input model final).
+Lag 12 signifikan: ACF 0.5611, PACF 0.7168 pada seri asli → pola musiman m = 12; kandidat model di model_config.json. Plot asli script 05 (seri asli, d=0): acf_pacf_plot.png. Plot tambahan 03_plot_acf_pacf_diff12_log.png memakai seri BERBEDA, yaitu Δ12 log (input model final).
 
 **File CSV/data:**
 

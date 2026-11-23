@@ -202,10 +202,15 @@ def estimasi_parameter(train, kandidat):
     y = data[TARGET_COL]
     baris_param, baris_opt = [], []
     hasil_fit = {}
+    riwayat = []  # solusi model sebelumnya, untuk warm start model bersarang (sama dengan 06)
 
     for k in kandidat:
         exog = data[k["exog"]].astype(float) if k["exog"] else None
-        result, info = fit_model(y, exog, k["order"], k["seasonal_order"])
+        result, info = em.fit_terbaik(
+            y, exog, k["order"], k["seasonal_order"],
+            params_bersarang=em.params_bersarang(k["order"], k["seasonal_order"], k["exog"], riwayat))
+        riwayat.append({"order": tuple(k["order"]), "seasonal_order": tuple(k["seasonal_order"]),
+                        "exog": k["exog"], "params": result.params})
         hasil_fit[k["Nama_Model"]] = result
 
         with warnings.catch_warnings():

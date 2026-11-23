@@ -1,0 +1,26 @@
+"# ===================================================================================================="
+"# KETERANGAN TABEL : 17_validasi_metrik.csv (dibuat oleh 17_validasi_data_latih.py)"
+"# Isi tabel        : Akurasi validasi di dalam data latih dan penerapan aturan pemilihan model final tanpa data uji."
+"# Satu baris data  : satu model shortlist (ditambah seasonal naive sebagai pembanding)."
+"# Keterangan kolom : nomor. NAMA KOLOM = arti | Diperoleh dari: cara menghitung/sumbernya"
+"#   1. Label = Nama singkat model. ARIMA = tanpa musiman; SARIMA D=0 / SARIMA D=1 = dengan pola musiman 12 bulan; ARIMAX Harga = ditambah data harga; ARIMAX Harga+Iduladha = ditambah harga dan penanda Iduladha; Seasonal naive = pembanding paling sederhana (ramalan = angka bulan yang sama tahun lalu). | Diperoleh dari: Ditetapkan di script 07: satu model terbaik (AIC terendah) dari tiap skenario."
+"#   2. Nama_Model = Nama lengkap model beserta ordenya, misalnya SARIMA(1, 0, 0)x(1, 1, 0, 12). y[t-12] = seasonal naive. | Diperoleh dari: Dari daftar kandidat model yang diestimasi di script 06."
+"#   3. Jumlah_Putaran = Banyaknya putaran validasi. | Diperoleh dari: 6 putaran (Okt 2024 - Mar 2025)."
+"#   4. MAPE_% = Rata-rata kesalahan ramalan validasi dalam persen. | Diperoleh dari: Rata-rata APE_% di 17_validasi_prediksi.csv."
+"#   5. RMSE = Akar rata-rata kuadrat kesalahan validasi (kg). | Diperoleh dari: Dari 17_validasi_prediksi.csv."
+"#   6. MAE = Rata-rata kesalahan mutlak validasi (kg). | Diperoleh dari: Dari 17_validasi_prediksi.csv."
+"#   7. Ljung_Box = Lulus = residual model tidak berpola lagi. | Diperoleh dari: Hasil uji Ljung-Box di script 07."
+"#   8. Shapiro_Wilk = Lulus = residual model menyebar normal. | Diperoleh dari: Hasil uji Shapiro-Wilk di script 07."
+"#   9. Lebih_baik_dari_naive = Ya = MAPE validasi lebih rendah dari seasonal naive. | Diperoleh dari: Dibandingkan dengan baris Seasonal naive."
+"#   10. Aturan_1 = Lolos = lulus Ljung-Box, Shapiro-Wilk, dan lebih baik dari seasonal naive. | Diperoleh dari: Aturan pemilihan 1."
+"#   11. Butuh_Eksogen_Masa_Depan = Ya = model memerlukan harga/label bulan yang diramal. | Diperoleh dari: Dari kolom Eksogen 07_shortlist.csv (aturan 2)."
+"#   12. Model_Final = Ya = model dengan MAPE validasi terendah di antara yang lolos aturan 1 dan 2. | Diperoleh dari: Aturan pemilihan 3."
+"# Catatan          : baris berawalan tanda # adalah keterangan, bukan data. Tabel data dimulai tepat di bawah garis ini."
+"# ===================================================================================================="
+Label,Nama_Model,Jumlah_Putaran,MAPE_%,RMSE,MAE,Ljung_Box,Shapiro_Wilk,Lebih_baik_dari_naive,Aturan_1,Butuh_Eksogen_Masa_Depan,Model_Final
+ARIMA,"ARIMA(1, 0, 1)",6,7.274655612729722,11505.981908724383,9117.298105215197,Lulus,Gagal,Ya,Gagal,Tidak,Tidak
+SARIMA D=0,"SARIMA(1, 0, 0)x(1, 0, 0, 12)",6,7.872424447060351,9971.133436948123,9600.843530681594,Lulus,Gagal,Ya,Gagal,Tidak,Tidak
+SARIMA D=1,"SARIMA(1, 0, 0)x(1, 1, 0, 12)",6,7.534292183213482,9905.926421914395,8989.302656985112,Lulus,Lulus,Ya,Lolos,Tidak,Ya
+ARIMAX Harga,"ARIMAX(0, 0, 2) + Harga",6,8.964718835947544,11299.935204861771,10943.176415541928,Lulus,Lulus,Tidak,Gagal,Ya,Tidak
+ARIMAX Harga+Iduladha,"ARIMAX(1, 0, 0) + Harga + Iduladha",6,8.035646539969353,10883.98519883609,9956.631319791319,Lulus,Lulus,Tidak,Gagal,Ya,Tidak
+Seasonal naive,y[t-12],6,7.976607119581335,10449.79958467785,9764.203333333337,-,-,-,-,-,Tidak

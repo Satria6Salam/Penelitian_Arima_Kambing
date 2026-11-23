@@ -82,7 +82,7 @@ MODEL = {
 _HORIZON = S03.buat_time_horizon(S03.TAHUN_DATA)
 _BPS = S03.lengkapi_komponen_kosong({th: S03.baca_bps_wilayah(th, S03.WILAYAH) for th in S03.TAHUN_DATA})
 _BASELINE = S03.hitung_baseline(_BPS)
-_GRADIEN = S03.hitung_gradien_per_tahun(S03.TAHUN_DATA)
+_GRADIEN = S03.hitung_gradien_per_tahun(_BASELINE)
 _S_DASAR = S03.hitung_koefisien_musiman(S03.PEMOTONGAN_MEI_2024, S03.PEMOTONGAN_JUNI_2024)
 _IDX_IDULADHA = S03.tentukan_indeks_iduladha(_HORIZON)
 

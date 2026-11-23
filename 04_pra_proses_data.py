@@ -45,10 +45,13 @@ def agregasi_bulanan(df):
     
     df_agregasi = df.groupby('Periode_Bulan').agg(
         Total_Kuantitas_Kg=('Kuantitas_Kg', 'sum'),
-        Harga_Rata2_Per_Kg=('Harga_Final', 'mean'),
+        Total_Pendapatan=('Total_Pendapatan', 'sum'),
         Jumlah_Transaksi=('ID_Transaksi', 'count')
     ).reset_index()
-    
+    # Harga rata-rata per kg = total pendapatan / total kg (tertimbang kilogram),
+    # sama dengan definisi Harga_Rata2_Per_Kg di dataset_sarimax.csv (script 03).
+    df_agregasi['Harga_Rata2_Per_Kg'] = df_agregasi['Total_Pendapatan'] / df_agregasi['Total_Kuantitas_Kg']
+
     df_agregasi['Periode'] = df_agregasi['Periode_Bulan'].dt.to_timestamp()
     df_agregasi['Total_Kuantitas_Kg'] = df_agregasi['Total_Kuantitas_Kg'].round(2)
     df_agregasi['Harga_Rata2_Per_Kg'] = df_agregasi['Harga_Rata2_Per_Kg'].round(0)

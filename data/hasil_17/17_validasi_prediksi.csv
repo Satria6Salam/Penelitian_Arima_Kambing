@@ -1,0 +1,55 @@
+"# ===================================================================================================="
+"# KETERANGAN TABEL : 17_validasi_prediksi.csv (dibuat oleh 17_validasi_data_latih.py)"
+"# Isi tabel        : Ramalan 1 bulan ke depan model shortlist dan seasonal naive pada rolling origin DI DALAM data latih (Okt 2024 - Mar 2025), tanpa memakai data uji."
+"# Satu baris data  : satu putaran validasi untuk satu model."
+"# Keterangan kolom : nomor. NAMA KOLOM = arti | Diperoleh dari: cara menghitung/sumbernya"
+"#   1. Label = Nama singkat model. ARIMA = tanpa musiman; SARIMA D=0 / SARIMA D=1 = dengan pola musiman 12 bulan; ARIMAX Harga = ditambah data harga; ARIMAX Harga+Iduladha = ditambah harga dan penanda Iduladha; Seasonal naive = pembanding paling sederhana (ramalan = angka bulan yang sama tahun lalu). | Diperoleh dari: Ditetapkan di script 07: satu model terbaik (AIC terendah) dari tiap skenario."
+"#   2. Nama_Model = Nama lengkap model beserta ordenya, misalnya SARIMA(1, 0, 0)x(1, 1, 0, 12). y[t-12] = seasonal naive. | Diperoleh dari: Dari daftar kandidat model yang diestimasi di script 06."
+"#   3. Putaran = Urutan putaran validasi (1-6). | Diperoleh dari: Putaran 1 meramal Oktober 2024, putaran 6 meramal Maret 2025."
+"#   4. Panjang_Data_Latih = Banyaknya bulan data yang dipakai melatih model pada putaran itu. | Diperoleh dari: 21 + (Putaran - 1)."
+"#   5. Periode_Target = Bulan yang diramal pada putaran itu. | Diperoleh dari: Satu bulan setelah data latih putaran itu."
+"#   6. Aktual = Permintaan sebenarnya pada bulan target (kg). | Diperoleh dari: Dari data latih (bukan data uji)."
+"#   7. Prediksi = Ramalan 1 bulan ke depan (kg). | Diperoleh dari: exp(ramalan skala log) dari estimasi_model.fit_terbaik; seasonal naive = aktual 12 bulan sebelumnya."
+"#   8. Error = Selisih kenyataan dan ramalan (kg). Positif = ramalan terlalu rendah. | Diperoleh dari: Aktual - Prediksi."
+"#   9. APE_% = Besar kesalahan ramalan putaran itu dalam persen. | Diperoleh dari: |Aktual - Prediksi| / Aktual x 100."
+"#   10. Optimizer = Cara pencarian parameter yang dipakai pada putaran itu. Tanda - untuk seasonal naive. | Diperoleh dari: Dipilih otomatis oleh estimasi_model.fit_terbaik."
+"#   11. Konvergen = True = pencarian parameter selesai dengan baik. Kosong untuk seasonal naive. | Diperoleh dari: Status konvergensi statsmodels."
+"# Catatan          : baris berawalan tanda # adalah keterangan, bukan data. Tabel data dimulai tepat di bawah garis ini."
+"# ===================================================================================================="
+Label,Nama_Model,Putaran,Panjang_Data_Latih,Periode_Target,Aktual,Prediksi,Error,APE_%,Optimizer,Konvergen
+ARIMA,"ARIMA(1, 0, 1)",1,21,2024-10,122920.99,109692.59624500324,13228.393754996767,10.761704534755836,nm_awal-0.3,True
+ARIMA,"ARIMA(1, 0, 1)",2,22,2024-11,123810.71,111854.18663575406,11956.52336424595,9.65709942560377,nm,True
+ARIMA,"ARIMA(1, 0, 1)",3,23,2024-12,134296.47,113362.43211392079,20934.03788607921,15.587928622456875,nm_awal-0.3,True
+ARIMA,"ARIMA(1, 0, 1)",4,24,2025-01,115283.92,112244.44865681647,3039.471343183526,2.6365093615688346,nm,True
+ARIMA,"ARIMA(1, 0, 1)",5,25,2025-02,110522.5,115896.04793160484,-5373.547931604844,4.861949314940256,nm,True
+ARIMA,"ARIMA(1, 0, 1)",6,26,2025-03,120366.71,120538.5243511809,-171.81435118088848,0.1427424170527619,bfgs,True
+SARIMA D=0,"SARIMA(1, 0, 0)x(1, 0, 0, 12)",1,21,2024-10,122920.99,109710.90482482633,13210.085175173677,10.746809942853272,bfgs,True
+SARIMA D=0,"SARIMA(1, 0, 0)x(1, 0, 0, 12)",2,22,2024-11,123810.71,113072.6768378843,10738.03316211571,8.672943691313707,bfgs,True
+SARIMA D=0,"SARIMA(1, 0, 0)x(1, 0, 0, 12)",3,23,2024-12,134296.47,122513.34078266713,11783.12921733287,8.773967936262858,bfgs,True
+SARIMA D=0,"SARIMA(1, 0, 0)x(1, 0, 0, 12)",4,24,2025-01,115283.92,120407.11821847789,-5123.19821847789,4.443983357330224,bfgs,True
+SARIMA D=0,"SARIMA(1, 0, 0)x(1, 0, 0, 12)",5,25,2025-02,110522.5,119718.92070529825,-9196.420705298253,8.320858382047323,bfgs,True
+SARIMA D=0,"SARIMA(1, 0, 0)x(1, 0, 0, 12)",6,26,2025-03,120366.71,112812.51529430885,7554.1947056911595,6.27598337255472,bfgs,True
+SARIMA D=1,"SARIMA(1, 0, 0)x(1, 1, 0, 12)",1,21,2024-10,122920.99,112629.39939164037,10291.590608359635,8.372524992159299,nm_awal+0.3,True
+SARIMA D=1,"SARIMA(1, 0, 0)x(1, 1, 0, 12)",2,22,2024-11,123810.71,116860.82810772849,6949.8818922715145,5.613312363907383,nm_awal-0.3,True
+SARIMA D=1,"SARIMA(1, 0, 0)x(1, 1, 0, 12)",3,23,2024-12,134296.47,130320.71520909459,3975.754790905412,2.9604313433595175,nm_awal-0.3,True
+SARIMA D=1,"SARIMA(1, 0, 0)x(1, 1, 0, 12)",4,24,2025-01,115283.92,132299.91508969467,-17015.99508969467,14.760076764994345,nm_awal+0.0,True
+SARIMA D=1,"SARIMA(1, 0, 0)x(1, 1, 0, 12)",5,25,2025-02,110522.5,104390.23445495308,6132.265545046917,5.548431808045346,nm_awal+0.0,True
+SARIMA D=1,"SARIMA(1, 0, 0)x(1, 1, 0, 12)",6,26,2025-03,120366.71,110796.38198436749,9570.32801563252,7.9509758268150055,powell,True
+ARIMAX Harga,"ARIMAX(0, 0, 2) + Harga",1,21,2024-10,122920.99,113399.88563256281,9521.10436743719,7.745710775220075,nm_awal+0.0,True
+ARIMAX Harga,"ARIMAX(0, 0, 2) + Harga",2,22,2024-11,123810.71,110633.28910541069,13177.420894589319,10.643199521745185,nm_awal-0.3,True
+ARIMAX Harga,"ARIMAX(0, 0, 2) + Harga",3,23,2024-12,134296.47,119246.7360003575,15049.7339996425,11.20635114209815,nm_awal+0.3,True
+ARIMAX Harga,"ARIMAX(0, 0, 2) + Harga",4,24,2025-01,115283.92,121380.00124595735,-6096.08124595735,5.287885115250549,nm,True
+ARIMAX Harga,"ARIMAX(0, 0, 2) + Harga",5,25,2025-02,110522.5,121085.11011161965,-10562.610111619651,9.556977187106384,nm_awal-0.3,True
+ARIMAX Harga,"ARIMAX(0, 0, 2) + Harga",6,26,2025-03,120366.71,109114.60212599445,11252.107874005553,9.348189274264913,nm_awal+0.3,True
+ARIMAX Harga+Iduladha,"ARIMAX(1, 0, 0) + Harga + Iduladha",1,21,2024-10,122920.99,113837.39512447098,9083.59487552903,7.389783368592321,bfgs,True
+ARIMAX Harga+Iduladha,"ARIMAX(1, 0, 0) + Harga + Iduladha",2,22,2024-11,123810.71,113401.48522232992,10409.224777670082,8.407370232890258,bfgs,True
+ARIMAX Harga+Iduladha,"ARIMAX(1, 0, 0) + Harga + Iduladha",3,23,2024-12,134296.47,116034.60471914754,18261.865280852464,13.598172223627666,nm_awal+0.0,True
+ARIMAX Harga+Iduladha,"ARIMAX(1, 0, 0) + Harga + Iduladha",4,24,2025-01,115283.92,123499.0023293272,-8215.082329327197,7.125956793737753,bfgs,True
+ARIMAX Harga+Iduladha,"ARIMAX(1, 0, 0) + Harga + Iduladha",5,25,2025-02,110522.5,113935.25523352563,-3412.7552335256332,3.0878375294855194,bfgs,True
+ARIMAX Harga+Iduladha,"ARIMAX(1, 0, 0) + Harga + Iduladha",6,26,2025-03,120366.71,110009.4445781565,10357.265421843505,8.604759091482608,bfgs,True
+Seasonal naive,y[t-12],1,21,2024-10,122920.99,109033.2,13887.790000000008,11.298143628683764,-,
+Seasonal naive,y[t-12],2,22,2024-11,123810.71,111603.33,12207.380000000005,9.85971245944717,-,
+Seasonal naive,y[t-12],3,23,2024-12,134296.47,121410.61,12885.86,9.59508466603776,-,
+Seasonal naive,y[t-12],4,24,2025-01,115283.92,118571.83,-3287.9100000000035,2.852010930926016,-,
+Seasonal naive,y[t-12],5,25,2025-02,110522.5,119971.53,-9449.029999999999,8.54941753941505,-,
+Seasonal naive,y[t-12],6,26,2025-03,120366.71,113499.46,6867.25,5.705273492978249,-,

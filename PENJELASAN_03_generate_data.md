@@ -4,30 +4,31 @@ Penjelasan seluruh isi [03_generate_data.py](03_generate_data.py), urut dari ata
 
 ## Gambaran besar
 
-Program ini membuat data penjualan sintetis satu UMKM daging kambing di Kabupaten Malang selama 36 bulan (Januari 2023 – Desember 2025). Volume tiap bulan dibentuk berlapis:
+Program ini membuat data permintaan daging kambing sintetis **tingkat Kabupaten Malang (agregat)** selama 36 bulan (Januari 2023 – Desember 2025), dikalibrasi dari produksi **karkas** tahunan BPS. Volume tiap bulan dibentuk berlapis:
 
 ```
-Volume dasar (BPS, ±10%)  →  × faktor tren  →  × faktor musim Iduladha  →  + white noise  =  Volume akhir
+Volume dasar (karkas BPS / 12, ±10%)  →  × faktor tren lokal  →  × faktor musim Iduladha  →  + white noise  =  Volume akhir
 ```
 
 Volume akhir lalu dipecah menjadi struk transaksi, tiap struk diberi harga, dan semuanya diringkas lagi per bulan menjadi dataset SARIMAX.
 
-## Bagian A – Parameter ([baris 64–124](03_generate_data.py#L64-L124))
+## Bagian A – Parameter ([baris 61–131](03_generate_data.py#L61-L131))
 
 Semua angka asumsi dikumpulkan di sini supaya rumus di bawahnya tidak perlu disentuh saat angka berubah.
 
-- **`BASE_DIR`, `DATA_DIR`**: `Path(__file__).resolve().parent` adalah folder tempat file program berada, sehingga folder `data/` selalu ketemu dari mana pun program dijalankan.
+- **`BASE_DIR`, `BPS_DIR`, `DATA_DIR`**: `Path(__file__).resolve().parent` adalah folder tempat file program berada. Input dibaca dari `data/sumber_bps/`, output ditulis ke `data/hasil_generate/`, sehingga folder selalu ketemu dari mana pun program dijalankan.
 - **`SEED = 42`** dan **`rng = np.random.default_rng(SEED)`**: satu generator acak dipakai seluruh program, jadi hasilnya selalu sama tiap dijalankan. Karena generatornya satu, urutan pemanggilan ikut menentukan hasil: menukar urutan tahap akan mengubah semua angka.
 - **`TAHUN_DATA`**: 3 tahun, menghasilkan 36 bulan.
-- **`WILAYAH`, `JUMLAH_UNIT_USAHA` (n = 100), `K_TOLERANSI` (k = 10%)**: dasar perhitungan baseline.
+- **`WILAYAH`, `K_TOLERANSI` (k = 10%)**: dasar perhitungan baseline. Data **tidak dibagi jumlah UMKM**; baseline adalah produksi karkas bulanan seluruh kabupaten.
 - **`PEMOTONGAN_MEI/JUNI/JULI_2024`**: jumlah ekor dipotong. Mei vs Juli dipakai sebagai dasar memilih k, Mei vs Juni sebagai dasar koefisien musiman.
-- **`PRODUKSI_NASIONAL`**: dict tahun → ribu ton, dasar tren.
+- **Tren**: tidak ada parameter khusus. Tren dibentuk dari baseline Kabupaten Malang sendiri (Bagian G), tidak memakai data nasional.
 - **`BULAN_IDULADHA`**: dict tahun → nomor bulan (semuanya Juni).
 - **`RENTANG_HARGA`**: dict produk → tuple `(min, maks)` Rp/kg. Harga Jeroan masih sementara, disamakan dengan Daging Variasi.
 - **`KOLOM_BPS`**: nama pendek → nama kolom asli di CSV BPS.
 - **`PRODUK`**: daftar 4 produk; urutannya dipakai konsisten untuk rasio dan undian.
+- **`TAHUN_LABEL_KOMPONEN_TERTUKAR`** = `[2024, 2025]`: tahun yang label kolom "Daging Murni/Skeletal" dan "Karkas"-nya tertukar di tabel BPS (lihat Bagian D).
 
-## Bagian B – Fungsi bantu tampilan ([baris 132–192](03_generate_data.py#L132-L192))
+## Bagian B – Fungsi bantu tampilan ([baris 134–199](03_generate_data.py#L134-L199))
 
 Fungsi-fungsi ini hanya memformat teks untuk terminal, tidak mengubah data.
 
@@ -80,7 +81,7 @@ def susun(sel):
 - `susun` merakit satu baris: tiap sel diberi spasi sampai selebar kolomnya (`ljust` rata kiri, `rjust` rata kanan), lalu disambung dengan `|`.
 - `garis` adalah pembatas `+-----+-----+`. Di bawah header, `-` diganti `=` supaya header terlihat terpisah.
 
-## Bagian C – Tahap 1: time horizon ([baris 199–219](03_generate_data.py#L199-L219))
+## Bagian C – Tahap 1: time horizon ([baris 202–226](03_generate_data.py#L202-L226))
 
 ### `buat_time_horizon(tahun_list)`
 
@@ -95,7 +96,7 @@ periode = pd.date_range(f"{tahun_list[0]}-01-01", periods=len(tahun_list) * 12, 
 
 Hasilnya DataFrame berkolom `t` (1–36), `Periode`, `Tahun`, `Bulan`. Dua kolom terakhir diambil langsung dari `periode.year` dan `periode.month`.
 
-## Bagian D – Tahap 2 Langkah 1: ekstraksi BPS ([baris 226–297](03_generate_data.py#L226-L297))
+## Bagian D – Tahap 2 Langkah 1: ekstraksi BPS ([baris 229–378](03_generate_data.py#L229-L378))
 
 ### `cari_file_bps(tahun)`
 
@@ -110,7 +111,7 @@ Membersihkan satu sel: tanda `(*)` dibuang, lalu dicoba `float()`. Kalau gagal (
 
 ### `baca_bps_wilayah(tahun, wilayah)`
 
-Membuka satu file CSV BPS untuk satu tahun, mengambil baris satu kabupaten, lalu mengembalikan angka produksinya sebagai dict, misalnya `{"Daging Murni": 1393468.17, "Karkas": 1048096.31, "Jeroan": 289375.55, ...}`.
+Membuka satu file CSV BPS untuk satu tahun, mengambil baris satu kabupaten, lalu mengembalikan angka produksinya sebagai dict, misalnya 2024: `{"Daging Murni": 1048096.31, "Karkas": 1393468.17, "Jeroan": 289375.55, ...}` (label sudah dibetulkan, lihat di bawah).
 
 ```python
 df = pd.read_csv(cari_file_bps(tahun), encoding="utf-8-sig", dtype=str)
@@ -137,10 +138,15 @@ baris = baris.iloc[0]
 - Hasil saringan masih berupa tabel (walau isinya 1 baris). `.iloc[0]` mengambilnya sebagai satu Series supaya bisa diakses dengan `baris[nama_kolom]`.
 
 ```python
-return {nama: ke_angka(baris[kolom]) for nama, kolom in KOLOM_BPS.items()}
+pemetaan_kolom = KOLOM_BPS.copy()
+if tahun in TAHUN_LABEL_KOMPONEN_TERTUKAR:
+    pemetaan_kolom["Daging Murni"] = KOLOM_BPS["Karkas"]
+    pemetaan_kolom["Karkas"] = KOLOM_BPS["Daging Murni"]
+return {nama: ke_angka(baris[kolom]) for nama, kolom in pemetaan_kolom.items()}
 ```
 
-- Untuk tiap pasangan di `KOLOM_BPS`, sel diambil lalu diubah menjadi angka.
+- **Label komponen tertukar (2024 & 2025).** Catatan kaki tabel BPS: *Jumlah Produksi Daging (Karkas) = karkas + jeroan + daging variasi* dan *Jumlah (Meatyield) = daging murni + jeroan + daging variasi*. Pada tabel 2024 dan 2025, kedua rumus itu hanya cocok bila nilai di kolom berlabel "Daging Murni/Skeletal" dibaca sebagai karkas dan sebaliknya. Karkas berisi tulang, jadi memang harus lebih besar dari daging murni. Contoh 2024: 1.393.468 + 289.376 + 79.010 = 1.761.853 (Total Karkas resmi). Tabel 2023 tidak tertukar.
+- Untuk tiap pasangan di pemetaan, sel diambil lalu diubah menjadi angka.
 - Hasilnya dict dengan 6 kunci: `Daging Murni`, `Karkas`, `Jeroan`, `Daging Variasi`, `Total Karkas`, `Total Meatyield`.
 
 ### `lengkapi_komponen_kosong(data_tahunan)`
@@ -149,19 +155,24 @@ Mengisi rincian produk 2023 yang kosong di BPS.
 
 ```python
 lengkap = [d for d in data_tahunan.values() if not np.isnan(d["Karkas"])]
-s = np.mean([(d["Jeroan"] + d["Daging Variasi"]) / d["Total Meatyield"] for d in lengkap])
-p = np.mean([d["Jeroan"] / (d["Jeroan"] + d["Daging Variasi"]) for d in lengkap])
+e = jeroan + variasi
+assert abs(total_karkas - (d["Karkas"] + e)) < 1
+assert abs(d["Total Meatyield"] - (d["Daging Murni"] + e)) < 1
+assert d["Karkas"] > d["Daging Murni"]
+s_tahun = e / total_karkas
+p_tahun = jeroan / e
 ```
 
 - `lengkap` berisi tahun yang rinciannya ada (2024 dan 2025).
-- `s` adalah rata-rata porsi (Jeroan + Daging Variasi) terhadap Total Meatyield.
+- Tiga `assert` memeriksa rumus BPS pada tahun lengkap. Kalau label tertukar tidak dibetulkan, program berhenti di sini.
+- `s` adalah rata-rata porsi E = Jeroan + Daging Variasi terhadap **Total Karkas** (rata-rata dari 2024 dan 2025).
 - `p` adalah rata-rata porsi Jeroan di dalam gabungan itu.
 
 ```python
 for d in data_tahunan.values():
     d["Diestimasi"] = bool(np.isnan(d["Karkas"]))
     if d["Diestimasi"]:
-        e = s * d["Total Meatyield"]
+        e = s * d["Total Karkas"]
         d["Jeroan"] = p * e
         d["Daging Variasi"] = (1 - p) * e
         d["Karkas"] = d["Total Meatyield"] - e
@@ -169,11 +180,11 @@ for d in data_tahunan.values():
 ```
 
 - Setiap tahun diberi penanda `Diestimasi` (True hanya untuk 2023).
-- `e` adalah taksiran Jeroan + Daging Variasi 2023, lalu dibagi dua memakai `p`.
+- `e` adalah taksiran Jeroan + Daging Variasi 2023 (E_2023 = s × Total Karkas 2023), lalu dibagi dua memakai `p`.
 - Karkas dan Daging Murni dihitung sebagai sisa dari kedua total resmi, sehingga total BPS 2023 tidak berubah.
 - Dict diubah langsung di tempat, jadi `data_bps` di `main` ikut terisi.
 
-## Bagian E – Tahap 2 Langkah 2–4: baseline ([baris 304–338](03_generate_data.py#L304-L338))
+## Bagian E – Tahap 2 Langkah 2–4: baseline ([baris 381–419](03_generate_data.py#L381-L419))
 
 ### `hitung_baseline(data_tahunan)`
 
@@ -181,12 +192,12 @@ Menghasilkan satu baris per tahun.
 
 ```python
 karkas_bulanan_kab = d["Karkas"] / 12
-mu = karkas_bulanan_kab / JUMLAH_UNIT_USAHA
+mu = karkas_bulanan_kab
 total_4_produk = sum(d[p] for p in PRODUK)
 ```
 
 - Langkah 2: produksi karkas setahun dibagi 12 menjadi produksi bulanan kabupaten.
-- Langkah 3: dibagi 100 unit usaha menjadi `mu`, baseline bulanan satu UMKM.
+- Langkah 3: `mu` = produksi karkas bulanan kabupaten itu sendiri (tidak dibagi jumlah UMKM). Hasil: 105.975 (2023, ditaksir), 116.122 (2024), dan 121.872 (2025) kg per bulan.
 - `mu` dihitung dari kolom Karkas saja, bukan dari total keempat produk.
 
 ```python
@@ -196,9 +207,9 @@ for p in PRODUK:
 
 - Langkah 4: porsi tiap produk terhadap jumlah keempatnya. Keempat rasio berjumlah 1, sehingga bisa langsung dipakai sebagai peluang undian.
 
-Hasilnya tabel `baseline` berkolom `Tahun`, `Karkas_Tahunan_Kab`, `Karkas_Bulanan_Kab`, `Mu_UMKM`, `Diestimasi`, dan empat kolom `Rasio_...`.
+Hasilnya tabel `baseline` berkolom `Tahun`, `Karkas_Tahunan_Kab`, `Karkas_Bulanan_Kab`, `Mu_Lokal`, `Diestimasi`, dan empat kolom `Rasio_...`.
 
-## Bagian F – Tahap 2 Langkah 6: volume dasar acak ([baris 345–376](03_generate_data.py#L345-L376))
+## Bagian F – Tahap 2 Langkah 6: volume dasar acak ([baris 422–457](03_generate_data.py#L422-L457))
 
 ### `hitung_variasi_relatif(a, b)`
 
@@ -210,7 +221,7 @@ Mengundi volume dasar tiap bulan.
 
 ```python
 for _, b in horizon.iterrows():
-    mu = baseline.loc[baseline["Tahun"] == b["Tahun"], "Mu_UMKM"].iloc[0]
+    mu = baseline.loc[baseline["Tahun"] == b["Tahun"], "Mu_Lokal"].iloc[0]
     batas_bawah = mu - K_TOLERANSI * mu
     batas_atas = mu + K_TOLERANSI * mu
     volume = rng.uniform(batas_bawah, batas_atas)
@@ -221,51 +232,52 @@ for _, b in horizon.iterrows():
 - `rng.uniform` mengundi satu angka dengan peluang merata di antara `mu − 10%` dan `mu + 10%`.
 
 ```python
-data.append({**b.to_dict(), "Mu": mu, "Batas_Bawah": batas_bawah,
+data.append({**b.to_dict(), "Mu_Lokal": mu, "Batas_Bawah": batas_bawah,
              "Batas_Atas": batas_atas, "Target_Kg": round(volume, 2)})
 ```
 
 - `**b.to_dict()` menyalin kolom lama (`t`, `Periode`, `Tahun`, `Bulan`), lalu ditambah empat kolom baru. `Target_Kg` adalah volume dasar hasil undian.
 
-## Bagian G – Tahap 3: tren linier ([baris 383–431](03_generate_data.py#L383-L431))
+## Bagian G – Tahap 3: tren lokal Kabupaten Malang ([baris 460–510](03_generate_data.py#L460-L510))
 
-### `hitung_growth_rate(produksi, tahun)`
+Tren diambil dari baseline Kabupaten Malang sendiri, tidak dari data nasional.
 
-Menghitung (tahun ini − tahun lalu) / tahun lalu dari dict produksi nasional.
+### `hitung_gradien_per_tahun(baseline)`
 
-- 2023 → 2024: (52,99 − 61,32) / 61,32 = −13,58%
-- 2024 → 2025: (60,99 − 52,99) / 52,99 = +15,10%
-
-### `hitung_gradien_per_tahun(tahun_list)`
-
-Menentukan gradien bulanan tiap tahun.
+Menentukan titik jangkar tren.
 
 ```python
-for i, tahun in enumerate(tahun_list):
-    growth = 0.0 if tahun == TAHUN_STABIL else hitung_growth_rate(PRODUKSI_NASIONAL, tahun)
-    hasil.append({"Tahun": tahun, "t_awal_fase": i * 12,
-                  "Growth_Tahunan": growth, "m_Bulanan": growth / 12})
+jangkar["t_Tengah"] = [6.5 + 12 * i for i in range(len(jangkar))]
+segmen = [(mu[i + 1] - mu[i]) / 12 for i in range(len(mu) - 1)]
+jangkar["m_Segmen_Kg"] = segmen + segmen[-1:]
 ```
 
-- 2023 dipaksa `growth = 0` (fase stabil); tahun lain memakai pertumbuhan nasional.
-- `t_awal_fase = i * 12` menghasilkan 0, 12, 24, yaitu nomor bulan tepat sebelum fase dimulai.
-- `m_Bulanan` adalah pertumbuhan setahun dibagi rata ke 12 bulan.
+- Baseline tiap tahun ditempatkan di tengah tahunnya: t = 6,5; 18,5; 30,5.
+- `m_Segmen_Kg` = kenaikan level per bulan antar-titik. 2023 → 2024: (116.122,35 − 105.975,26) / 12 = 845,59 kg per bulan; 2024 → 2025: (121.872,13 − 116.122,35) / 12 = 479,15 kg per bulan.
+- Tahun terakhir tidak punya titik sesudahnya, jadi memakai segmen sebelumnya (garis diperpanjang).
+
+### `level_tren(t, gradien)`
+
+```
+Mu_Tren_t = mu_i + m_Segmen_i × (t − t_Tengah_i)
+```
+
+- `i` adalah titik jangkar terakhir yang `t_Tengah`-nya ≤ t. Sebelum titik pertama dan sesudah titik terakhir, garis diperpanjang.
+- Hasilnya level bulanan yang bergerak halus dari sekitar 101 ribu kg (Januari 2023) ke sekitar 124,5 ribu kg (Desember 2025).
 
 ### `injeksi_tren(volume_bulanan, gradien)`
 
-Menerapkan tren ke tiap bulan.
-
 ```python
-df = volume_bulanan.merge(gradien[["Tahun", "t_awal_fase", "m_Bulanan"]], on="Tahun")
-df["Faktor_Tren"] = 1 + df["m_Bulanan"] * (df["t"] - df["t_awal_fase"])
-df["Volume_Tren_Kg"] = (df["Target_Kg"] * df["Faktor_Tren"]).round(2)
+hasil["Mu_Tren_Kg"] = [level_tren(t, gradien) for t in hasil["t"]]
+hasil["Faktor_Tren"] = hasil["Mu_Tren_Kg"] / hasil["Mu_Lokal"]
+hasil["Volume_Tren_Kg"] = (hasil["Target_Kg"] * hasil["Faktor_Tren"]).round(2)
 ```
 
-- `merge(on="Tahun")` menempelkan `m` dan `t_awal_fase` ke setiap bulan sesuai tahunnya.
-- `t - t_awal_fase` adalah urutan bulan di dalam fase (1 sampai 12), sehingga faktor bergerak dari `1 + m` sampai `1 + 12m`.
-- Faktor ini mulai lagi dari sekitar 1 di awal tiap tahun, jadi tren tidak menumpuk antar-tahun. Perbedaan level antar-tahun dibawa oleh `mu` yang berbeda per tahun.
+- `Faktor_Tren` = level tren dibagi baseline tahun itu, sehingga volume dasar hasil undian digeser mengikuti tren.
+- Rata-rata tahunan `Mu_Tren_Kg` sama dengan baseline BPS: 2023 dan 2025 tepat sama, 2024 selisih −0,47% karena kemiringan berubah di tengah tahun.
+- Tidak ada lompatan level di awal tahun, dan kenaikan level tidak dihitung dua kali (versi lama menambahkan tren nasional di atas baseline yang sudah naik per tahun).
 
-## Bagian H – Tahap 4: musiman Iduladha ([baris 438–483](03_generate_data.py#L438-L483))
+## Bagian H – Tahap 4: musiman Iduladha ([baris 513–562](03_generate_data.py#L513-L562))
 
 ### `hitung_koefisien_musiman(sebelum, saat)`
 
@@ -287,7 +299,7 @@ return set(horizon.loc[is_iduladha, "t"].astype(int))
 
 Berisi percabangan sederhana per bulan: kalau `t` ada di himpunan Iduladha, pengalinya 2,717; kalau tidak, 1. Hasilnya dua kolom baru: `Koefisien_Musim` dan `Volume_Musim_Kg = Volume_Tren_Kg × s`. `.copy()` dipakai supaya tabel masukan tidak ikut berubah.
 
-## Bagian I – Tahap 6: white noise ([baris 490–508](03_generate_data.py#L490-L508))
+## Bagian I – Tahap 6: white noise ([baris 565–587](03_generate_data.py#L565-L587))
 
 ### `tambah_white_noise(volume_bulanan, sigma_persen)`
 
@@ -302,7 +314,7 @@ df["Volume_Akhir_Kg"] = (df["Volume_Musim_Kg"] + df["Noise_Kg"]).clip(lower=0.01
 - `clip(lower=0.01)` adalah pengaman agar volume tidak pernah nol atau negatif.
 - `Volume_Akhir_Kg` inilah yang menjadi variabel target `Permintaan_Kg`.
 
-## Bagian J – Langkah 5 & 7: pemecahan menjadi transaksi ([baris 515–562](03_generate_data.py#L515-L562))
+## Bagian J – Langkah 5 & 7: pemecahan menjadi transaksi ([baris 590–641](03_generate_data.py#L590-L641))
 
 ### `undi_jenis_produk(peluang)`
 
@@ -358,7 +370,7 @@ df.insert(0, "ID_Transaksi", [f"TRX{i:06d}" for i in range(1, len(df) + 1)])
 - Semua struk diurutkan menurut tanggal. `kind="stable"` menjaga urutan asli untuk struk bertanggal sama.
 - ID diberikan setelah pengurutan, jadi `TRX000001` adalah transaksi paling awal. `{i:06d}` berarti angka 6 digit dengan nol di depan.
 
-## Bagian K – Tahap 5: variabel eksogen ([baris 569–635](03_generate_data.py#L569-L635))
+## Bagian K – Tahap 5: variabel eksogen ([baris 644–714](03_generate_data.py#L644-L714))
 
 ### `undi_harga_normal(produk)`
 
@@ -405,7 +417,7 @@ rekap["Harga_Rata2_Per_Kg"] = (rekap["Total_Pendapatan"] / rekap["Total_Kg"]).ro
 - Harga rata-rata dihitung dari total pendapatan dibagi total kg, jadi struk yang lebih berat berpengaruh lebih besar (rata-rata tertimbang).
 - Indeks tabel hasilnya adalah `t`, dan ini dimanfaatkan di `main`.
 
-## Bagian L – Tahap 7: kompilasi dan ekspor ([baris 642–718](03_generate_data.py#L642-L718))
+## Bagian L – Tahap 7: kompilasi dan ekspor ([baris 717–797](03_generate_data.py#L717-L797))
 
 ### `kompilasi_dataset(volume)`
 
@@ -413,7 +425,7 @@ Memilih 7 kolom dari tabel `volume` dan memberi nama final. `Volume_Akhir_Kg` be
 
 ### `ekspor_csv(dataset, volume, transaksi, baseline)`
 
-Menyimpan empat tabel.
+Menyimpan empat tabel ke `data/hasil_generate/` (dengan keterangan kolom dari `keterangan_csv.py`).
 
 ```python
 DATA_DIR.mkdir(exist_ok=True)
@@ -424,7 +436,7 @@ for nama, _, tabel in daftar:
         file_terkunci.append(nama)
 ```
 
-- `mkdir(exist_ok=True)` membuat folder `data/` kalau belum ada, tanpa error kalau sudah ada.
+- `mkdir(exist_ok=True)` membuat folder output kalau belum ada, tanpa error kalau sudah ada.
 - `index=False` supaya nomor baris pandas tidak ikut tertulis.
 - `PermissionError` muncul kalau file sedang dibuka di Excel. Nama file itu dicatat dan perulangan lanjut ke file berikutnya.
 - Kalau ada file terkunci, daftarnya dicetak lalu program berhenti dengan `SystemExit(1)`. File lain yang tidak terkunci sudah telanjur tersimpan saat itu.
@@ -441,15 +453,15 @@ selisih_bulan = df["Periode"].dt.to_period("M").astype(int).diff().dropna()
 
 Pemeriksaan lainnya: jumlah baris 36, tidak ada sel kosong, permintaan selalu positif, total kg dataset sama dengan total kg seluruh struk (toleransi 0,5 kg), dan kolom numerik terbaca sebagai angka. Tiap pemeriksaan dikembalikan sebagai tuple `(nama, True/False, keterangan)`.
 
-## Bagian M – Program utama ([baris 725–885](03_generate_data.py#L725-L885))
+## Bagian M – Program utama ([baris 800–962](03_generate_data.py#L800-L962))
 
 `main()` memanggil fungsi-fungsi di atas secara berurutan dan mencetak tabel di tiap tahap. Tabel `volume` bertambah kolom di setiap tahap:
 
 | Urutan | Pemanggilan | Kolom yang ditambahkan |
 |---|---|---|
 | Tahap 1 | `buat_time_horizon` | `t`, `Periode`, `Tahun`, `Bulan` |
-| Tahap 2 | `baca_bps_wilayah` → `lengkapi_komponen_kosong` → `hitung_baseline` → `buat_volume_bulanan` | `Mu`, `Batas_Bawah`, `Batas_Atas`, `Target_Kg` |
-| Tahap 3 | `hitung_gradien_per_tahun` → `injeksi_tren` | `Faktor_Tren`, `Volume_Tren_Kg` |
+| Tahap 2 | `baca_bps_wilayah` → `lengkapi_komponen_kosong` → `hitung_baseline` → `buat_volume_bulanan` | `Mu_Lokal`, `Batas_Bawah`, `Batas_Atas`, `Target_Kg` |
+| Tahap 3 | `hitung_gradien_per_tahun` → `injeksi_tren` | `Mu_Tren_Kg`, `Faktor_Tren`, `Volume_Tren_Kg` |
 | Tahap 4 | `hitung_koefisien_musiman`, `tentukan_indeks_iduladha` → `sisipkan_musiman` | `Koefisien_Musim`, `Volume_Musim_Kg` |
 | Tahap 6 | `tambah_white_noise` | `Sigma_Noise`, `Noise_Kg`, `Volume_Akhir_Kg` |
 | Langkah 7 | `pecah_menjadi_transaksi` | (tabel `transaksi` baru) |
@@ -479,16 +491,16 @@ volume["Cocok"] = (volume["Total_Transaksi_Kg"] - volume["Volume_Akhir_Kg"]).abs
 - Pemeriksaan Langkah 7: total kg semua struk tiap bulan harus sama dengan volume akhirnya. Hasilnya tampil sebagai `OK` atau `BEDA` di tabel.
 
 ```python
-print(f"  Cek dokumen: 873,41 x (1 + {angka(m3, 6)} x 1)  = {angka(873.41 * (1 + m3))} kg (t = 25)")
+print(f"  Cek dokumen: 15,5 kg x 125.500 = {rupiah(15.5 * 125_500)} | 15,5 kg x 150.000 = {rupiah(15.5 * 150_000)}")
 ```
 
-- Baris "Cek dokumen" menghitung ulang contoh angka dari dokumen metodologi (873,41; 868,20; 15,5 kg) supaya bisa dibandingkan langsung. Angka-angka itu ditulis manual dan tidak memengaruhi data yang dihasilkan.
+- Baris "Cek dokumen" menghitung ulang contoh harga dari dokumen metodologi (15,5 kg) supaya bisa dibandingkan langsung. Angkanya ditulis manual dan tidak memengaruhi data yang dihasilkan.
 
 ```python
 [... for b in baseline.itertuples()]
 ```
 
-- `itertuples()` mirip `iterrows()`, tetapi kolom diakses dengan titik (`b.Tahun`, `b.Mu_UMKM`). Untuk kolom yang namanya mengandung spasi seperti `Rasio_Daging Murni`, program memakai `iterrows()` dan `b["..."]`.
+- `itertuples()` mirip `iterrows()`, tetapi kolom diakses dengan titik (`b.Tahun`, `b.Mu_Lokal`). Untuk kolom yang namanya mengandung spasi seperti `Rasio_Daging Murni`, program memakai `iterrows()` dan `b["..."]`.
 
 ```python
 if __name__ == "__main__":

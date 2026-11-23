@@ -13,5 +13,5 @@
 "# Catatan          : baris berawalan tanda # adalah keterangan, bukan data. Tabel data dimulai tepat di bawah garis ini."
 "# ===================================================================================================="
 Kategori,Jumlah_Bulan,Harga_Rata2_Per_Kg,Harga_Min,Harga_Maks,Volume_Rata2_Kg,Selisih_vs_Bulan_Biasa_%
-Bulan Iduladha,3,133196.66666666666,132865.0,133371.0,272065.12,10.394318704388938
-Bulan biasa,33,120655.36363636363,119448.0,121667.0,96315.5693939394,0.0
+Bulan Iduladha,3,130898.0,130377.0,131222.0,320368.4066666667,10.452222553493318
+Bulan biasa,33,118510.9696969697,117243.0,119216.0,115081.9390909091,0.0

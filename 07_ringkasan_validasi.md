@@ -15,56 +15,59 @@ Shortlist = AIC terendah per skenario di dalam kelompok (d, D)-nya. Tabel seluru
 
 | Label | Nama_Model | Parameter | Koefisien | Std_Error | z | P_value | CI95_Bawah | CI95_Atas | Signifikan_5% |
 |---|---|---|---|---|---|---|---|---|---|
-| ARIMAX Harga+Iduladha | ARIMAX(2, 0, 0) + Harga + Iduladha | intercept | -4.3955 | 5.7067 | -0.7702 | 0.4412 | -15.5805 | 6.7895 | Tidak |
-| ARIMAX Harga+Iduladha | ARIMAX(2, 0, 0) + Harga + Iduladha | Harga_Rata2_Per_Kg | 4.4901 | 4.3004 | 1.0441 | 0.2964 | -3.9386 | 12.9188 | Tidak |
-| ARIMAX Harga+Iduladha | ARIMAX(2, 0, 0) + Harga + Iduladha | Koefisien_Musim | 0.3243 | 0.2367 | 1.3701 | 0.1707 | -0.1396 | 0.7882 | Tidak |
-| ARIMAX Harga+Iduladha | ARIMAX(2, 0, 0) + Harga + Iduladha | ar.L1 | 0.4829 | 0.1825 | 2.6468 | 0.0081 | 0.1253 | 0.8405 | Ya |
-| ARIMAX Harga+Iduladha | ARIMAX(2, 0, 0) + Harga + Iduladha | ar.L2 | 0.4108 | 0.1885 | 2.1795 | 0.0293 | 0.0414 | 0.7803 | Ya |
-| ARIMAX Harga+Iduladha | ARIMAX(2, 0, 0) + Harga + Iduladha | sigma2 | 0.0068 | 0.0029 | 2.3363 | 0.0195 | 0.0011 | 0.0125 | - |
-| ARIMAX Harga | ARIMAX(2, 0, 0) + Harga | intercept | -22.5998 | 14.0540 | -1.6081 | 0.1078 | -50.1451 | 4.9455 | Tidak |
-| ARIMAX Harga | ARIMAX(2, 0, 0) + Harga | Harga_Rata2_Per_Kg | 10.0785 | 0.5548 | 18.1673 | 0.0000 | 8.9912 | 11.1658 | Ya |
-| ARIMAX Harga | ARIMAX(2, 0, 0) + Harga | ar.L1 | 0.3865 | 0.2376 | 1.6266 | 0.1038 | -0.0792 | 0.8523 | Tidak |
-| ARIMAX Harga | ARIMAX(2, 0, 0) + Harga | ar.L2 | 0.4012 | 0.2199 | 1.8241 | 0.0681 | -0.0299 | 0.8322 | Tidak |
-| ARIMAX Harga | ARIMAX(2, 0, 0) + Harga | sigma2 | 0.0078 | 0.0035 | 2.2191 | 0.0265 | 0.0009 | 0.0146 | - |
-| SARIMA D=0 | SARIMA(1, 0, 0)x(1, 0, 0, 12) | intercept | 0.2014 | 0.1982 | 1.0159 | 0.3097 | -0.1871 | 0.5899 | Tidak |
-| SARIMA D=0 | SARIMA(1, 0, 0)x(1, 0, 0, 12) | ar.L1 | 0.7731 | 0.1222 | 6.3261 | 0.0000 | 0.5336 | 1.0127 | Ya |
-| SARIMA D=0 | SARIMA(1, 0, 0)x(1, 0, 0, 12) | ar.S.L12 | 0.9235 | 0.0477 | 19.3472 | 0.0000 | 0.8299 | 1.0170 | Ya |
-| SARIMA D=0 | SARIMA(1, 0, 0)x(1, 0, 0, 12) | sigma2 | 0.0212 | 0.0116 | 1.8280 | 0.0675 | -0.0015 | 0.0439 | - |
-| ARIMA | ARIMA(0, 0, 0) | intercept | 11.5454 | 0.1022 | 113.0140 | 0.0000 | 11.3451 | 11.7456 | Ya |
-| ARIMA | ARIMA(0, 0, 0) | sigma2 | 0.0982 | 0.0229 | 4.2858 | 0.0000 | 0.0533 | 0.1431 | - |
-| SARIMA D=1 | SARIMA(1, 0, 0)x(1, 1, 0, 12) | ar.L1 | 0.9840 | 0.0288 | 34.1651 | 0.0000 | 0.9275 | 1.0404 | Ya |
-| SARIMA D=1 | SARIMA(1, 0, 0)x(1, 1, 0, 12) | ar.S.L12 | -0.9463 | 0.0867 | -10.9190 | 0.0000 | -1.1162 | -0.7765 | Ya |
-| SARIMA D=1 | SARIMA(1, 0, 0)x(1, 1, 0, 12) | sigma2 | 0.0024 | 0.0036 | 0.6721 | 0.5015 | -0.0046 | 0.0094 | - |
+| ARIMAX Harga+Iduladha | ARIMAX(1, 0, 0) + Harga + Iduladha | intercept | 20.9054 | 37.2861 | 0.5607 | 0.5750 | -52.1740 | 93.9847 | Tidak |
+| ARIMAX Harga+Iduladha | ARIMAX(1, 0, 0) + Harga + Iduladha | Harga_Rata2_Per_Kg | -2.1614 | 5.2513 | -0.4116 | 0.6806 | -12.4538 | 8.1309 | Tidak |
+| ARIMAX Harga+Iduladha | ARIMAX(1, 0, 0) + Harga + Iduladha | Koefisien_Musim | 0.7102 | 0.2957 | 2.4021 | 0.0163 | 0.1307 | 1.2897 | Ya |
+| ARIMAX Harga+Iduladha | ARIMAX(1, 0, 0) + Harga + Iduladha | ar.L1 | 0.4222 | 0.2037 | 2.0719 | 0.0383 | 0.0228 | 0.8215 | Ya |
+| ARIMAX Harga+Iduladha | ARIMAX(1, 0, 0) + Harga + Iduladha | sigma2 | 0.0046 | 0.0015 | 3.0070 | 0.0026 | 0.0016 | 0.0077 | - |
+| ARIMAX Harga | ARIMAX(0, 0, 2) + Harga | intercept | -96.6467 | 7.6654 | -12.6082 | 0.0000 | -111.6705 | -81.6228 | Ya |
+| ARIMAX Harga | ARIMAX(0, 0, 2) + Harga | Harga_Rata2_Per_Kg | 9.2687 | 0.6554 | 14.1424 | 0.0000 | 7.9842 | 10.5532 | Ya |
+| ARIMAX Harga | ARIMAX(0, 0, 2) + Harga | ma.L1 | 0.1098 | 0.2129 | 0.5156 | 0.6061 | -0.3075 | 0.5270 | Tidak |
+| ARIMAX Harga | ARIMAX(0, 0, 2) + Harga | ma.L2 | 0.5475 | 0.2391 | 2.2893 | 0.0221 | 0.0788 | 1.0162 | Ya |
+| ARIMAX Harga | ARIMAX(0, 0, 2) + Harga | sigma2 | 0.0054 | 0.0024 | 2.2856 | 0.0223 | 0.0008 | 0.0100 | - |
+| SARIMA D=0 | SARIMA(1, 0, 0)x(1, 0, 0, 12) | intercept | 0.7204 | 0.6418 | 1.1225 | 0.2617 | -0.5375 | 1.9784 | Tidak |
+| SARIMA D=0 | SARIMA(1, 0, 0)x(1, 0, 0, 12) | ar.L1 | 0.1188 | 0.2789 | 0.4259 | 0.6702 | -0.4278 | 0.6653 | Tidak |
+| SARIMA D=0 | SARIMA(1, 0, 0)x(1, 0, 0, 12) | ar.S.L12 | 0.9302 | 0.0471 | 19.7648 | 0.0000 | 0.8380 | 1.0225 | Ya |
+| SARIMA D=0 | SARIMA(1, 0, 0)x(1, 0, 0, 12) | sigma2 | 0.0111 | 0.0058 | 1.9081 | 0.0564 | -0.0003 | 0.0224 | - |
+| ARIMA | ARIMA(1, 0, 1) | intercept | 4.9418 | 4.0205 | 1.2291 | 0.2190 | -2.9383 | 12.8219 | Tidak |
+| ARIMA | ARIMA(1, 0, 1) | ar.L1 | 0.5784 | 0.3437 | 1.6832 | 0.0923 | -0.0951 | 1.2520 | Tidak |
+| ARIMA | ARIMA(1, 0, 1) | ma.L1 | -1.0000 | 0.0012 | -830.0444 | 0.0000 | -1.0024 | -0.9976 | Ya |
+| ARIMA | ARIMA(1, 0, 1) | sigma2 | 0.0560 | 0.0218 | 2.5648 | 0.0103 | 0.0132 | 0.0988 | - |
+| SARIMA D=1 | SARIMA(1, 0, 0)x(1, 1, 0, 12) | ar.L1 | 0.4361 | 0.3193 | 1.3658 | 0.1720 | -0.1897 | 1.0618 | Tidak |
+| SARIMA D=1 | SARIMA(1, 0, 0)x(1, 1, 0, 12) | ar.S.L12 | -0.6900 | 0.9796 | -0.7043 | 0.4812 | -2.6100 | 1.2300 | Tidak |
+| SARIMA D=1 | SARIMA(1, 0, 0)x(1, 1, 0, 12) | sigma2 | 0.0059 | 0.0152 | 0.3874 | 0.6984 | -0.0239 | 0.0356 | - |
 
 | Label | Nama_Model | LogL | AIC | BIC |
 |---|---|---|---|---|
-| ARIMAX Harga+Iduladha | ARIMAX(2, 0, 0) + Harga + Iduladha | 28.3542 | -44.7084 | -36.9334 |
-| ARIMAX Harga | ARIMAX(2, 0, 0) + Harga | 26.8078 | -43.6157 | -37.1365 |
-| SARIMA D=0 | SARIMA(1, 0, 0)x(1, 0, 0, 12) | 1.7372 | 4.5257 | 9.7090 |
-| ARIMA | ARIMA(0, 0, 0) | -6.9815 | 17.9630 | 20.5546 |
-| SARIMA D=1 | SARIMA(1, 0, 0)x(1, 1, 0, 12) | 9.2738 | -12.5475 | -10.4234 |
+| ARIMAX Harga+Iduladha | ARIMAX(1, 0, 0) + Harga + Iduladha | 34.1473 | -58.2946 | -51.8154 |
+| ARIMAX Harga | ARIMAX(0, 0, 2) + Harga | 31.8559 | -53.7118 | -47.2327 |
+| SARIMA D=0 | SARIMA(1, 0, 0)x(1, 0, 0, 12) | 10.4578 | -12.9157 | -7.7323 |
+| ARIMA | ARIMA(1, 0, 1) | -0.4555 | 8.9110 | 14.0943 |
+| SARIMA D=1 | SARIMA(1, 0, 0)x(1, 1, 0, 12) | 13.2499 | -20.4999 | -18.3757 |
 
 ## 2. Validitas estimasi dan optimum lokal
 
-- Konsistensi dengan script 06: selisih LogL maksimum 0.00e+00.
+- Konsistensi dengan script 06: selisih LogL maksimum 3.47e-01.
 - Model dengan std error tidak valid: 0; tidak konvergen: 0.
-- Model yang dengan lbfgs default saja masih berhenti di optimum lokal (diperbaiki oleh multi-optimizer, perbaikan LogL > 0.01): 13. Log lengkap: `data/hasil_07/07_cek_optimum_lokal.csv`.
+- Model yang dengan lbfgs default saja masih berhenti di optimum lokal (diperbaiki oleh multi-optimizer, perbaikan LogL > 0.01): 15. Log lengkap: `data/hasil_07/07_cek_optimum_lokal.csv`.
 
 | Nama_Model | Kelompok | LogL_lbfgs | LogL_07 | Optimizer_Terpilih | Perbaikan_vs_lbfgs_default |
 |---|---|---|---|---|---|
-| ARIMAX(2, 0, 0) + Harga | d=0, D=0 | 17.7846 | 26.8078 | nm_awal+0.0 | 9.0232 |
-| ARIMAX(1, 0, 2) + Harga | d=0, D=0 | 15.1396 | 27.7892 | nm_awal+0.3 | 12.6496 |
-| ARIMAX(2, 0, 1) + Harga + Iduladha | d=0, D=0 | 28.5281 | 28.5402 | nm_awal+0.3 | 0.0121 |
-| ARIMAX(1, 0, 1) + Harga + Iduladha | d=0, D=0 | 27.4987 | 27.5388 | bfgs | 0.0402 |
-| ARIMAX(1, 0, 1) + Harga | d=0, D=0 | 26.1720 | 26.2271 | bfgs | 0.0551 |
-| ARIMAX(2, 0, 1) + Harga | d=0, D=0 | 9.3936 | 27.1831 | powell | 17.7895 |
-| ARIMAX(1, 0, 0) + Harga | d=0, D=0 | 15.6151 | 24.6046 | bfgs | 8.9894 |
-| ARIMAX(0, 0, 2) + Harga + Iduladha | d=0, D=0 | 23.9792 | 24.0194 | nm_awal+0.0 | 0.0401 |
-| ARIMAX(0, 0, 2) + Harga | d=0, D=0 | 21.4167 | 21.4379 | bfgs | 0.0212 |
-| ARIMAX(0, 0, 1) + Harga | d=0, D=0 | 16.9533 | 16.9959 | bfgs | 0.0426 |
-| ARIMAX(0, 0, 1) + Harga + Iduladha | d=0, D=0 | 16.5196 | 17.1738 | bfgs | 0.6542 |
-| ARIMAX(0, 0, 0) + Harga | d=0, D=0 | 10.5188 | 10.7284 | bfgs | 0.2097 |
-| ARIMAX(0, 0, 0) + Harga + Iduladha | d=0, D=0 | 9.4622 | 10.8312 | bfgs | 1.3689 |
+| ARIMAX(1, 0, 0) + Harga + Iduladha | d=0, D=0 | 33.8078 | 34.1473 | bfgs | 0.3395 |
+| ARIMAX(0, 0, 2) + Harga + Iduladha | d=0, D=0 | 34.8148 | 34.8378 | bfgs | 0.0230 |
+| ARIMAX(1, 0, 1) + Harga + Iduladha | d=0, D=0 | 34.4261 | 34.6447 | bfgs | 0.2186 |
+| ARIMAX(0, 0, 1) + Harga + Iduladha | d=0, D=0 | 33.0916 | 33.2722 | bfgs | 0.1806 |
+| ARIMAX(0, 0, 2) + Harga | d=0, D=0 | 1.0876 | 31.8559 | nm_awal+0.3 | 30.7683 |
+| ARIMAX(1, 0, 2) + Harga | d=0, D=0 | 2.1931 | 32.0515 | nm | 29.8584 |
+| ARIMAX(0, 0, 0) + Harga | d=0, D=0 | 28.1311 | 29.1476 | bfgs | 1.0165 |
+| ARIMAX(1, 0, 0) + Harga | d=0, D=0 | 0.2408 | 29.6622 | nm_awal+0.0 | 29.4215 |
+| ARIMAX(0, 0, 1) + Harga | d=0, D=0 | 29.1166 | 29.4277 | bfgs | 0.3111 |
+| ARIMAX(1, 0, 1) + Harga | d=0, D=0 | 2.1262 | 30.2955 | bfgs | 28.1693 |
+| ARIMAX(2, 0, 0) + Harga | d=0, D=0 | 28.1048 | 29.6622 | warm | 1.5575 |
+| ARIMAX(2, 0, 1) + Harga | d=0, D=0 | 2.4457 | 30.2955 | warm | 27.8498 |
+| ARIMA(1, 0, 1) | d=0, D=0 | -0.6668 | -0.4555 | nm_awal+0.3 | 0.2113 |
+| ARIMA(1, 0, 2) | d=0, D=0 | -0.9829 | -0.3712 | nm | 0.6117 |
+| ARIMA(2, 0, 1) | d=0, D=0 | -0.5587 | -0.5221 | nm | 0.0366 |
 
 ## 3. Diagnostik residual (training)
 
@@ -72,56 +75,56 @@ Residual burn-in (`loglikelihood_burn`) dibuang. Ljung-Box lag [6, 9, 12], df = 
 
 | Label | Jumlah_Residual | model_df | LB_Q_lag6 | LB_p_lag6 | LB_Q_lag9 | LB_p_lag9 | LB_Q_lag12 | LB_p_lag12 | LB_lag_dilewati | Ljung_Box | Shapiro_W | Shapiro_p | Shapiro_Wilk |
 |---|---|---|---|---|---|---|---|---|---|---|---|---|---|
-| ARIMA | 27 | 0 | 5.4700 | 0.4851 | 5.9261 | 0.7473 | 9.7256 | 0.6400 | - | Lulus | 0.7392 | 0.0000 | Gagal |
-| SARIMA D=0 | 27 | 2 | 9.4402 | 0.0510 | 10.3911 | 0.1675 | 12.8346 | 0.2331 | - | Lulus | 0.7141 | 0.0000 | Gagal |
-| SARIMA D=1 | 15 | 2 | 7.4853 | 0.1124 | 7.8678 | 0.3444 | 9.9739 | 0.4428 | - | Lulus | 0.9300 | 0.2731 | Lulus |
-| ARIMAX Harga | 27 | 2 | 4.5460 | 0.3371 | 6.3460 | 0.5000 | 10.4992 | 0.3978 | - | Lulus | 0.9622 | 0.4149 | Lulus |
-| ARIMAX Harga+Iduladha | 27 | 2 | 1.9104 | 0.7522 | 3.0060 | 0.8845 | 7.6443 | 0.6635 | - | Lulus | 0.9805 | 0.8743 | Lulus |
+| ARIMA | 27 | 2 | 1.1418 | 0.8876 | 2.1328 | 0.9521 | 11.3710 | 0.3294 | - | Lulus | 0.8080 | 0.0002 | Gagal |
+| SARIMA D=0 | 27 | 2 | 4.1183 | 0.3902 | 5.9932 | 0.5405 | 7.7421 | 0.6540 | - | Lulus | 0.6926 | 0.0000 | Gagal |
+| SARIMA D=1 | 15 | 2 | 8.4731 | 0.0757 | 9.2109 | 0.2379 | 9.6828 | 0.4687 | - | Lulus | 0.9484 | 0.5003 | Lulus |
+| ARIMAX Harga | 27 | 2 | 1.0915 | 0.8956 | 2.6046 | 0.9190 | 2.8669 | 0.9844 | - | Lulus | 0.9779 | 0.8127 | Lulus |
+| ARIMAX Harga+Iduladha | 27 | 1 | 1.2375 | 0.9412 | 3.1275 | 0.9261 | 4.7007 | 0.9448 | - | Lulus | 0.9723 | 0.6637 | Lulus |
 
 ## 4. Rolling origin (9 putaran, latih ulang penuh)
 
 Target akurasi: MAPE < 15%, RMSE < 10% × ȳ, MAE < 8% × ȳ, MSE < (10% × ȳ)², R² > 0.7 (ȳ = rata-rata permintaan aktual periode evaluasi).
 
-Pada periode testing: ȳ = 113,751 kg → MAPE < 15%, RMSE < 11,375 kg, MAE < 9,100 kg, MSE < 129,391,859 kg², R² > 0.7.
+Pada periode testing: ȳ = 145,698 kg → MAPE < 15%, RMSE < 14,570 kg, MAE < 11,656 kg, MSE < 212,279,308 kg², R² > 0.7.
 
 > Target RMSE/MAE/MSE dibuat **relatif terhadap rata-rata permintaan** karena data penelitian adalah agregat Kabupaten Malang (tidak dibagi jumlah UMKM yang tidak diketahui pasti). Proporsi target mengikuti dokumen alur: MAE/RMSE = 400/500 = 0,8 dan MSE = RMSE². MAPE dan R² tidak bergantung skala.
 
 | Label | MAPE_% | RMSE | RMSE_%_rata2 | MAE | MAE_%_rata2 | MSE | R2 | APE_maks_% | Target_MAPE_% | Target_RMSE | Target_MAE | Target_MSE | Target_R2 | Lebih_baik_dari_naive |
 |---|---|---|---|---|---|---|---|---|---|---|---|---|---|---|
-| ARIMAX Harga | 4.003 | 10,399.789 | 9.143 | 5,927.776 | 5.211 | 108,155,608.659 | 0.967 | 10.430 | Lulus | Lulus | Lulus | Lulus | Lulus | Ya |
-| ARIMAX Harga+Iduladha | 4.586 | 11,304.698 | 9.938 | 6,687.913 | 5.879 | 127,796,186.552 | 0.961 | 11.535 | Lulus | Lulus | Lulus | Lulus | Lulus | Ya |
-| SARIMA D=1 | 6.586 | 7,395.249 | 6.501 | 6,102.489 | 5.365 | 54,689,701.138 | 0.983 | 13.502 | Lulus | Lulus | Lulus | Lulus | Lulus | Ya |
-| SARIMA D=0 | 8.364 | 22,986.773 | 20.208 | 12,699.812 | 11.165 | 528,391,736.826 | 0.838 | 23.615 | Lulus | Gagal | Gagal | Gagal | Lulus | Ya |
-| Seasonal naive | 14.727 | 28,533.759 | 25.085 | 19,596.608 | 17.228 | 814,175,425.297 | 0.750 | 27.672 | Lulus | Gagal | Gagal | Gagal | Lulus | - |
-| ARIMA | 17.544 | 58,572.084 | 51.492 | 28,811.254 | 25.328 | 3,430,689,041.569 | -0.052 | 62.820 | Gagal | Gagal | Gagal | Gagal | Gagal | Tidak |
+| ARIMAX Harga+Iduladha | 4.382 | 15,502.578 | 10.640 | 8,574.172 | 5.885 | 240,329,911.227 | 0.957 | 12.411 | Lulus | Gagal | Lulus | Gagal | Lulus | Ya |
+| SARIMA D=1 | 7.510 | 16,963.421 | 11.643 | 12,132.241 | 8.327 | 287,757,652.983 | 0.948 | 13.741 | Lulus | Gagal | Gagal | Gagal | Lulus | Ya |
+| SARIMA D=0 | 8.268 | 30,144.810 | 20.690 | 16,119.089 | 11.063 | 908,709,540.002 | 0.837 | 24.122 | Lulus | Gagal | Gagal | Gagal | Lulus | Ya |
+| Seasonal naive | 8.810 | 26,773.137 | 18.376 | 15,862.021 | 10.887 | 716,800,849.637 | 0.871 | 21.913 | Lulus | Gagal | Gagal | Gagal | Lulus | - |
+| ARIMAX Harga | 9.392 | 29,173.207 | 20.023 | 16,868.982 | 11.578 | 851,076,023.183 | 0.847 | 37.928 | Lulus | Gagal | Gagal | Gagal | Lulus | Tidak |
+| ARIMA | 18.466 | 78,742.271 | 54.045 | 39,461.444 | 27.084 | 6,200,345,171.412 | -0.112 | 64.381 | Gagal | Gagal | Gagal | Gagal | Gagal | Tidak |
 
 ### Error per putaran (APE %)
 
 | Periode_Target | ARIMA | ARIMAX Harga | ARIMAX Harga+Iduladha | SARIMA D=0 | SARIMA D=1 | Seasonal naive |
 |---|---|---|---|---|---|---|
-| 2025-04 | 20.55 | 2.24 | 2.12 | 0.83 | 10.39 | 5.09 |
-| 2025-05 | 14.82 | 0.02 | 0.35 | 9.23 | 13.50 | 13.58 |
-| 2025-06 | 62.82 | 10.30 | 11.54 | 23.62 | 0.56 | 27.67 |
-| 2025-07 | 7.91 | 0.01 | 2.20 | 16.48 | 1.11 | 14.45 |
-| 2025-08 | 2.67 | 10.43 | 7.48 | 12.38 | 1.14 | 23.04 |
-| 2025-09 | 7.64 | 5.80 | 5.84 | 2.77 | 5.60 | 16.76 |
-| 2025-10 | 10.80 | 4.83 | 5.88 | 0.86 | 9.57 | 14.68 |
-| 2025-11 | 13.27 | 1.38 | 1.80 | 1.20 | 4.37 | 13.37 |
-| 2025-12 | 17.41 | 1.02 | 4.08 | 7.90 | 13.03 | 3.90 |
+| 2025-04 | 7.85 | 0.38 | 2.45 | 0.20 | 3.39 | 1.49 |
+| 2025-05 | 7.16 | 0.49 | 2.94 | 6.94 | 12.28 | 7.83 |
+| 2025-06 | 64.38 | 19.85 | 12.41 | 24.12 | 12.28 | 20.73 |
+| 2025-07 | 31.17 | 4.81 | 6.08 | 2.27 | 4.43 | 3.80 |
+| 2025-08 | 24.64 | 37.93 | 7.70 | 10.35 | 6.41 | 11.35 |
+| 2025-09 | 15.30 | 4.24 | 1.19 | 0.83 | 7.45 | 1.78 |
+| 2025-10 | 8.35 | 3.29 | 2.01 | 3.58 | 4.52 | 3.12 |
+| 2025-11 | 2.51 | 6.16 | 0.49 | 6.59 | 3.10 | 7.28 |
+| 2025-12 | 4.83 | 7.39 | 4.17 | 19.53 | 13.74 | 21.91 |
 
 ### Prediksi per putaran (kg)
 
 | Periode_Target | Aktual | ARIMA | ARIMAX Harga | ARIMAX Harga+Iduladha | SARIMA D=0 | SARIMA D=1 | Seasonal naive |
 |---|---|---|---|---|---|---|---|
-| 2025-04 | 85,690 | 103,297 | 87,607 | 87,510 | 86,404 | 94,591 | 81,326 |
-| 2025-05 | 89,364 | 102,610 | 89,380 | 89,053 | 81,113 | 77,298 | 77,228 |
-| 2025-06 | 274,672 | 102,122 | 246,391 | 242,988 | 209,807 | 273,123 | 198,665 |
-| 2025-07 | 97,810 | 105,546 | 97,796 | 95,663 | 113,930 | 96,725 | 83,675 |
-| 2025-08 | 102,546 | 105,287 | 91,851 | 94,878 | 89,852 | 101,377 | 78,919 |
-| 2025-09 | 97,732 | 105,200 | 103,400 | 103,442 | 100,442 | 92,261 | 81,357 |
-| 2025-10 | 94,733 | 104,966 | 99,309 | 100,303 | 93,915 | 103,799 | 80,821 |
-| 2025-11 | 92,390 | 104,650 | 91,113 | 94,051 | 91,278 | 96,430 | 80,042 |
-| 2025-12 | 88,817 | 104,278 | 89,723 | 92,437 | 95,832 | 100,392 | 85,352 |
+| 2025-04 | 112,878 | 121,738 | 112,446 | 115,644 | 112,653 | 116,699 | 111,191 |
+| 2025-05 | 116,787 | 125,154 | 116,220 | 113,358 | 108,678 | 102,448 | 107,648 |
+| 2025-06 | 356,163 | 126,861 | 285,482 | 311,960 | 270,251 | 312,439 | 282,346 |
+| 2025-07 | 125,856 | 86,627 | 119,803 | 118,208 | 128,714 | 120,282 | 121,071 |
+| 2025-08 | 130,954 | 98,688 | 81,286 | 120,865 | 117,406 | 122,558 | 116,087 |
+| 2025-09 | 123,878 | 104,924 | 118,630 | 122,400 | 124,911 | 114,646 | 121,679 |
+| 2025-10 | 119,197 | 109,241 | 115,277 | 121,596 | 123,468 | 124,580 | 122,921 |
+| 2025-11 | 115,410 | 112,513 | 122,516 | 114,849 | 123,013 | 118,993 | 123,811 |
+| 2025-12 | 110,158 | 115,479 | 118,303 | 114,753 | 131,671 | 125,295 | 134,296 |
 
 ## 5. Rekomendasi model
 
@@ -133,15 +136,15 @@ Aturan pemilihan:
 
 | Peringkat | Label | Nama_Model | Ljung_Box | Shapiro_Wilk | MAPE_% | RMSE | R2 | Butuh_Eksogen_Masa_Depan | Layak_Statistik | Layak_Peramalan |
 |---|---|---|---|---|---|---|---|---|---|---|
-| 1 | SARIMA D=1 | SARIMA(1, 0, 0)x(1, 1, 0, 12) | Lulus | Lulus | 6.586 | 7,395.249 | 0.983 | Tidak | True | True |
-| 2 | ARIMAX Harga | ARIMAX(2, 0, 0) + Harga | Lulus | Lulus | 4.003 | 10,399.789 | 0.967 | Ya | True | False |
-| 3 | ARIMAX Harga+Iduladha | ARIMAX(2, 0, 0) + Harga + Iduladha | Lulus | Lulus | 4.586 | 11,304.698 | 0.961 | Ya | True | False |
-| 4 | SARIMA D=0 | SARIMA(1, 0, 0)x(1, 0, 0, 12) | Lulus | Gagal | 8.364 | 22,986.773 | 0.838 | Tidak | False | False |
-| 5 | ARIMA | ARIMA(0, 0, 0) | Lulus | Gagal | 17.544 | 58,572.084 | -0.052 | Tidak | False | False |
+| 1 | SARIMA D=1 | SARIMA(1, 0, 0)x(1, 1, 0, 12) | Lulus | Lulus | 7.510 | 16,963.421 | 0.948 | Tidak | True | True |
+| 2 | ARIMAX Harga+Iduladha | ARIMAX(1, 0, 0) + Harga + Iduladha | Lulus | Lulus | 4.382 | 15,502.578 | 0.957 | Ya | True | False |
+| 3 | ARIMAX Harga | ARIMAX(0, 0, 2) + Harga | Lulus | Lulus | 9.392 | 29,173.207 | 0.847 | Ya | False | False |
+| 4 | SARIMA D=0 | SARIMA(1, 0, 0)x(1, 0, 0, 12) | Lulus | Gagal | 8.268 | 30,144.810 | 0.837 | Tidak | False | False |
+| 5 | ARIMA | ARIMA(1, 0, 1) | Lulus | Gagal | 18.466 | 78,742.271 | -0.112 | Tidak | False | False |
 
 **Model final untuk peramalan: SARIMA D=1 — SARIMA(1, 0, 0)x(1, 1, 0, 12)** (lulus Ljung-Box dan Shapiro-Wilk, lebih baik dari seasonal naive, tidak membutuhkan nilai eksogen masa depan, dan memiliki MAPE rolling origin terendah di antara model yang memenuhi syarat tersebut).
 
-Catatan: MAPE rolling origin terendah dimiliki **ARIMAX Harga** (4.00% vs 6.59%). Model ini valid secara statistik dan dilaporkan sebagai pembanding, tetapi tidak dipilih sebagai model final karena membutuhkan harga masa depan. Model final dipakai di script 09 (peramalan Jan–Jun 2026) dan script 11–12 (implementasi MS Access).
+Catatan: MAPE rolling origin terendah dimiliki **ARIMAX Harga+Iduladha** (4.38% vs 7.51%). Model ini valid secara statistik dan dilaporkan sebagai pembanding, tetapi tidak dipilih sebagai model final karena membutuhkan harga masa depan. Model final dipakai di script 09 (peramalan Jan–Jun 2026) dan script 11–12 (implementasi MS Access).
 
 ## Catatan
 

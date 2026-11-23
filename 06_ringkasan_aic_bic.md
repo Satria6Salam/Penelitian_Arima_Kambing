@@ -17,75 +17,79 @@ Dibuat otomatis oleh `06_pemodelan_forecasting.py` (statsmodels 0.15.0, pandas 3
 
 | Nama_Model | nobs | nobs_effective | loglikelihood_burn | Jumlah_Parameter | Log_Likelihood | AIC | Delta_AIC_Kelompok | BIC | Delta_BIC_Kelompok | Rank_AIC_Kelompok | Rank_BIC_Kelompok | Optimizer_Terpilih | Konvergen |
 |---|---|---|---|---|---|---|---|---|---|---|---|---|---|
-| ARIMAX(2, 0, 0) + Harga + Iduladha | 27 | 27 | 0 | 6 | 28.3542 | -44.7084 | 0.0000 | -36.9334 | 0.2031 | 1.0000 | 2.0000 | nm_awal+0.3 | True |
-| ARIMAX(2, 0, 0) + Harga | 27 | 27 | 0 | 5 | 26.8078 | -43.6157 | 1.0927 | -37.1365 | 0.0000 | 2.0000 | 1.0000 | nm_awal+0.0 | True |
-| ARIMAX(1, 0, 2) + Harga | 27 | 27 | 0 | 6 | 27.7892 | -43.5784 | 1.1300 | -35.8034 | 1.3332 | 3.0000 | 6.0000 | nm_awal+0.3 | True |
-| ARIMAX(1, 0, 2) + Harga + Iduladha | 27 | 27 | 0 | 7 | 28.6480 | -43.2960 | 1.4124 | -34.2251 | 2.9114 | 4.0000 | 9.0000 | bfgs | True |
-| ARIMAX(2, 0, 1) + Harga + Iduladha | 27 | 27 | 0 | 7 | 28.5402 | -43.0803 | 1.6281 | -34.0094 | 3.1271 | 5.0000 | 10.0000 | nm_awal+0.3 | True |
-| ARIMAX(1, 0, 1) + Harga + Iduladha | 27 | 27 | 0 | 6 | 27.5388 | -43.0776 | 1.6308 | -35.3026 | 1.8339 | 6.0000 | 7.0000 | bfgs | True |
-| ARIMAX(1, 0, 1) + Harga | 27 | 27 | 0 | 5 | 26.2271 | -42.4543 | 2.2541 | -35.9751 | 1.1614 | 7.0000 | 4.0000 | bfgs | True |
-| ARIMAX(1, 0, 0) + Harga + Iduladha | 27 | 27 | 0 | 5 | 26.1898 | -42.3796 | 2.3288 | -35.9004 | 1.2361 | 8.0000 | 5.0000 | bfgs | True |
-| ARIMAX(2, 0, 1) + Harga | 27 | 27 | 0 | 6 | 27.1831 | -42.3661 | 2.3423 | -34.5911 | 2.5454 | 9.0000 | 8.0000 | powell | True |
-| ARIMAX(1, 0, 0) + Harga | 27 | 27 | 0 | 4 | 24.6046 | -41.2091 | 3.4993 | -36.0258 | 1.1107 | 10.0000 | 3.0000 | bfgs | True |
-| ARIMAX(0, 0, 2) + Harga + Iduladha | 27 | 27 | 0 | 6 | 24.0194 | -36.0388 | 8.6696 | -28.2638 | 8.8728 | 11.0000 | 11.0000 | nm_awal+0.0 | True |
-| ARIMAX(0, 0, 2) + Harga | 27 | 27 | 0 | 5 | 21.4379 | -32.8757 | 11.8327 | -26.3965 | 10.7400 | 12.0000 | 12.0000 | bfgs | True |
-| ARIMAX(0, 0, 1) + Harga | 27 | 27 | 0 | 4 | 16.9959 | -25.9918 | 18.7166 | -20.8085 | 16.3281 | 13.0000 | 13.0000 | bfgs | True |
-| ARIMAX(0, 0, 1) + Harga + Iduladha | 27 | 27 | 0 | 5 | 17.1738 | -24.3476 | 20.3608 | -17.8684 | 19.2681 | 14.0000 | 14.0000 | bfgs | True |
-| ARIMAX(0, 0, 0) + Harga | 27 | 27 | 0 | 3 | 10.7284 | -15.4568 | 29.2516 | -11.5693 | 25.5672 | 15.0000 | 15.0000 | bfgs | True |
-| ARIMAX(0, 0, 0) + Harga + Iduladha | 27 | 27 | 0 | 4 | 10.8312 | -13.6623 | 31.0461 | -8.4790 | 28.6575 | 16.0000 | 16.0000 | bfgs | True |
-| SARIMA(1, 0, 0)x(1, 0, 0, 12) | 27 | 27 | 0 | 4 | 1.7372 | 4.5257 | 49.2341 | 9.7090 | 46.8456 | 17.0000 | 17.0000 | bfgs | True |
-| SARIMA(0, 0, 1)x(0, 0, 1, 12) | 27 | 27 | 0 | 4 | -3.4295 | 14.8590 | 59.5674 | 20.0423 | 57.1788 | 18.0000 | 18.0000 | nm_awal+0.3 | True |
-| ARIMA(0, 0, 0) | 27 | 27 | 0 | 2 | -6.9815 | 17.9630 | 62.6714 | 20.5546 | 57.6912 | 19.0000 | 19.0000 | powell | True |
-| ARIMA(1, 0, 0) | 27 | 27 | 0 | 3 | -6.6138 | 19.2276 | 63.9360 | 23.1151 | 60.2516 | 20.0000 | 20.0000 | bfgs | True |
-| ARIMA(0, 0, 1) | 27 | 27 | 0 | 3 | -6.7144 | 19.4287 | 64.1371 | 23.3162 | 60.4527 | 21.0000 | 21.0000 | powell | True |
-| ARIMA(1, 0, 1) | 27 | 27 | 0 | 4 | -5.9398 | 19.8797 | 64.5881 | 25.0630 | 62.1995 | 22.0000 | 22.0000 | bfgs | True |
-| ARIMA(2, 0, 0) | 27 | 27 | 0 | 4 | -6.1244 | 20.2487 | 64.9571 | 25.4321 | 62.5686 | 23.0000 | 23.0000 | nm | True |
-| ARIMA(0, 0, 2) | 27 | 27 | 0 | 4 | -6.2817 | 20.5634 | 65.2718 | 25.7468 | 62.8833 | 24.0000 | 24.0000 | bfgs | True |
-| ARIMA(2, 0, 1) | 27 | 27 | 0 | 5 | -5.8603 | 21.7207 | 66.4291 | 28.1999 | 65.3364 | 25.0000 | 25.0000 | nm | True |
-| ARIMA(1, 0, 2) | 27 | 27 | 0 | 5 | -5.8605 | 21.7209 | 66.4293 | 28.2001 | 65.3366 | 26.0000 | 26.0000 | nm_awal+0.3 | True |
+| ARIMAX(1, 0, 0) + Harga + Iduladha | 27 | 27 | 0 | 5 | 34.1473 | -58.2946 | 0.0000 | -51.8154 | 0.0000 | 1.0000 | 1.0000 | bfgs | True |
+| ARIMAX(2, 0, 0) + Harga + Iduladha | 27 | 27 | 0 | 6 | 34.8704 | -57.7409 | 0.5537 | -49.9659 | 1.8495 | 2.0000 | 4.0000 | warm | True |
+| ARIMAX(0, 0, 2) + Harga + Iduladha | 27 | 27 | 0 | 6 | 34.8378 | -57.6755 | 0.6191 | -49.9005 | 1.9149 | 3.0000 | 5.0000 | bfgs | True |
+| ARIMAX(1, 0, 1) + Harga + Iduladha | 27 | 27 | 0 | 6 | 34.6447 | -57.2894 | 1.0051 | -49.5144 | 2.3010 | 4.0000 | 6.0000 | bfgs | True |
+| ARIMAX(0, 0, 1) + Harga + Iduladha | 27 | 27 | 0 | 5 | 33.2722 | -56.5444 | 1.7502 | -50.0652 | 1.7502 | 5.0000 | 3.0000 | bfgs | True |
+| ARIMAX(1, 0, 2) + Harga + Iduladha | 27 | 27 | 0 | 7 | 35.0553 | -56.1105 | 2.1841 | -47.0397 | 4.7757 | 6.0000 | 9.0000 | bfgs | True |
+| ARIMAX(0, 0, 0) + Harga + Iduladha | 27 | 27 | 0 | 4 | 31.9658 | -55.9315 | 2.3631 | -50.7482 | 1.0672 | 7.0000 | 2.0000 | bfgs | True |
+| ARIMAX(2, 0, 1) + Harga + Iduladha | 27 | 27 | 0 | 7 | 34.8758 | -55.7516 | 2.5429 | -46.6808 | 5.1346 | 8.0000 | 10.0000 | bfgs | True |
+| ARIMAX(0, 0, 2) + Harga | 27 | 27 | 0 | 5 | 32.2026 | -54.4052 | 3.8893 | -47.9261 | 3.8893 | 9.0000 | 8.0000 | warm | True |
+| ARIMAX(1, 0, 2) + Harga | 27 | 27 | 0 | 6 | 32.2026 | -52.4052 | 5.8893 | -44.6302 | 7.1852 | 10.0000 | 13.0000 | warm | True |
+| ARIMAX(0, 0, 0) + Harga | 27 | 27 | 0 | 3 | 29.1476 | -52.2951 | 5.9994 | -48.4076 | 3.4078 | 11.0000 | 7.0000 | bfgs | True |
+| ARIMAX(1, 0, 0) + Harga | 27 | 27 | 0 | 4 | 29.6622 | -51.3245 | 6.9701 | -46.1411 | 5.6743 | 12.0000 | 11.0000 | nm_awal+0.0 | True |
+| ARIMAX(0, 0, 1) + Harga | 27 | 27 | 0 | 4 | 29.4277 | -50.8554 | 7.4392 | -45.6720 | 6.1434 | 13.0000 | 12.0000 | bfgs | True |
+| ARIMAX(1, 0, 1) + Harga | 27 | 27 | 0 | 5 | 30.2955 | -50.5911 | 7.7035 | -44.1119 | 7.7035 | 14.0000 | 14.0000 | bfgs | True |
+| ARIMAX(2, 0, 0) + Harga | 27 | 27 | 0 | 5 | 29.6622 | -49.3245 | 8.9701 | -42.8453 | 8.9701 | 15.0000 | 15.0000 | warm | True |
+| ARIMAX(2, 0, 1) + Harga | 27 | 27 | 0 | 6 | 30.2955 | -48.5911 | 9.7035 | -40.8160 | 10.9994 | 16.0000 | 16.0000 | warm | True |
+| SARIMA(1, 0, 0)x(1, 0, 0, 12) | 27 | 27 | 0 | 4 | 10.4578 | -12.9157 | 45.3789 | -7.7323 | 44.0831 | 17.0000 | 17.0000 | bfgs | True |
+| SARIMA(0, 0, 1)x(0, 0, 1, 12) | 27 | 27 | 0 | 4 | 3.7006 | 0.5987 | 58.8933 | 5.7821 | 57.5975 | 18.0000 | 18.0000 | nm | True |
+| ARIMA(1, 0, 1) | 27 | 27 | 0 | 4 | -0.4555 | 8.9110 | 67.2056 | 14.0943 | 65.9097 | 19.0000 | 20.0000 | nm_awal+0.3 | True |
+| ARIMA(0, 0, 0) | 27 | 27 | 0 | 2 | -2.6454 | 9.2908 | 67.5854 | 11.8824 | 63.6979 | 20.0000 | 19.0000 | lbfgs | True |
+| ARIMA(0, 0, 1) | 27 | 27 | 0 | 3 | -2.3590 | 10.7180 | 69.0126 | 14.6055 | 66.4209 | 21.0000 | 21.0000 | powell | True |
+| ARIMA(1, 0, 2) | 27 | 27 | 0 | 5 | -0.3712 | 10.7423 | 69.0369 | 17.2215 | 69.0369 | 22.0000 | 24.0000 | nm | True |
+| ARIMA(0, 0, 2) | 27 | 27 | 0 | 4 | -1.4114 | 10.8228 | 69.1174 | 16.0061 | 67.8215 | 23.0000 | 23.0000 | nm_awal+0.3 | True |
+| ARIMA(1, 0, 0) | 27 | 27 | 0 | 3 | -2.4173 | 10.8346 | 69.1292 | 14.7221 | 66.5375 | 24.0000 | 22.0000 | bfgs | True |
+| ARIMA(2, 0, 1) | 27 | 27 | 0 | 5 | -0.5221 | 11.0442 | 69.3388 | 17.5234 | 69.3388 | 25.0000 | 25.0000 | nm | True |
+| ARIMA(2, 0, 0) | 27 | 27 | 0 | 4 | -2.3256 | 12.6511 | 70.9457 | 17.8345 | 69.6499 | 26.0000 | 26.0000 | nm | True |
 
 ## Kelompok d=0, D=1 (2 model)
 
 | Nama_Model | nobs | nobs_effective | loglikelihood_burn | Jumlah_Parameter | Log_Likelihood | AIC | Delta_AIC_Kelompok | BIC | Delta_BIC_Kelompok | Rank_AIC_Kelompok | Rank_BIC_Kelompok | Optimizer_Terpilih | Konvergen |
 |---|---|---|---|---|---|---|---|---|---|---|---|---|---|
-| SARIMA(1, 0, 0)x(1, 1, 0, 12) | 27 | 15 | 12 | 3 | 9.2738 | -12.5475 | 0.0000 | -10.4234 | 0.0000 | 1.0000 | 1.0000 | nm_awal+0.3 | True |
-| SARIMA(0, 0, 1)x(0, 1, 1, 12) | 27 | 15 | 12 | 3 | 0.6424 | 4.7151 | 17.2627 | 6.8393 | 17.2627 | 2.0000 | 2.0000 | nm_awal+0.3 | True |
+| SARIMA(1, 0, 0)x(1, 1, 0, 12) | 27 | 15 | 12 | 3 | 13.2499 | -20.4999 | 0.0000 | -18.3757 | 0.0000 | 1.0000 | 1.0000 | nm_awal+0.3 | True |
+| SARIMA(0, 0, 1)x(0, 1, 1, 12) | 27 | 15 | 12 | 3 | 12.7177 | -19.4354 | 1.0645 | -17.3112 | 1.0645 | 2.0000 | 2.0000 | bfgs | True |
 
 ## Pengecekan model bersarang
 
-142 pasangan model bersarang diperiksa; pelanggaran (LogL model kompleks < model sederhana − 0.001): **0**. Detail: `data/hasil_06/06_cek_model_bersarang.csv`.
+142 pasangan model bersarang diperiksa; pelanggaran (LogL model kompleks < model sederhana − 0.001): **1**. Detail: `data/hasil_06/06_cek_model_bersarang.csv`.
+
+| Model_Sederhana | Model_Kompleks | LogL_Sederhana | LogL_Kompleks | Selisih_LogL |
+|---|---|---|---|---|
+| ARIMA(1, 0, 1) | ARIMA(2, 0, 1) | -0.4555 | -0.5221 | -0.0666 |
 
 ## Model gagal, tidak konvergen, atau dengan peringatan
 
 | Nama_Model | Status | Peringatan_Observasi | Warning | Penyebab_Gagal |
 |---|---|---|---|---|
-| ARIMAX(2, 0, 0) + Harga + Iduladha | Berhasil | nobs_effective 27 < 10 x 6 parameter | - | - |
-| ARIMAX(2, 0, 0) + Harga | Berhasil | nobs_effective 27 < 10 x 5 parameter | - | - |
-| ARIMAX(1, 0, 2) + Harga | Berhasil | nobs_effective 27 < 10 x 6 parameter | - | - |
-| ARIMAX(1, 0, 2) + Harga + Iduladha | Berhasil | nobs_effective 27 < 10 x 7 parameter | - | - |
-| ARIMAX(2, 0, 1) + Harga + Iduladha | Berhasil | nobs_effective 27 < 10 x 7 parameter | - | - |
-| ARIMAX(1, 0, 1) + Harga + Iduladha | Berhasil | nobs_effective 27 < 10 x 6 parameter | - | - |
-| ARIMAX(1, 0, 1) + Harga | Berhasil | nobs_effective 27 < 10 x 5 parameter | - | - |
 | ARIMAX(1, 0, 0) + Harga + Iduladha | Berhasil | nobs_effective 27 < 10 x 5 parameter | - | - |
-| ARIMAX(2, 0, 1) + Harga | Berhasil | nobs_effective 27 < 10 x 6 parameter | - | - |
-| ARIMAX(1, 0, 0) + Harga | Berhasil | nobs_effective 27 < 10 x 4 parameter | - | - |
+| ARIMAX(2, 0, 0) + Harga + Iduladha | Berhasil | nobs_effective 27 < 10 x 6 parameter | - | - |
 | ARIMAX(0, 0, 2) + Harga + Iduladha | Berhasil | nobs_effective 27 < 10 x 6 parameter | - | - |
-| ARIMAX(0, 0, 2) + Harga | Berhasil | nobs_effective 27 < 10 x 5 parameter | - | - |
-| ARIMAX(0, 0, 1) + Harga | Berhasil | nobs_effective 27 < 10 x 4 parameter | - | - |
+| ARIMAX(1, 0, 1) + Harga + Iduladha | Berhasil | nobs_effective 27 < 10 x 6 parameter | - | - |
 | ARIMAX(0, 0, 1) + Harga + Iduladha | Berhasil | nobs_effective 27 < 10 x 5 parameter | - | - |
-| ARIMAX(0, 0, 0) + Harga | Berhasil | nobs_effective 27 < 10 x 3 parameter | - | - |
+| ARIMAX(1, 0, 2) + Harga + Iduladha | Berhasil | nobs_effective 27 < 10 x 7 parameter | - | - |
 | ARIMAX(0, 0, 0) + Harga + Iduladha | Berhasil | nobs_effective 27 < 10 x 4 parameter | - | - |
-| SARIMA(1, 0, 0)x(1, 0, 0, 12) | Berhasil | nobs_effective 27 < 10 x 4 parameter | - | - |
-| SARIMA(0, 0, 1)x(0, 0, 1, 12) | Berhasil | nobs_effective 27 < 10 x 4 parameter | - | - |
-| ARIMA(1, 0, 0) | Berhasil | nobs_effective 27 < 10 x 3 parameter | - | - |
-| ARIMA(0, 0, 1) | Berhasil | nobs_effective 27 < 10 x 3 parameter | - | - |
+| ARIMAX(2, 0, 1) + Harga + Iduladha | Berhasil | nobs_effective 27 < 10 x 7 parameter | - | - |
+| ARIMAX(0, 0, 2) + Harga | Berhasil | nobs_effective 27 < 10 x 5 parameter | - | - |
+| ARIMAX(1, 0, 2) + Harga | Berhasil | nobs_effective 27 < 10 x 6 parameter | - | - |
+| ARIMAX(0, 0, 0) + Harga | Berhasil | nobs_effective 27 < 10 x 3 parameter | - | - |
+| ARIMAX(1, 0, 0) + Harga | Berhasil | nobs_effective 27 < 10 x 4 parameter | - | - |
+| ARIMAX(0, 0, 1) + Harga | Berhasil | nobs_effective 27 < 10 x 4 parameter | - | - |
+| ARIMAX(1, 0, 1) + Harga | Berhasil | nobs_effective 27 < 10 x 5 parameter | - | - |
+| ARIMAX(2, 0, 0) + Harga | Berhasil | nobs_effective 27 < 10 x 5 parameter | - | - |
+| ARIMAX(2, 0, 1) + Harga | Berhasil | nobs_effective 27 < 10 x 6 parameter | - | - |
+| SARIMA(1, 0, 0)x(1, 0, 0, 12) | Berhasil | nobs_effective 27 < 10 x 4 parameter | EstimationWarning: Non-stationary starting seasonal autoregressive Using zeros as starting parameters. | - |
+| SARIMA(0, 0, 1)x(0, 0, 1, 12) | Berhasil | nobs_effective 27 < 10 x 4 parameter | EstimationWarning: Too few observations to estimate starting parameters for seasonal ARMA. All parameters except for variances will be set to zeros. | - |
 | ARIMA(1, 0, 1) | Berhasil | nobs_effective 27 < 10 x 4 parameter | - | - |
-| ARIMA(2, 0, 0) | Berhasil | nobs_effective 27 < 10 x 4 parameter | - | - |
-| ARIMA(0, 0, 2) | Berhasil | nobs_effective 27 < 10 x 4 parameter | - | - |
-| ARIMA(2, 0, 1) | Berhasil | nobs_effective 27 < 10 x 5 parameter | - | - |
+| ARIMA(0, 0, 1) | Berhasil | nobs_effective 27 < 10 x 3 parameter | - | - |
 | ARIMA(1, 0, 2) | Berhasil | nobs_effective 27 < 10 x 5 parameter | - | - |
+| ARIMA(0, 0, 2) | Berhasil | nobs_effective 27 < 10 x 4 parameter | - | - |
+| ARIMA(1, 0, 0) | Berhasil | nobs_effective 27 < 10 x 3 parameter | - | - |
+| ARIMA(2, 0, 1) | Berhasil | nobs_effective 27 < 10 x 5 parameter | - | - |
+| ARIMA(2, 0, 0) | Berhasil | nobs_effective 27 < 10 x 4 parameter | - | - |
 | SARIMA(1, 0, 0)x(1, 1, 0, 12) | Berhasil | nobs_effective 15 < 20; nobs_effective 15 < 10 x 3 parameter | - | - |
-| SARIMA(0, 0, 1)x(0, 1, 1, 12) | Berhasil | nobs_effective 15 < 20; nobs_effective 15 < 10 x 3 parameter | - | - |
+| SARIMA(0, 0, 1)x(0, 1, 1, 12) | Berhasil | nobs_effective 15 < 20; nobs_effective 15 < 10 x 3 parameter | EstimationWarning: Too few observations to estimate starting parameters for seasonal ARMA. All parameters except for variances will be set to zeros. | - |
 
 ## Tahap berikutnya
 

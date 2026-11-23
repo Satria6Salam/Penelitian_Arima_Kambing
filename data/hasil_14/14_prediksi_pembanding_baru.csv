@@ -13,57 +13,57 @@
 "# Catatan          : baris berawalan tanda # adalah keterangan, bukan data. Tabel data dimulai tepat di bawah garis ini."
 "# ===================================================================================================="
 Skema,Label,Spesifikasi,Periode,Aktual_Kg,Prediksi_Kg,APE_%
-Rolling origin,Holt-Winters,"ExponentialSmoothing(log y): tren aditif teredam + musiman aditif, m = 12",2025-04,85689.94,88318.91712523504,3.0680113969446503
-Rolling origin,Holt-Winters,"ExponentialSmoothing(log y): tren aditif teredam + musiman aditif, m = 12",2025-05,89364.3,79927.08227752426,10.56038901717548
-Rolling origin,Holt-Winters,"ExponentialSmoothing(log y): tren aditif teredam + musiman aditif, m = 12",2025-06,274672.06,260037.8480784973,5.327885159306954
-Rolling origin,Holt-Winters,"ExponentialSmoothing(log y): tren aditif teredam + musiman aditif, m = 12",2025-07,97809.84,105260.31145835467,7.6173025723737755
-Rolling origin,Holt-Winters,"ExponentialSmoothing(log y): tren aditif teredam + musiman aditif, m = 12",2025-08,102546.45,104269.7587742251,1.6805152925577709
-Rolling origin,Holt-Winters,"ExponentialSmoothing(log y): tren aditif teredam + musiman aditif, m = 12",2025-09,97732.41,100362.56358815978,2.6911784823067197
-Rolling origin,Holt-Winters,"ExponentialSmoothing(log y): tren aditif teredam + musiman aditif, m = 12",2025-10,94733.0,104106.0405016854,9.894166237409777
-Rolling origin,Holt-Winters,"ExponentialSmoothing(log y): tren aditif teredam + musiman aditif, m = 12",2025-11,92390.06,97277.34666072532,5.2898403364229045
-Rolling origin,Holt-Winters,"ExponentialSmoothing(log y): tren aditif teredam + musiman aditif, m = 12",2025-12,88816.82,101134.69323369372,13.868851906309763
-Multilangkah,Holt-Winters,"ExponentialSmoothing(log y): tren aditif teredam + musiman aditif, m = 12",2025-04,85689.94,88318.91712523504,3.0680113969446503
-Multilangkah,Holt-Winters,"ExponentialSmoothing(log y): tren aditif teredam + musiman aditif, m = 12",2025-05,89364.3,81644.37782876288,8.63870938533298
-Multilangkah,Holt-Winters,"ExponentialSmoothing(log y): tren aditif teredam + musiman aditif, m = 12",2025-06,274672.06,236003.39148544014,14.078122294113154
-Multilangkah,Holt-Winters,"ExponentialSmoothing(log y): tren aditif teredam + musiman aditif, m = 12",2025-07,97809.84,88898.1582555863,9.111232309973822
-Multilangkah,Holt-Winters,"ExponentialSmoothing(log y): tren aditif teredam + musiman aditif, m = 12",2025-08,102546.45,89035.15605157244,13.175779316034397
-Multilangkah,Holt-Winters,"ExponentialSmoothing(log y): tren aditif teredam + musiman aditif, m = 12",2025-09,97732.41,84805.60974005325,13.226728226538931
-Multilangkah,Holt-Winters,"ExponentialSmoothing(log y): tren aditif teredam + musiman aditif, m = 12",2025-10,94733.0,88094.44501589682,7.007647793380528
-Multilangkah,Holt-Winters,"ExponentialSmoothing(log y): tren aditif teredam + musiman aditif, m = 12",2025-11,92390.06,88786.56832546806,3.900302342624234
-Multilangkah,Holt-Winters,"ExponentialSmoothing(log y): tren aditif teredam + musiman aditif, m = 12",2025-12,88816.82,95704.29961082936,7.7547018806002646
-Rolling origin,Theta,"ThetaModel(log y): deseasonalize aditif, m = 12",2025-04,85689.94,83347.10089973091,2.7340888560186776
-Rolling origin,Theta,"ThetaModel(log y): deseasonalize aditif, m = 12",2025-05,89364.3,83076.54808072247,7.036089265263127
-Rolling origin,Theta,"ThetaModel(log y): deseasonalize aditif, m = 12",2025-06,274672.06,83594.14800672415,69.5658349790932
-Rolling origin,Theta,"ThetaModel(log y): deseasonalize aditif, m = 12",2025-07,97809.84,109831.61764408673,12.29096954262141
-Rolling origin,Theta,"ThetaModel(log y): deseasonalize aditif, m = 12",2025-08,102546.45,101784.31287894947,0.7432116090323275
-Rolling origin,Theta,"ThetaModel(log y): deseasonalize aditif, m = 12",2025-09,97732.41,97374.81182779503,0.36589517459456533
-Rolling origin,Theta,"ThetaModel(log y): deseasonalize aditif, m = 12",2025-10,94733.0,101617.95447986333,7.26774669847184
-Rolling origin,Theta,"ThetaModel(log y): deseasonalize aditif, m = 12",2025-11,92390.06,97882.54305660201,5.944885257788565
-Rolling origin,Theta,"ThetaModel(log y): deseasonalize aditif, m = 12",2025-12,88816.82,101799.22744603449,14.617059523223736
-Multilangkah,Theta,"ThetaModel(log y): deseasonalize aditif, m = 12",2025-04,85689.94,83347.10089973091,2.7340888560186776
-Multilangkah,Theta,"ThetaModel(log y): deseasonalize aditif, m = 12",2025-05,89364.3,82509.0878942306,7.671085775605473
-Multilangkah,Theta,"ThetaModel(log y): deseasonalize aditif, m = 12",2025-06,274672.06,81679.50068626621,70.26290162666481
-Multilangkah,Theta,"ThetaModel(log y): deseasonalize aditif, m = 12",2025-07,97809.84,80858.25455869894,17.331165699996088
-Multilangkah,Theta,"ThetaModel(log y): deseasonalize aditif, m = 12",2025-08,102546.45,80045.26564617801,21.942431311685567
-Multilangkah,Theta,"ThetaModel(log y): deseasonalize aditif, m = 12",2025-09,97732.41,79240.45092657639,18.921010004177337
-Multilangkah,Theta,"ThetaModel(log y): deseasonalize aditif, m = 12",2025-10,94733.0,78443.72821251264,17.19492868112206
-Multilangkah,Theta,"ThetaModel(log y): deseasonalize aditif, m = 12",2025-11,92390.06,77655.01614295786,15.948732858320625
-Multilangkah,Theta,"ThetaModel(log y): deseasonalize aditif, m = 12",2025-12,88816.82,76874.23417492727,13.446310985996494
-Rolling origin,SARIMA airline,"SARIMA(0, 1, 1)x(0, 1, 1, 12) pada log y",2025-04,85689.94,87701.33070392236,2.347289196284133
-Rolling origin,SARIMA airline,"SARIMA(0, 1, 1)x(0, 1, 1, 12) pada log y",2025-05,89364.3,79214.30449030486,11.357998115237455
-Rolling origin,SARIMA airline,"SARIMA(0, 1, 1)x(0, 1, 1, 12) pada log y",2025-06,274672.06,247424.4447847138,9.92005346859313
-Rolling origin,SARIMA airline,"SARIMA(0, 1, 1)x(0, 1, 1, 12) pada log y",2025-07,97809.84,100052.53731515813,2.292915840735588
-Rolling origin,SARIMA airline,"SARIMA(0, 1, 1)x(0, 1, 1, 12) pada log y",2025-08,102546.45,97993.80755399381,4.439590493874905
-Rolling origin,SARIMA airline,"SARIMA(0, 1, 1)x(0, 1, 1, 12) pada log y",2025-09,97732.41,95919.17484252699,1.8553058882647147
-Rolling origin,SARIMA airline,"SARIMA(0, 1, 1)x(0, 1, 1, 12) pada log y",2025-10,94733.0,100477.68140548925,6.064076304444328
-Rolling origin,SARIMA airline,"SARIMA(0, 1, 1)x(0, 1, 1, 12) pada log y",2025-11,92390.06,96601.78101480668,4.558630024492549
-Rolling origin,SARIMA airline,"SARIMA(0, 1, 1)x(0, 1, 1, 12) pada log y",2025-12,88816.82,100357.33399512054,12.99361314120516
-Multilangkah,SARIMA airline,"SARIMA(0, 1, 1)x(0, 1, 1, 12) pada log y",2025-04,85689.94,87701.33070392236,2.347289196284133
-Multilangkah,SARIMA airline,"SARIMA(0, 1, 1)x(0, 1, 1, 12) pada log y",2025-05,89364.3,80531.22914704062,9.88433955501177
-Multilangkah,SARIMA airline,"SARIMA(0, 1, 1)x(0, 1, 1, 12) pada log y",2025-06,274672.06,231307.57335941942,15.787731245974046
-Multilangkah,SARIMA airline,"SARIMA(0, 1, 1)x(0, 1, 1, 12) pada log y",2025-07,97809.84,86603.7096111544,11.457058296839666
-Multilangkah,SARIMA airline,"SARIMA(0, 1, 1)x(0, 1, 1, 12) pada log y",2025-08,102546.45,86240.56721015499,15.9009724762242
-Multilangkah,SARIMA airline,"SARIMA(0, 1, 1)x(0, 1, 1, 12) pada log y",2025-09,97732.41,81697.91760201633,16.406525120974376
-Multilangkah,SARIMA airline,"SARIMA(0, 1, 1)x(0, 1, 1, 12) pada log y",2025-10,94733.0,84429.26750787196,10.876603181708631
-Multilangkah,SARIMA airline,"SARIMA(0, 1, 1)x(0, 1, 1, 12) pada log y",2025-11,92390.06,84677.48358899629,8.347842193200993
-Multilangkah,SARIMA airline,"SARIMA(0, 1, 1)x(0, 1, 1, 12) pada log y",2025-12,88816.82,90853.2920217392,2.2928900423806975
+Rolling origin,Holt-Winters,"ExponentialSmoothing(log y): tren aditif teredam + musiman aditif, m = 12",2025-04,112878.4,120076.75003535749,6.377083689490188
+Rolling origin,Holt-Winters,"ExponentialSmoothing(log y): tren aditif teredam + musiman aditif, m = 12",2025-05,116787.1,109978.25922387608,5.8301308758620785
+Rolling origin,Holt-Winters,"ExponentialSmoothing(log y): tren aditif teredam + musiman aditif, m = 12",2025-06,356163.29,322810.4741293848,9.36447320851489
+Rolling origin,Holt-Winters,"ExponentialSmoothing(log y): tren aditif teredam + musiman aditif, m = 12",2025-07,125855.97,125299.22204870488,0.4423691234473223
+Rolling origin,Holt-Winters,"ExponentialSmoothing(log y): tren aditif teredam + musiman aditif, m = 12",2025-08,130954.34,126331.10141723715,3.5304202844768993
+Rolling origin,Holt-Winters,"ExponentialSmoothing(log y): tren aditif teredam + musiman aditif, m = 12",2025-09,123878.5,121433.01310322498,1.9741011529644148
+Rolling origin,Holt-Winters,"ExponentialSmoothing(log y): tren aditif teredam + musiman aditif, m = 12",2025-10,119197.07,127172.8307825728,6.691238956270309
+Rolling origin,Holt-Winters,"ExponentialSmoothing(log y): tren aditif teredam + musiman aditif, m = 12",2025-11,115410.21,128190.79847486329,11.074053564986391
+Rolling origin,Holt-Winters,"ExponentialSmoothing(log y): tren aditif teredam + musiman aditif, m = 12",2025-12,110157.85,136268.35466882642,23.702808895440867
+Multilangkah,Holt-Winters,"ExponentialSmoothing(log y): tren aditif teredam + musiman aditif, m = 12",2025-04,112878.4,120076.75003535749,6.377083689490188
+Multilangkah,Holt-Winters,"ExponentialSmoothing(log y): tren aditif teredam + musiman aditif, m = 12",2025-05,116787.1,111385.38136302774,4.625269945886371
+Multilangkah,Holt-Winters,"ExponentialSmoothing(log y): tren aditif teredam + musiman aditif, m = 12",2025-06,356163.29,323278.5248313696,9.233058569464136
+Multilangkah,Holt-Winters,"ExponentialSmoothing(log y): tren aditif teredam + musiman aditif, m = 12",2025-07,125855.97,122219.53439880139,2.8893628178294675
+Multilangkah,Holt-Winters,"ExponentialSmoothing(log y): tren aditif teredam + musiman aditif, m = 12",2025-08,130954.34,122820.33956297487,6.211325594115572
+Multilangkah,Holt-Winters,"ExponentialSmoothing(log y): tren aditif teredam + musiman aditif, m = 12",2025-09,123878.5,117452.26514669033,5.187530405445389
+Multilangkah,Holt-Winters,"ExponentialSmoothing(log y): tren aditif teredam + musiman aditif, m = 12",2025-10,119197.07,122534.6835140622,2.800080164774345
+Multilangkah,Holt-Winters,"ExponentialSmoothing(log y): tren aditif teredam + musiman aditif, m = 12",2025-11,115410.21,124090.11908570913,7.520919583899138
+Multilangkah,Holt-Winters,"ExponentialSmoothing(log y): tren aditif teredam + musiman aditif, m = 12",2025-12,110157.85,134458.6667346756,22.059995483459037
+Rolling origin,Theta,"ThetaModel(log y): deseasonalize aditif, m = 12",2025-04,112878.4,112243.9368512914,0.5620766671999256
+Rolling origin,Theta,"ThetaModel(log y): deseasonalize aditif, m = 12",2025-05,116787.1,108046.83845878829,7.483927198476301
+Rolling origin,Theta,"ThetaModel(log y): deseasonalize aditif, m = 12",2025-06,356163.29,289149.45263338764,18.815481339082517
+Rolling origin,Theta,"ThetaModel(log y): deseasonalize aditif, m = 12",2025-07,125855.97,137043.91358257155,8.889481827974905
+Rolling origin,Theta,"ThetaModel(log y): deseasonalize aditif, m = 12",2025-08,130954.34,128669.48051152886,1.7447756893518265
+Rolling origin,Theta,"ThetaModel(log y): deseasonalize aditif, m = 12",2025-09,123878.5,124530.27084397359,0.5261371779393414
+Rolling origin,Theta,"ThetaModel(log y): deseasonalize aditif, m = 12",2025-10,119197.07,130105.71264466911,9.151770798283131
+Rolling origin,Theta,"ThetaModel(log y): deseasonalize aditif, m = 12",2025-11,115410.21,128723.40223151035,11.53554112024434
+Rolling origin,Theta,"ThetaModel(log y): deseasonalize aditif, m = 12",2025-12,110157.85,135382.23886924022,22.89840339952188
+Multilangkah,Theta,"ThetaModel(log y): deseasonalize aditif, m = 12",2025-04,112878.4,112243.9368512914,0.5620766671999256
+Multilangkah,Theta,"ThetaModel(log y): deseasonalize aditif, m = 12",2025-05,116787.1,107926.43156047269,7.587026683193023
+Multilangkah,Theta,"ThetaModel(log y): deseasonalize aditif, m = 12",2025-06,356163.29,281367.385483592,21.000453055228682
+Multilangkah,Theta,"ThetaModel(log y): deseasonalize aditif, m = 12",2025-07,125855.97,118391.44281762347,5.93100762909899
+Multilangkah,Theta,"ThetaModel(log y): deseasonalize aditif, m = 12",2025-08,130954.34,119102.57003753285,9.05030712419852
+Multilangkah,Theta,"ThetaModel(log y): deseasonalize aditif, m = 12",2025-09,123878.5,113877.25930512462,8.073427346049055
+Multilangkah,Theta,"ThetaModel(log y): deseasonalize aditif, m = 12",2025-10,119197.07,114687.89630723294,3.7829568233238215
+Multilangkah,Theta,"ThetaModel(log y): deseasonalize aditif, m = 12",2025-11,115410.21,117323.3637621893,1.6576988831311312
+Multilangkah,Theta,"ThetaModel(log y): deseasonalize aditif, m = 12",2025-12,110157.85,128256.16702814416,16.429439234829072
+Rolling origin,SARIMA airline,"SARIMA(0, 1, 1)x(0, 1, 1, 12) pada log y",2025-04,112878.4,121870.36959208772,7.966067548873592
+Rolling origin,SARIMA airline,"SARIMA(0, 1, 1)x(0, 1, 1, 12) pada log y",2025-05,116787.1,112370.13086193743,3.7820693707289363
+Rolling origin,SARIMA airline,"SARIMA(0, 1, 1)x(0, 1, 1, 12) pada log y",2025-06,356163.29,328622.8855768523,7.732521906776994
+Rolling origin,SARIMA airline,"SARIMA(0, 1, 1)x(0, 1, 1, 12) pada log y",2025-07,125855.97,125650.80712615562,0.16301401820222217
+Rolling origin,SARIMA airline,"SARIMA(0, 1, 1)x(0, 1, 1, 12) pada log y",2025-08,130954.34,126678.33854706047,3.2652613521167204
+Rolling origin,SARIMA airline,"SARIMA(0, 1, 1)x(0, 1, 1, 12) pada log y",2025-09,123878.5,121819.63111933498,1.6620066279984154
+Rolling origin,SARIMA airline,"SARIMA(0, 1, 1)x(0, 1, 1, 12) pada log y",2025-10,119197.07,127611.80119142655,7.059511774430819
+Rolling origin,SARIMA airline,"SARIMA(0, 1, 1)x(0, 1, 1, 12) pada log y",2025-11,115410.21,128943.67042442807,11.726397884925486
+Rolling origin,SARIMA airline,"SARIMA(0, 1, 1)x(0, 1, 1, 12) pada log y",2025-12,110157.85,139037.6978244387,26.21678602517996
+Multilangkah,SARIMA airline,"SARIMA(0, 1, 1)x(0, 1, 1, 12) pada log y",2025-04,112878.4,121870.36959208772,7.966067548873592
+Multilangkah,SARIMA airline,"SARIMA(0, 1, 1)x(0, 1, 1, 12) pada log y",2025-05,116787.1,113451.90624315832,2.8557895151448154
+Multilangkah,SARIMA airline,"SARIMA(0, 1, 1)x(0, 1, 1, 12) pada log y",2025-06,356163.29,330368.22725099983,7.242482162886622
+Multilangkah,SARIMA airline,"SARIMA(0, 1, 1)x(0, 1, 1, 12) pada log y",2025-07,125855.97,125305.6389713409,0.4372704994916812
+Multilangkah,SARIMA airline,"SARIMA(0, 1, 1)x(0, 1, 1, 12) pada log y",2025-08,130954.34,126311.61237914993,3.5453026000131573
+Multilangkah,SARIMA airline,"SARIMA(0, 1, 1)x(0, 1, 1, 12) pada log y",2025-09,123878.5,121131.40050770443,2.2175756828631057
+Multilangkah,SARIMA airline,"SARIMA(0, 1, 1)x(0, 1, 1, 12) pada log y",2025-10,119197.07,126727.36386536225,6.317515913236995
+Multilangkah,SARIMA airline,"SARIMA(0, 1, 1)x(0, 1, 1, 12) pada log y",2025-11,115410.21,128675.44549600387,11.49398783348879
+Multilangkah,SARIMA airline,"SARIMA(0, 1, 1)x(0, 1, 1, 12) pada log y",2025-12,110157.85,139777.93056135648,26.888760593417967

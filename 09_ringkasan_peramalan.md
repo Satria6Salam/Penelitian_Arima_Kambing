@@ -10,16 +10,16 @@ Dibuat otomatis oleh `09_peramalan_visualisasi.py` (statsmodels 0.15.0).
 
 ## A. Validasi ekstrapolasi Apr–Sep 2025
 
-Parameter dikunci dari 27 bulan training (Jan 2023–Mar 2025), lalu diekstrapolasi 6 bulan dan dibandingkan dengan aktual testing. MAPE **7,61%**, aktual di dalam interval 95% pada **5 dari 6** bulan. Fan chart: `data/hasil_09/validasi_apr_sep_2025/grafik/09_fan_chart_validasi.png`.
+Parameter dikunci dari 27 bulan training (Jan 2023–Mar 2025), lalu diekstrapolasi 6 bulan dan dibandingkan dengan aktual testing. MAPE **10,46%**, aktual di dalam interval 95% pada **6 dari 6** bulan. Fan chart: `data/hasil_09/validasi_apr_sep_2025/grafik/09_fan_chart_validasi.png`.
 
 | h | Periode | Yhat_Kg | Batas_Bawah_95_Kg | Batas_Atas_95_Kg | Aktual_Kg | APE_% | Aktual_dalam_Interval |
 |---|---|---|---|---|---|---|---|
-| 1 | 2025-04 | 94.591 | 85.941 | 104.112 | 85.690 | 10,39 | Tidak |
-| 2 | 2025-05 | 84.589 | 73.940 | 96.772 | 89.364 | 5,34 | Ya |
-| 3 | 2025-06 | 269.022 | 228.447 | 316.802 | 274.672 | 2,06 | Ya |
-| 4 | 2025-07 | 90.987 | 75.447 | 109.728 | 97.810 | 6,98 | Ya |
-| 5 | 2025-08 | 95.426 | 77.525 | 117.461 | 102.546 | 6,94 | Ya |
-| 6 | 2025-09 | 84.106 | 67.106 | 105.414 | 97.732 | 13,94 | Ya |
+| 1 | 2025-04 | 116.699 | 100.411 | 135.630 | 112.878 | 3,39 | Ya |
+| 2 | 2025-05 | 104.256 | 88.486 | 122.836 | 116.787 | 10,73 | Ya |
+| 3 | 2025-06 | 312.294 | 264.403 | 368.861 | 356.163 | 12,32 | Ya |
+| 4 | 2025-07 | 112.492 | 95.196 | 132.929 | 125.856 | 10,62 | Ya |
+| 5 | 2025-08 | 115.319 | 97.580 | 136.283 | 130.954 | 11,94 | Ya |
+| 6 | 2025-09 | 106.815 | 90.382 | 126.234 | 123.878 | 13,77 | Ya |
 
 ## B. Model final untuk peramalan (fit 36 bulan, Jan 2023–Dec 2025)
 
@@ -27,20 +27,20 @@ Parameter dikunci dari 27 bulan training (Jan 2023–Mar 2025), lalu diekstrapol
 
 | Parameter | Koefisien | Std_Error | P_value | CI95_Bawah | CI95_Atas |
 |---|---|---|---|---|---|
-| ar.L1 | 0.9459 | 0.0560 | 0.0000 | 0.8361 | 1.0557 |
-| ar.S.L12 | -0.7953 | 0.1571 | 0.0000 | -1.1033 | -0.4873 |
-| sigma2 | 0.0068 | 0.0038 | 0.0741 | -0.0007 | 0.0143 |
+| ar.L1 | 0.6049 | 0.2286 | 0.0081 | 0.1569 | 1.0528 |
+| ar.S.L12 | -0.6906 | 0.1956 | 0.0004 | -1.0739 | -0.3073 |
+| sigma2 | 0.0058 | 0.0028 | 0.0397 | 0.0003 | 0.0114 |
 
-LogL 18.9741; AIC -31.9482; BIC -28.4141; optimizer nm; konvergen True.
+LogL 23.5529; AIC -41.1057; BIC -37.5716; optimizer bfgs; konvergen True.
 
 ### Validitas residual
 
 | Jumlah_Residual | Uji | Statistik | df | P_value | Keputusan |
 |---|---|---|---|---|---|
-| 24 | Ljung-Box lag 6 | 9.0589 | 4 | 0.0596 | Lulus (white noise) |
-| 24 | Ljung-Box lag 9 | 10.8464 | 7 | 0.1455 | Lulus (white noise) |
-| 24 | Ljung-Box lag 12 | 11.5533 | 10 | 0.3161 | Lulus (white noise) |
-| 24 | Shapiro-Wilk | 0.9712 | - | 0.6959 | Lulus (normal) |
+| 24 | Ljung-Box lag 6 | 7.3915 | 4 | 0.1166 | Lulus (white noise) |
+| 24 | Ljung-Box lag 9 | 9.6395 | 7 | 0.2099 | Lulus (white noise) |
+| 24 | Ljung-Box lag 12 | 11.9561 | 10 | 0.2880 | Lulus (white noise) |
+| 24 | Shapiro-Wilk | 0.9759 | - | 0.8092 | Lulus (normal) |
 
 Model tetap valid (lulus seluruh uji) setelah di-fit ulang pada 36 bulan.
 
@@ -48,46 +48,46 @@ Model tetap valid (lulus seluruh uji) setelah di-fit ulang pada 36 bulan.
 
 | h | t | Periode | Yhat_Kg | SE_log | Batas_Bawah_95_Kg | Batas_Atas_95_Kg | Lebar_Interval_Kg |
 |---|---|---|---|---|---|---|---|
-| 1 | 37 | 2026-01 | 71.327 | 0.0827 | 60.653 | 83.880 | 23.226 |
-| 2 | 38 | 2026-02 | 71.335 | 0.1138 | 57.069 | 89.168 | 32.099 |
-| 3 | 39 | 2026-03 | 69.364 | 0.1358 | 53.157 | 90.514 | 37.357 |
-| 4 | 40 | 2026-04 | 67.206 | 0.1528 | 49.817 | 90.665 | 40.848 |
-| 5 | 41 | 2026-05 | 65.768 | 0.1665 | 47.456 | 91.146 | 43.689 |
-| 6 | 42 | 2026-06 | 177.280 | 0.1779 | 125.095 | 251.233 | 126.137 |
+| 1 | 37 | 2026-01 | 108.757 | 0.0764 | 93.632 | 126.325 | 32.693 |
+| 2 | 38 | 2026-02 | 111.595 | 0.0893 | 93.679 | 132.937 | 39.259 |
+| 3 | 39 | 2026-03 | 112.341 | 0.0936 | 93.519 | 134.952 | 41.433 |
+| 4 | 40 | 2026-04 | 109.806 | 0.0951 | 91.137 | 132.299 | 41.162 |
+| 5 | 41 | 2026-05 | 109.254 | 0.0956 | 90.582 | 131.776 | 41.194 |
+| 6 | 42 | 2026-06 | 301.478 | 0.0958 | 249.855 | 363.766 | 113.911 |
 
-Efek corong: SE skala log naik dari 0.0827 (h=1) menjadi 0.1779 (h=6); lebar interval relatif terhadap Ŷ naik dari 32,6% menjadi 71,2%.
+Efek corong: SE skala log naik dari 0.0764 (h=1) menjadi 0.0958 (h=6); lebar interval relatif terhadap Ŷ naik dari 30,1% menjadi 37,8%.
 
 ### Contoh perhitungan manual
 
 #### Kasus A: bulan ke-37 (2026-01), meramal 1 langkah ke depan
 
-- Ŷ (skala log) = 11.1750 → Ŷ = exp(11.1750) = **71.327 kg**
-- SE (skala log) = 0.0827
-- Margin of Error = Z × SE = 1.96 × 0.0827 = 0.1621
-- Batas bawah = exp(11.1750 − 0.1621) = exp(11.0129) = **60.653 kg**
-- Batas atas = exp(11.1750 + 0.1621) = exp(11.3371) = **83.880 kg**
-- Interval tidak simetris di kg: Ŷ − bawah = 10.674 kg, atas − Ŷ = 12.552 kg (lebar 23.226 kg).
-- Interpretasi bisnis: dengan keyakinan 95%, permintaan 2026-01 berada di kisaran 60.653–83.880 kg.
+- Ŷ (skala log) = 11.5969 → Ŷ = exp(11.5969) = **108.757 kg**
+- SE (skala log) = 0.0764
+- Margin of Error = Z × SE = 1.96 × 0.0764 = 0.1497
+- Batas bawah = exp(11.5969 − 0.1497) = exp(11.4471) = **93.632 kg**
+- Batas atas = exp(11.5969 + 0.1497) = exp(11.7466) = **126.325 kg**
+- Interval tidak simetris di kg: Ŷ − bawah = 15.125 kg, atas − Ŷ = 17.568 kg (lebar 32.693 kg).
+- Interpretasi bisnis: dengan keyakinan 95%, permintaan 2026-01 berada di kisaran 93.632–126.325 kg.
 
 #### Kasus B: bulan ke-38 (2026-02), meramal 2 langkah ke depan
 
-- Ŷ (skala log) = 11.1751 → Ŷ = exp(11.1751) = **71.335 kg**
-- SE (skala log) = 0.1138
-- Margin of Error = Z × SE = 1.96 × 0.1138 = 0.2231
-- Batas bawah = exp(11.1751 − 0.2231) = exp(10.9520) = **57.069 kg**
-- Batas atas = exp(11.1751 + 0.2231) = exp(11.3983) = **89.168 kg**
-- Interval tidak simetris di kg: Ŷ − bawah = 14.266 kg, atas − Ŷ = 17.833 kg (lebar 32.099 kg).
-- Interpretasi bisnis: dengan keyakinan 95%, permintaan 2026-02 berada di kisaran 57.069–89.168 kg.
+- Ŷ (skala log) = 11.6226 → Ŷ = exp(11.6226) = **111.595 kg**
+- SE (skala log) = 0.0893
+- Margin of Error = Z × SE = 1.96 × 0.0893 = 0.1750
+- Batas bawah = exp(11.6226 − 0.1750) = exp(11.4476) = **93.679 kg**
+- Batas atas = exp(11.6226 + 0.1750) = exp(11.7976) = **132.937 kg**
+- Interval tidak simetris di kg: Ŷ − bawah = 17.916 kg, atas − Ŷ = 21.343 kg (lebar 39.259 kg).
+- Interpretasi bisnis: dengan keyakinan 95%, permintaan 2026-02 berada di kisaran 93.679–132.937 kg.
 
 #### Bulan puncak: bulan ke-42 (2026-06), h = 6
 
-- Ŷ (skala log) = 12.0855 → Ŷ = exp(12.0855) = **177.280 kg**
-- SE (skala log) = 0.1779
-- Margin of Error = Z × SE = 1.96 × 0.1779 = 0.3487
-- Batas bawah = exp(12.0855 − 0.3487) = exp(11.7368) = **125.095 kg**
-- Batas atas = exp(12.0855 + 0.3487) = exp(12.4341) = **251.233 kg**
-- Interval tidak simetris di kg: Ŷ − bawah = 52.184 kg, atas − Ŷ = 73.953 kg (lebar 126.137 kg).
-- Interpretasi bisnis: dengan keyakinan 95%, permintaan 2026-06 berada di kisaran 125.095–251.233 kg.
+- Ŷ (skala log) = 12.6165 → Ŷ = exp(12.6165) = **301.478 kg**
+- SE (skala log) = 0.0958
+- Margin of Error = Z × SE = 1.96 × 0.0958 = 0.1878
+- Batas bawah = exp(12.6165 − 0.1878) = exp(12.4286) = **249.855 kg**
+- Batas atas = exp(12.6165 + 0.1878) = exp(12.8043) = **363.766 kg**
+- Interval tidak simetris di kg: Ŷ − bawah = 51.623 kg, atas − Ŷ = 62.289 kg (lebar 113.911 kg).
+- Interpretasi bisnis: dengan keyakinan 95%, permintaan 2026-06 berada di kisaran 249.855–363.766 kg.
 
 ### Fan chart
 
@@ -101,19 +101,19 @@ Iduladha 2026 diperkirakan jatuh sekitar **27 May 2026** (akhir Mei), bukan Juni
 
 | Periode | Yhat_Kg | Aktual_Tahun_Lalu_Kg | Perubahan_% |
 |---|---|---|---|
-| 2026-01 | 71.327 | 85.388 | -16,5 |
-| 2026-02 | 71.335 | 82.547 | -13,6 |
-| 2026-03 | 69.364 | 90.640 | -23,5 |
-| 2026-04 | 67.206 | 85.690 | -21,6 |
-| 2026-05 | 65.768 | 89.364 | -26,4 |
-| 2026-06 | 177.280 | 274.672 | -35,5 |
+| 2026-01 | 108.757 | 115.284 | -5,7 |
+| 2026-02 | 111.595 | 110.522 | 1,0 |
+| 2026-03 | 112.341 | 120.367 | -6,7 |
+| 2026-04 | 109.806 | 112.878 | -2,7 |
+| 2026-05 | 109.254 | 116.787 | -6,5 |
+| 2026-06 | 301.478 | 356.163 | -15,4 |
 
-Ramalan 2026 rata-rata **-22,8%** dibanding bulan yang sama tahun 2025. Penurunan ini bukan tren yang terlihat di 2025 (Jul–Des 2025 justru lebih tinggi dari 2024), melainkan efek koefisien AR musiman (-0.80) yang ikut mengulang penurunan level tajam dari 2023 ke 2024 (misalnya Desember 2023 → Desember 2024 turun sekitar 31%). Dengan data hanya 3 tahun, pola ini sebaiknya dibaca sebagai skenario konservatif, bukan prediksi penurunan pasar yang pasti; ramalan perlu diperbarui setelah data 2026 tersedia.
+Ramalan 2026 rata-rata **-6,0%** dibanding bulan yang sama tahun 2025. Penurunan ini bukan tren yang terlihat di 2025 (Jul–Des 2025 justru lebih tinggi dari 2024), melainkan efek koefisien AR musiman (-0.69) yang ikut mengulang penurunan level tajam dari 2023 ke 2024 (misalnya Desember 2023 → Desember 2024 turun sekitar 31%). Dengan data hanya 3 tahun, pola ini sebaiknya dibaca sebagai skenario konservatif, bukan prediksi penurunan pasar yang pasti; ramalan perlu diperbarui setelah data 2026 tersedia.
 
 ### Implikasi manajerial
 
-- **Pemesanan stok bulan normal (garis tengah):** Ŷ berkisar 65.768–71.335 kg per bulan (rata-rata 69.000 kg).
-- **Batas bawah bulan normal:** 47.456–60.653 kg, volume minimum yang hampir pasti terserap.
-- **Persiapan puncak Iduladha:** Ŷ puncak 177.280 kg (±2,57 kali bulan normal) dengan batas atas 95% **251.233 kg** sebagai acuan kapasitas cold storage, pasokan ternak, dan modal cadangan (stok pengaman 73.953 kg di atas Ŷ).
+- **Pemesanan stok bulan normal (garis tengah):** Ŷ berkisar 108.757–112.341 kg per bulan (rata-rata 110.351 kg).
+- **Batas bawah bulan normal:** 90.582–93.679 kg, volume minimum yang hampir pasti terserap.
+- **Persiapan puncak Iduladha:** Ŷ puncak 301.478 kg (±2,73 kali bulan normal) dengan batas atas 95% **363.766 kg** sebagai acuan kapasitas cold storage, pasokan ternak, dan modal cadangan (stok pengaman 62.289 kg di atas Ŷ).
 - Karena Iduladha 2026 jatuh ±27 Mei, persiapan kapasitas puncak sebaiknya sudah siap pada pertengahan Mei 2026, bukan menunggu Juni.
 - Interval melebar untuk bulan yang lebih jauh; rencana April–Juni sebaiknya diperbarui setelah data aktual Januari–Maret 2026 tersedia.

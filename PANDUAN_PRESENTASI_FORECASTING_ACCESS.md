@@ -61,16 +61,18 @@ Alur yang diceritakan:
 | Ringkasan | [08_ringkasan_forecasting.md](08_ringkasan_forecasting.md) | Tabel siap kutip |
 
 **Angka kunci (SARIMA D=1, model final):**
-- Ramalan 9 bulan sekaligus: **MAPE 6,98%**, RMSE 7.818 kg, R² 0,98. Seasonal naive: MAPE 14,73%.
-- Target relatif (ȳ testing 113.751 kg): RMSE < 11.375 kg, MAE < 9.100 kg → **lulus semua target**.
-- Interval 95% memuat aktual pada **8 dari 9 bulan**.
-- Juni 2025 (Iduladha): ramalan 269.022 kg vs aktual 274.672 kg (meleset 2,1%).
+- Ramalan 9 bulan sekaligus: **MAPE 9,07%**, RMSE 18.484 kg, MAE 14.171 kg, R² 0,94. Seasonal naive: MAPE 8,81% (RMSE 26.773 kg).
+- Target relatif (ȳ testing 145.698 kg): RMSE < 14.570 kg, MAE < 11.656 kg → MAPE dan R² **lulus**, RMSE dan MAE **belum lulus**.
+- Interval 95% memuat aktual pada **9 dari 9 bulan**.
+- Juni 2025 (Iduladha): ramalan 312.294 kg vs aktual 356.163 kg (meleset 12,3%); seasonal naive meleset 20,7%.
+- Model cenderung meramal terlalu rendah (7 dari 9 bulan di bawah aktual).
 
 **Kalimat kunci:**
 > "Model dilatih sampai Maret 2025, lalu meramal April sampai Desember 2025 tanpa melihat data aktual.
-> Hasilnya MAPE 6,98%, kurang dari setengah kesalahan metode 'sama dengan tahun lalu'."
+> Hasilnya MAPE 9,07%, memenuhi target 15%. Namun metode 'sama dengan tahun lalu' juga mencapai 8,81%,
+> jadi keunggulan SARIMA pada peramalan 9 bulan tidak terlihat; keunggulannya ada pada rolling origin (7,51%)."
 
-**Jika ditanya soal ARIMAX** (MAPE 3,84%): ARIMAX memakai harga **aktual** bulan testing; saat
+**Jika ditanya soal ARIMAX** (MAPE multilangkah 6,38%): ARIMAX memakai harga **aktual** bulan testing; saat
 meramal 2026 harga belum diketahui, jadi model final dipilih dari model tanpa eksogen masa depan.
 
 ---
@@ -82,8 +84,8 @@ meramal 2026 harga belum diketahui, jadi model final dipilih dari model tanpa ek
 | Jenis | File | Yang ditunjukkan |
 |---|---|---|
 | Kode | [09_peramalan_visualisasi.py](09_peramalan_visualisasi.py) | `HORIZON = 6`, `Z = 1,96`; `bagian_validasi()` (parameter dikunci dari training, uji Apr–Sep 2025); `bagian_utama()` (fit 36 bulan, ramal 6 bulan); `ekstrapolasi()` (interval di skala log lalu `exp()`) |
-| CSV | `data\hasil_09\validasi_apr_sep_2025\09_peramalan_validasi_apr_sep_2025.csv` | Validasi 6 bulan: MAPE 7,61%, 5/6 di dalam interval |
-| CSV | `data\hasil_09\09_parameter_model_final.csv` | φ = 0,9459; Φ = −0,7953; σ² = 0,0068 |
+| CSV | `data\hasil_09\validasi_apr_sep_2025\09_peramalan_validasi_apr_sep_2025.csv` | Validasi 6 bulan: MAPE 10,46%, 6/6 di dalam interval |
+| CSV | `data\hasil_09\09_parameter_model_final.csv` | φ = 0,6049; Φ = −0,6906; σ² = 0,0058 |
 | CSV | `data\hasil_09\09_diagnostik_model_final.csv` | Ljung-Box & Shapiro-Wilk tetap lulus setelah fit 36 bulan |
 | CSV | `data\hasil_09\09_peramalan_jan_jun_2026.csv` | Ŷ, SE, batas bawah/atas per bulan |
 | Plot | `09_fan_chart_validasi.png` lalu `09_fan_chart.png` | Validasi dulu, baru ramalan 2026 |
@@ -93,19 +95,22 @@ meramal 2026 harga belum diketahui, jadi model final dipilih dari model tanpa ek
 
 | Bulan 2026 | Ŷ (kg) | Batas bawah | Batas atas |
 |---|---|---|---|
-| Jan | 71.327 | 60.653 | 83.880 |
-| Feb | 71.335 | 57.069 | 89.168 |
-| Mar | 69.364 | 53.157 | 90.514 |
-| Apr | 67.206 | 49.817 | 90.665 |
-| Mei | 65.768 | 47.456 | 91.146 |
-| Jun | 177.280 | 125.095 | 251.233 |
+| Jan | 108.757 | 93.632 | 126.325 |
+| Feb | 111.595 | 93.679 | 132.937 |
+| Mar | 112.341 | 93.519 | 134.952 |
+| Apr | 109.806 | 91.137 | 132.299 |
+| Mei | 109.254 | 90.582 | 131.776 |
+| Jun | 301.478 | 249.855 | 363.766 |
+
+Ini ramalan **model** (puncak di Juni). Versi yang dipakai untuk perencanaan adalah hasil penyesuaian
+Iduladha di bagian 3 (puncak di Mei).
 
 **Kalimat kunci:**
-> "Pita biru melebar ke bulan yang lebih jauh: SE skala log naik dari 0,083 (Januari) ke 0,178 (Juni).
+> "Pita biru melebar ke bulan yang lebih jauh: SE skala log naik dari 0,0764 (Januari) ke 0,0958 (Juni).
 > Ini efek corong ketidakpastian. Interval tidak simetris karena dihitung di skala log."
 
-Contoh hitung (jika diminta): ln Ŷ Jan = 11,1750 → Ŷ = e^11,1750 = 71.327 kg;
-batas = exp(11,1750 ∓ 1,96 × 0,0827) = 60.653 – 83.880 kg.
+Contoh hitung (jika diminta): ln Ŷ Jan = 11,5969 → Ŷ = e^11,5969 = 108.757 kg;
+batas = exp(11,5969 ∓ 1,96 × 0,0764) = 93.632 – 126.325 kg.
 
 ---
 
@@ -121,8 +126,8 @@ batas = exp(11,1750 ∓ 1,96 × 0,0827) = 60.653 – 83.880 kg.
 | Plot | `13_ramalan_disesuaikan.png` | Garis abu-abu (model) vs biru (disesuaikan), garis merah 27 Mei |
 | Ringkasan | [13_ringkasan_penyesuaian_iduladha.md](13_ringkasan_penyesuaian_iduladha.md) | Metode + keterbatasan |
 
-**Angka kunci:** R = 177.280 ÷ 65.768 = **2,696**. Setelah disesuaikan: **Mei 177.280 kg** (batas atas
-245.686 kg), Juni kembali normal 65.768 kg.
+**Angka kunci:** R = 301.478 ÷ 109.254 = **2,759**. Setelah disesuaikan: **Mei 301.478 kg** (batas atas
+363.624 kg), Juni kembali normal 109.254 kg.
 
 **Kalimat kunci:**
 > "SARIMA memakai musim tetap 12 bulan, jadi ia mengulang puncak di Juni seperti 2023–2025. Iduladha
@@ -142,9 +147,10 @@ sehingga tidak bisa divalidasi dengan data historis).
 |---|---|---|
 | Kode | [11_implementasi_access.py](11_implementasi_access.py) | `buat_tabel()`: membuat Tbl_Volume_Bulanan & Tbl_Parameter_SARIMA; `buat_query()`: query qry_11_*; `verifikasi()`: Access vs Python |
 | Kode | [12_ramalan_6_bulan_access.py](12_ramalan_6_bulan_access.py) | `pasang_query()`: memasang 4 query qry_12_*; `baca_dao()`: membaca hasil dari MS Access asli; uji dinamis di salinan database |
+| Kode | [16_penyesuaian_iduladha_access.py](16_penyesuaian_iduladha_access.py) | Tabel `Tbl_16_*` dan query `qry_16_*`: penyesuaian Iduladha dihitung di Access, diverifikasi terhadap script 13 |
 | Kode SQL | [sql/12_query_ramalan_6_bulan.sql](sql/12_query_ramalan_6_bulan.sql) | Rumus SARIMA bentuk tertutup dalam SQL (Exp, Log, Sqr) |
 | CSV | `data\hasil_11\access_output\Tbl_Parameter_SARIMA.csv` | Parameter yang disimpan di Access |
-| CSV | `data\hasil_12\12_verifikasi_ramalan_6_bulan.csv` | Selisih Access vs Python < 0,0000003% |
+| CSV | `data\hasil_12\12_verifikasi_ramalan_6_bulan.csv` | Selisih Access vs Python maks. 9,1 × 10⁻⁸% |
 | CSV | `data\hasil_12\12_uji_dinamis_ramalan_feb_jul_2026.csv` | Hasil yang akan muncul saat simulasi input Januari 2026 |
 
 **Kalimat kunci:**
@@ -171,19 +177,19 @@ Pakai `db_penjualan_kambing_DEMO.accdb`. Detail kalimat per langkah ada di
 |---|---|---|---|
 | 1 | Buka file → **Enable Content** → F11 (panel kiri) → **All Access Objects** | Struktur: tabel input, tabel parameter, query | – |
 | 2 | Klik ganda tabel **Tbl_Volume_Bulanan** | Data input 36 bulan, agregat Kabupaten Malang | Juni 2023/2024/2025 jauh lebih besar |
-| 3 | Klik ganda tabel **Tbl_Parameter_SARIMA** | Parameter hasil pelatihan Python | ar.L1 0,9459; ar.S.L12 −0,7953; sigma2 0,0068; Z 1,96 |
-| 4 | Klik ganda query **qry_12_Ramalan_6_Bulan** | **Inti demo**: ramalan 6 bulan + interval 95% dihitung Access | Jan 71.327; Jun 177.280 (batas atas 251.233) |
+| 3 | Klik ganda tabel **Tbl_Parameter_SARIMA** | Parameter hasil pelatihan Python | ar.L1 0,6049; ar.S.L12 −0,6906; sigma2 0,0058; Z 1,96 |
+| 4 | Klik ganda query **qry_12_Ramalan_6_Bulan** | **Inti demo**: ramalan 6 bulan + interval 95% dihitung Access | Jan 108.757; Jun 301.478 (batas atas 363.766) |
 | 5 | (Opsional) **Home → View → SQL View** | Rumus SARIMA di SQL; kembali ke Datasheet View, **No** saat ditanya save | – |
-| 6 | Klik ganda **qry_11_Ramalan_1_Bulan_Historis** | Bukti ketepatan pada 2025 | Jun 2025: ramalan 275.623 vs aktual 274.672 (0,3%) |
-| 7 | Klik ganda **qry_11_Ramalan_Bulan_Depan** | Versi ringkas: hanya bulan berikutnya | Jan 2026: 71.327 |
-| 8 | **Simulasi input**: buka **Tbl_Volume_Bulanan** → baris `*` paling bawah → isi Periode `01/01/2026`, Tahun `2026`, Bulan `1`, Permintaan_Kg `74894`, Sumber `Simulasi presentasi` → **Enter** → tutup tabel | Pengelola data kabupaten mengisi data bulan yang baru lewat | – |
-| 9 | Klik ganda lagi **qry_12_Ramalan_6_Bulan** | Ramalan otomatis bergeser ke Feb–Jul 2026 tanpa Python | Feb 74.704; Jun 183.952; Jul 75.443 |
-| 10 | Kembali ke plot `13_ramalan_disesuaikan.png` | Access menampilkan ramalan model (puncak Juni); untuk perencanaan, puncak dibaca di **Mei** sesuai penyesuaian Iduladha | Mei 2026: 177.280 kg |
+| 6 | Klik ganda **qry_11_Ramalan_1_Bulan_Historis** | Bukti ketepatan pada 2025 | Jun 2025: ramalan 335.676 vs aktual 356.163 (5,8%) |
+| 7 | Klik ganda **qry_11_Ramalan_Bulan_Depan** | Versi ringkas: hanya bulan berikutnya | Jan 2026: 108.757 |
+| 8 | **Simulasi input**: buka **Tbl_Volume_Bulanan** → baris `*` paling bawah → isi Periode `01/01/2026`, Tahun `2026`, Bulan `1`, Permintaan_Kg `114195`, Sumber `Simulasi presentasi` → **Enter** → tutup tabel | Pengelola data kabupaten mengisi data bulan yang baru lewat | – |
+| 9 | Klik ganda lagi **qry_12_Ramalan_6_Bulan** | Ramalan otomatis bergeser ke Feb–Jul 2026 tanpa Python | Feb 114.937; Jun 302.671; Jul 122.358 |
+| 10 | Klik ganda **qry_16_Ramalan_Disesuaikan** (lalu tunjukkan plot `13_ramalan_disesuaikan.png`) | Ramalan yang puncaknya sudah digeser ke bulan Iduladha, dihitung Access | Setelah simulasi: Mei 302.671; Juni 109.970 (tanpa simulasi: Mei 301.478) |
 | 11 | Setelah demo: hapus baris simulasi (klik kotak kiri baris → Delete → Yes) | – | – |
 
 **Kalimat penutup demo:**
 > "Pengelola data kabupaten cukup mengisi total permintaan setiap bulan, lalu membuka satu query.
-> UMKM memakai hasilnya sebagai indeks, misalnya bulan Iduladha 2,57 kali bulan normal.
+> UMKM memakai hasilnya sebagai indeks, misalnya Mei 2026 (bulan Iduladha) 2,73 kali bulan normal.
 > Parameter model diperbarui setahun sekali oleh peneliti."
 
 ---
@@ -196,9 +202,10 @@ Pakai `db_penjualan_kambing_DEMO.accdb`. Detail kalimat per langkah ada di
 | CSV | `data\hasil_11\11_rek_stok_testing.csv`, `data\hasil_11\11_rek_panduan_umkm_2026.csv` |
 | Ringkasan | [11_rekomendasi_manajerial.md](11_rekomendasi_manajerial.md) |
 
-- Kabupaten: kekurangan pasokan turun **75,7%** dibanding "sama seperti tahun lalu"; kapasitas wilayah
-  puncak disiapkan sampai batas atas, **siap pertengahan Mei 2026**.
-- UMKM: rencana stok = penjualan bulan normal × indeks (Iduladha ±2,57×, faktor batas atas ±1,4).
+- Kabupaten: pada data testing, total selisih rencana stok vs aktual turun **10,7%** dibanding "sama seperti
+  tahun lalu" (kelebihan stok 36.263 → 18.938 kg, kekurangan sedikit naik 106.495 → 108.603 kg karena model
+  cenderung meramal rendah). Kapasitas wilayah puncak disiapkan sampai batas atas 363.624 kg, **siap pertengahan Mei 2026**.
+- UMKM: rencana stok = penjualan bulan normal × indeks (Mei 2026 ±2,73×, faktor batas atas 1,16–1,21).
 
 ---
 
@@ -219,11 +226,11 @@ Pakai `db_penjualan_kambing_DEMO.accdb`. Detail kalimat per langkah ada di
 
 | Pertanyaan | Jawaban singkat |
 |---|---|
-| Kenapa ramalan Access puncaknya di Juni, padahal sudah disesuaikan ke Mei? | Access menghitung persis model SARIMA (hasilnya identik dengan Python). Penyesuaian Iduladha adalah post-processing di script 13 untuk perencanaan; model dan query tidak diubah. |
-| Kenapa ramalan 2026 lebih rendah dari 2025 (±−23%)? | Efek koefisien musiman Φ = −0,80 yang mengulang penurunan 2023→2024 dari data yang hanya 3 tahun. Dibaca sebagai skenario konservatif dan diperbarui saat data 2026 masuk. |
+| Kenapa qry_12 puncaknya di Juni, padahal sudah disesuaikan ke Mei? | qry_12 menghitung persis model SARIMA (identik dengan Python). Penyesuaian Iduladha adalah post-processing: di Python oleh script 13, di Access oleh `qry_16_Ramalan_Disesuaikan` (hasil keduanya sama). Model dan parameternya tidak diubah. |
+| Kenapa ramalan 2026 lebih rendah dari 2025 (±−6%)? | Dengan data hanya 3 tahun, koefisien model belum stabil (φ 0,436 di data latih → 0,605 pada 36 bulan). Dibaca sebagai skenario konservatif dan diperbarui saat data 2026 masuk. |
 | Kenapa interval melebar? | SE(h) bertambah dengan horizon h; makin jauh bulan, makin besar ketidakpastian (corong). |
-| Apakah 8 dari 9 bulan di dalam interval 95% itu wajar? | Ya. Interval 95% berarti ±1 dari 20 bulan boleh di luar; 1 dari 9 masih wajar untuk sampel kecil. |
-| Apakah angka 251 ton untuk satu usaha? | Tidak. Itu kapasitas wilayah Kabupaten Malang. UMKM memakai indeks. |
+| Semua 9 bulan di dalam interval 95%, apakah intervalnya terlalu lebar? | Untuk 9 titik, 9 dari 9 masih wajar (interval 95% berarti ±1 dari 20 boleh di luar). Lebar interval relatif 30–38% dari ramalan, jadi ramalan tetap perlu diperbarui setiap bulan. |
+| Apakah angka ±364 ton untuk satu usaha? | Tidak. Itu kapasitas wilayah Kabupaten Malang. UMKM memakai indeks. |
 | Bagaimana jika data bulan baru salah isi? | Perbaiki langsung di Tbl_Volume_Bulanan; query menghitung ulang setiap kali dibuka. |
 
 Pertanyaan umum lain (data tidak dibagi UMKM, pemilihan SARIMA vs ARIMAX, target RMSE relatif) ada di
